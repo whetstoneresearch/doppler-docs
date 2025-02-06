@@ -5,6 +5,7 @@
 ## How it works
 
 * [Explainer](how-it-works/publish-your-docs.md)
+* [Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 
 ## Get started
 
@@ -13,13 +14,13 @@
 
 ## API reference
 
-* [Contracts](api-reference/openapi.md)
 * [SDK](api-reference/sdk.md)
+* [Contracts](api-reference/openapi.md)
 
 ## Resources
 
-* [Security](resources/security.md)
-* [Contract addresses](resources/contract-addresses.md)
-* [Governance](resources/governance.md)
-* [GitHub](https://github.com/whetstoneresearch)
 * [FAQs](resources/faqs.md)
+* [GitHub](https://github.com/whetstoneresearch)
+* [Governance](resources/governance.md)
+* [Contract addresses](resources/contract-addresses.md)
+* [Security & bug bounty](resources/security-and-bug-bounty.md)

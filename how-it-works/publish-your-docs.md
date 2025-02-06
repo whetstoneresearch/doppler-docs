@@ -1,6 +1,5 @@
 ---
 icon: lightbulb
-description: Learn about Doppler
 ---
 
 # Explainer
