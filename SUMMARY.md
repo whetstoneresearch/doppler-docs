@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Doppler Docs](README.md)
+* [Welcome](README.md)
 
 ## Getting Started
 

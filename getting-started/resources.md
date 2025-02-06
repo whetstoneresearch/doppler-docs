@@ -4,7 +4,7 @@ icon: book-open
 
 # Resources
 
-### Code
+### Open Source Code
 
 {% embed url="https://github.com/whetstoneresearch/doppler" %}
 Core contracts
@@ -24,12 +24,15 @@ Please visit the security page to learn more about the bug bounty program :point
 [security.md](security.md)
 {% endcontent-ref %}
 
+
+
 ### Community
 
-:link: [Whetstone Research](https://whetstone.cc/)
+:link: [Whetstone Research](https://whetstone.cc/)&#x20;
 
 :link: [Whetstone Research Twitter](https://x.com/whetstonedotcc)
 
 :link: [Pure Markets Telegram](https://t.me/pure_markets)&#x20;
 
 :link: [Pure Markets Twitter](https://x.com/pure_markets)
+
