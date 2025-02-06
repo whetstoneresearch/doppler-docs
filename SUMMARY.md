@@ -1,21 +1,21 @@
 # Table of contents
 
 * [Welcome](README.md)
+* [How it works](publish-your-docs.md)
 
-## Getting Started
+## Get started
 
-* [How it works](getting-started/publish-your-docs.md)
-* [Get started](getting-started/quickstart.md)
-* [Resources](getting-started/resources.md)
-* [Governance](getting-started/governance.md)
-* [Security](getting-started/security.md)
-* [FAQs](getting-started/faqs.md)
+* [TypeScript SDK](get-started/quickstart.md)
+* [Demo application](get-started/demo-application.md)
 
-## References
+## API reference
 
-* [Editor](references/editor.md)
-* [Markdown](references/markdown.md)
-* [Images & media](references/images-and-media.md)
-* [Interactive blocks](references/interactive-blocks.md)
-* [OpenAPI](references/openapi.md)
-* [Integrations](references/integrations.md)
+* [Contracts](api-reference/openapi.md)
+* [SDK](api-reference/sdk.md)
+
+## Resources
+
+* [Community](resources/community.md)
+* [Security](resources/security.md)
+* [Governance](resources/governance.md)
+* [FAQs](resources/faqs.md)
