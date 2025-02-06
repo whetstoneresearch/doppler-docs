@@ -19,6 +19,7 @@
 ## Resources
 
 * [Security](resources/security.md)
+* [Contract addresses](resources/contract-addresses.md)
 * [Governance](resources/governance.md)
-* [Community](resources/community.md)
+* [GitHub](https://github.com/whetstoneresearch)
 * [FAQs](resources/faqs.md)

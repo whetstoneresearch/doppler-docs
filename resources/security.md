@@ -26,6 +26,8 @@ If you find issues in the smart contracts please file them there.
 
 
 
+## Issues
+
 Other issues can be directed to security@whetstone.cc.&#x20;
 
 Please follow best practices for responsible disclosure as there could be user funds at risk.
