@@ -1,9 +1,9 @@
 ---
 icon: bullseye-arrow
-description: Get started with the Doppler TypeScript SDK.
+description: Create your first tokens within 15 minutes
 ---
 
-# Get started
+# TypeScript SDK
 
 You can integrate Doppler via interacting directly with the onchain smart contracts, deployed to a variety of networks. Or alternatively, you can use the TypeScript SDK developed by Whetsone.&#x20;
 

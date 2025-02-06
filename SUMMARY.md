@@ -1,7 +1,10 @@
 # Table of contents
 
 * [Welcome](README.md)
-* [How it works](publish-your-docs.md)
+
+## How it works
+
+* [Explainer](how-it-works/publish-your-docs.md)
 
 ## Get started
 
@@ -15,7 +18,7 @@
 
 ## Resources
 
-* [Community](resources/community.md)
 * [Security](resources/security.md)
 * [Governance](resources/governance.md)
+* [Community](resources/community.md)
 * [FAQs](resources/faqs.md)

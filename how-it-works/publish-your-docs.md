@@ -1,9 +1,9 @@
 ---
-icon: globe-pointer
-description: Learn how the Doppler smart contract protocol works
+icon: lightbulb
+description: Learn about Doppler
 ---
 
-# How it works
+# Explainer
 
 
 

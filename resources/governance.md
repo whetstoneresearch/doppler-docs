@@ -18,5 +18,5 @@ Below is placeholder information, multisig signers are TBD&#x20;
 
 
 
-The governance process is expected to decentralize overtime as the protocl stabilizes and matures.
+The governance process is expected to decentralize overtime as the protocol stabilizes and matures.
 
