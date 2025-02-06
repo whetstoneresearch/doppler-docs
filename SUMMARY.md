@@ -8,7 +8,6 @@
 * [Get started](getting-started/quickstart.md)
 * [Resources](getting-started/resources.md)
 * [Governance](getting-started/governance.md)
-* [Doppler Points](getting-started/doppler-points.md)
 * [Security](getting-started/security.md)
 * [FAQs](getting-started/faqs.md)
 
