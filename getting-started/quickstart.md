@@ -1,23 +1,74 @@
 ---
 icon: bullseye-arrow
+description: Get started with the Doppler TypeScript SDK.
 ---
 
-# Quickstart
-
-<figure><img src="https://gitbookio.github.io/onboarding-template-images/quickstart-hero.png" alt=""><figcaption></figcaption></figure>
-
-Beautiful documentation starts with the content you create — and GitBook makes it easy to get started with any pre-existing content.
+# Get started
 
 {% hint style="info" %}
-Want to learn about writing content from scratch? Head to the [Basics](https://github.com/GitbookIO/onboarding-template/blob/main/getting-started/broken-reference/README.md) section to learn more.
+The [Doppler-SDK is open source on the Whetstone GitHub](https://github.com/whetstoneresearch/doppler-sdk). Contributions encouraged!
 {% endhint %}
 
-### Import
+### Installation
 
-GitBook supports importing content from many popular writing tools and formats. If your content already exists, you can upload a file or group of files to be imported.
+```
+# Using npm
+npm install doppler-v3-sdk
 
-<div data-full-width="false"><figure><img src="https://gitbookio.github.io/onboarding-template-images/quickstart-import.png" alt=""><figcaption></figcaption></figure></div>
+# Using bun
+bun add doppler-v3-sdk
+```
 
-### Sync a repository
+### Swapping tokens
 
-GitBook also allows you to set up a bi-directional sync with an existing repository on GitHub or GitLab. Setting up Git Sync allows you and your team to write content in GitBook or in code, and never have to worry about your content becoming out of sync.
+```
+import { ReadQuoter, fixed } from "doppler-v3-sdk";
+
+const quoter = new ReadQuoter("0x...quoterAddress");
+const amountIn = fixed(1.5, 18); // 1.5 tokens with 18 decimals
+
+const quote = await quoter.quoteExactInput(
+  {
+    tokenIn: "0x...",
+    tokenOut: "0x...",
+    amountIn: amountIn.toBigInt(),
+    fee: 3000,
+  },
+  { tokenDecimals: 18, formatDecimals: 4 }
+);
+
+console.log(`Expected output: ${quote.formattedAmountOut}`);
+```
+
+### Quote prices
+
+```
+const quoter = new ReadQuoter(quoterAddress);
+const quote = await quoter.quoteExactInput({
+  params: {
+    tokenIn: "0x...",
+    tokenOut: "0x...",
+    amountIn: parseUnits("1", 18),
+    fee: 3000,
+  },
+  options: {
+    tokenDecimals: 18,
+    formatDecimals: 4,
+  },
+});
+```
+
+### Query Uniswap v3 pool data
+
+```
+import { ReadUniswapV3Pool } from "doppler-v3-sdk";
+
+const pool = new ReadUniswapV3Pool("0x...poolAddress");
+const [slot0, liquidityEvents] = await Promise.all([
+  pool.getSlot0(),
+  pool.getMintEvents(),
+]);
+
+console.log(`Current price: ${slot0.sqrtPriceX96}`);
+console.log(`${liquidityEvents.length} liquidity positions found`);
+```
