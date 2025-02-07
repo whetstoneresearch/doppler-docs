@@ -16,8 +16,9 @@
 
 * [SDK](reference/sdk.md)
 * [Contracts](reference/openapi.md)
-* [Governance](reference/governance.md)
-* [Doppler Airlock](reference/doppler-airlock.md)
+* [Treasury](reference/treasury.md)
+* [Airlock & Modules](reference/airlock-and-modules.md)
+* [Fees & Economics](reference/fees-and-economics.md)
 * [Uniswap V3 implementation](reference/uniswap-v3-implementation.md)
 * [Uniswap v4 implementation](reference/uniswap-v4-implementation.md)
 
