@@ -12,15 +12,18 @@
 * [TypeScript SDK](get-started/quickstart.md)
 * [Demo application](get-started/demo-application.md)
 
-## API reference
+## Reference
 
-* [SDK](api-reference/sdk.md)
-* [Contracts](api-reference/openapi.md)
+* [SDK](reference/sdk.md)
+* [Contracts](reference/openapi.md)
+* [Governance](reference/governance.md)
+* [Doppler Airlock](reference/doppler-airlock.md)
+* [Uniswap V3 implementation](reference/uniswap-v3-implementation.md)
+* [Uniswap v4 implementation](reference/uniswap-v4-implementation.md)
 
 ## Resources
 
 * [FAQs](resources/faqs.md)
 * [GitHub](https://github.com/whetstoneresearch)
-* [Governance](resources/governance.md)
 * [Contract addresses](resources/contract-addresses.md)
 * [Security & bug bounty](resources/security-and-bug-bounty.md)
