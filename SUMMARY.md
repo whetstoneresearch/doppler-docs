@@ -17,14 +17,14 @@
 * [SDK](reference/sdk.md)
 * [Contracts](reference/openapi.md)
 * [Treasury](reference/treasury.md)
-* [Airlock & Modules](reference/airlock-and-modules.md)
-* [Fees & Economics](reference/fees-and-economics.md)
-* [Uniswap V3 implementation](reference/uniswap-v3-implementation.md)
+* [Airlock & modules](reference/airlock-and-modules.md)
+* [Fees & economics](reference/fees-and-economics.md)
+* [Contract addresses](reference/contract-addresses.md)
+* [Uniswap v3 implementation](reference/uniswap-v3-implementation.md)
 * [Uniswap v4 implementation](reference/uniswap-v4-implementation.md)
 
 ## Resources
 
 * [FAQs](resources/faqs.md)
 * [GitHub](https://github.com/whetstoneresearch)
-* [Contract addresses](resources/contract-addresses.md)
 * [Security & bug bounty](resources/security-and-bug-bounty.md)
