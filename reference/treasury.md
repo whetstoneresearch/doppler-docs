@@ -4,7 +4,7 @@ icon: scale-balanced
 
 # Treasury
 
-Doppler is a series of smart contracts with a treasury managed by a multi-signature governance Safe.&#x20;
+Doppler's smart contracts with a treasury managed by a multi-signature governance Safe.&#x20;
 
 
 
