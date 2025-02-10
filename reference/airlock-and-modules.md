@@ -2,9 +2,9 @@
 icon: wind
 ---
 
-# Doppler Airlock
+# Airlock & modules
 
-Airlock is a protocol facilitating the deployment of new tokens using a modular approach.
+Airlock is what we refer to Doppler's implementation of a smart contract protocol facilitating the deployment of new tokens using a modular approach. Here's an overview:&#x20;
 
 ### Architecture
 
@@ -18,3 +18,8 @@ Different types of modules can be used to cover the several aspects of the token
 | LiquidityMigrator | Migrates liquidity from one pool to another             |
 
 _Note: a "module" must be whitelisted before it can be used._
+
+{% hint style="info" %}
+Refer to [GitHub](https://github.com/whetstoneresearch/doppler/blob/main/src/Airlock.sol) to view the open source Airlock implementation&#x20;
+{% endhint %}
+

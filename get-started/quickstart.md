@@ -5,13 +5,15 @@ description: Create your first tokens within 15 minutes
 
 # TypeScript SDK
 
-You can integrate Doppler via interacting directly with the onchain smart contracts, deployed to a variety of networks. Or alternatively, you can use the TypeScript SDK developed by Whetsone.&#x20;
+Integrate Doppler directly with the onchain smart contracts, deployed to a variety of networks.&#x20;
 
-Other, open source, community developed SDKs are in progress.&#x20;
+Or alternatively, you can use the TypeScript SDK.
 
 {% hint style="info" %}
 The [Doppler-SDK is open source on the Whetstone GitHub](https://github.com/whetstoneresearch/doppler-sdk). Contributions welcome!
 {% endhint %}
+
+## Examples
 
 ### Installing the TypeScript SDK
 

@@ -12,21 +12,18 @@ These fee's are paid for in $ETH.&#x20;
 
 
 
-*   Interface Fee&#x20;
+*   Integrator Fee - up to 95% of LP fees
 
-    * This fee is configurable from third party application interfaces
-    * This can be set between [<mark style="color:red;">{to confirm: 0 - 25 basis points, or 0.025% of swaps}</mark>](#user-content-fn-1)[^1]
-    * See more in the [SDK reference](broken-reference)
+    * This fee is configurable by third party application integrators&#x20;
+      * This can be set between 0 - 95% of total LP fees earned
+      * See more in the [SDK reference](broken-reference)
 
 
-* Contract Fee
-  * This fee is fixed at <mark style="color:red;">{to confirm: 75 basis points, or 0.075% of swaps}</mark>
+* Protocol Fee - 5% of LP fees
+  * This fee is fixed at 5% of total LP fees earned
   * See more in the [Treasury](treasury.md) section
 
 
 
 It is expected that eventually in subsequent versions of the protocol other tokens may be utilized in order to pay for the protocol fees. This may dependent on the application/interface's parameterization, the token creator's preference, the network the contracts are deployed to, or other tbd configurations.
 
-
-
-[^1]: 
