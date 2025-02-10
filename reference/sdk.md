@@ -4,4 +4,4 @@ icon: memo
 
 # SDK
 
-to do — generate docs with ai somehow lol&#x20;
+TO DO&#x20;

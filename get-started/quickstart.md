@@ -1,6 +1,5 @@
 ---
 icon: bullseye-arrow
-description: Create your first tokens within 15 minutes
 ---
 
 # TypeScript SDK

@@ -5,12 +5,12 @@ icon: '4'
 # Uniswap v4 implementation
 
 {% hint style="info" %}
-The v4 implementation is not currently deployed and in active development.&#x20;
+The v4 implementation is coming soon. See [contract addresses](../reference/contract-addresses.md) for supported deployments.&#x20;
 {% endhint %}
 
 
 
-The Doppler Protocol make use of 4 Uniswap v4 hook functions in its contract:
+The Doppler Protocol makes use of 4 Uniswap v4 hook functions in its contract:
 
 * `afterInitialize`
   * Used to place initial liquidity positions

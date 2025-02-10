@@ -5,4 +5,4 @@ description: Have a running website locally in just a few scripts
 
 # Demo application
 
-TO DO :)&#x20;
+TO DO :) set up the mini app?&#x20;
