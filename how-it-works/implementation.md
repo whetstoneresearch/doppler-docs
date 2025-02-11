@@ -12,7 +12,7 @@ This documentation is a work in progress... We're working on it! Check back soon
 
 ### Uniswap v3 implementation - explainer
 
-1. When you create a token on an application like Pure Markets, you send a message to the Doppler contracts to create the token.&#x20;
+1. Applications send a message to the Doppler smart contracts to create a token.&#x20;
 2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the "Doppler Airlock"
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool
