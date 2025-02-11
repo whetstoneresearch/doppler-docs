@@ -1,5 +1,6 @@
 ---
 icon: scale-balanced
+hidden: true
 ---
 
 # Treasury
