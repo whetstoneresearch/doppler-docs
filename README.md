@@ -21,7 +21,36 @@ Doppler is an Ethereum Virtual Machine (EVM) based token launchpad & liquidity b
 
 Which enables you to easily...
 
-<table data-view="cards" data-full-width="true"><thead><tr><th></th><th data-hidden data-card-cover data-type="files"></th><th data-hidden></th><th data-hidden data-type="content-ref"></th></tr></thead><tbody><tr><td><strong>Create arbitrary assets</strong></td><td><a href=".gitbook/assets/Screenshot 2025-02-06 at 10.50.05 AM.png">Screenshot 2025-02-06 at 10.50.05 AM.png</a></td><td></td><td><a href="broken-reference">Broken link</a></td></tr><tr><td><strong>Enter price discovery</strong></td><td><a href=".gitbook/assets/Screenshot 2025-02-06 at 10.38.58 AM.png">Screenshot 2025-02-06 at 10.38.58 AM.png</a></td><td></td><td></td></tr><tr><td><strong>Bootstrap initial liquidity</strong> </td><td><a href=".gitbook/assets/whetstone-logo.png">whetstone-logo.png</a></td><td></td><td><a href="how-it-works/publish-your-docs.md">publish-your-docs.md</a></td></tr></tbody></table>
+
+
+{% stepper %}
+{% step %}
+### Create arbitrary assets
+
+Memecoins, RWAs, any asset you can imagine, can be created on Doppler
+{% endstep %}
+
+{% step %}
+### Enter price discovery
+
+Efficiently find the correct, market driven price for these assets
+{% endstep %}
+
+{% step %}
+### Bootstrap initial liquidity
+
+Build liquidity around the initial price and establish a marketplace for the assets
+{% endstep %}
+
+{% step %}
+### Plug into a thriving ecosystem
+
+Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap ecosystems
+{% endstep %}
+{% endstepper %}
 
 Token issuers and application developers no longer have to worry about the complicated, burdensome aspects of a token's lifecycle. From creation to issuance, price discovery to liquidity formation, distribution to ecosystem integrations - doppler enables you to focus on building compelling, unique applications & experiences; not designing auctions, becoming MEV infrastructure experts, or grinding for distribution.
 
+{% hint style="info" %}
+The Doppler Documentation is an active work in progress. Thank you for reading!
+{% endhint %}
