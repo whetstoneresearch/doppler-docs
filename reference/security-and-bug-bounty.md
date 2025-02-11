@@ -20,7 +20,7 @@ Additionally, Doppler had a public audit contest done via Cantina.&#x20;
 
 ## Bug Bounty & Issues
 
-Doppler is in progress of establishing a bug bounty program via Cantina.&#x20;
+Doppler is in progress of establishing a bug bounty program via a reputable third party.&#x20;
 
 Security issues should in the interim be disclosed to security@whetstone.cc.&#x20;
 
