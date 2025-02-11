@@ -1,5 +1,6 @@
 ---
 icon: memo
+hidden: true
 ---
 
 # SDK

@@ -1,5 +1,6 @@
 ---
 icon: file-signature
+hidden: true
 ---
 
 # Contracts

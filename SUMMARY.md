@@ -7,7 +7,7 @@
 * [Explainer](how-it-works/publish-your-docs.md)
 * [Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 * [Uniswap v3 implementation](how-it-works/uniswap-v3-implementation.md)
-* [Uniswap v4 implementation](how-it-works/uniswap-v4-implementation.md)
+* [Implementation](how-it-works/implementation.md)
 
 ## Get started
 

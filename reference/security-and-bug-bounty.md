@@ -18,17 +18,11 @@ Additionally, Doppler had a public audit contest done via Cantina.&#x20;
 
 
 
-## Bug Bounty
+## Bug Bounty & Issues
 
-[Doppler has an active bug bounty program with Cantina](https://cantina.xyz/bounties) :point\_left:
+Doppler is in progress of establishing a bug bounty program via Cantina.&#x20;
 
-If you find issues in the smart contracts please file them there.
-
-
-
-## Issues
-
-Other issues can be disclosed to security@whetstone.cc.&#x20;
+Security issues should in the interim be disclosed to security@whetstone.cc.&#x20;
 
 Please follow best practices for responsible disclosure as there could be user funds at risk.
 
