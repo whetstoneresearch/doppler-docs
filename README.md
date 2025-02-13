@@ -33,7 +33,7 @@ Memecoins, RWAs, any asset you can imagine, can be created on Doppler
 {% step %}
 ### Enter price discovery
 
-Efficiently find the correct, market driven price for these assets
+Efficiently find the correct market driven price for these assets
 {% endstep %}
 
 {% step %}
@@ -49,7 +49,7 @@ Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap eco
 {% endstep %}
 {% endstepper %}
 
-Token issuers and application developers no longer have to worry about the complicated, burdensome aspects of a token's lifecycle. From creation to issuance, price discovery to liquidity formation, distribution to ecosystem integrations - doppler enables you to focus on building compelling, unique applications & experiences; not designing auctions, becoming MEV infrastructure experts, or grinding for distribution.
+Token issuers and application developers no longer have to worry about the complicated, burdensome aspects of a token's lifecycle. From creation to issuance, price discovery to liquidity formation, distribution to ecosystem integrations - Doppler enables you to focus on building compelling, unique applications & experiences; not designing auctions, becoming MEV infrastructure experts, or grinding for distribution.
 
 {% hint style="info" %}
 The Doppler Documentation is an active work in progress. Thank you for reading!

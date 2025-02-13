@@ -12,16 +12,17 @@ This documentation is a work in progress... We're working on it! Check back soon
 
 ### Uniswap v3 implementation - explainer
 
-1. Applications send a message to the Doppler smart contracts to create a token.&#x20;
-2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the "Doppler Airlock"
+1. Applications send a message to the Doppler smart contracts to create a token,. This message can be formed entirely utilizing the [doppler-sdk](../get-started/quickstart.md)
+2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](../reference/airlock-and-modules.md)
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool
-   1. The Uniswap v3 migrator contracts are designed to mitigate sniping by adjusting how liquidity is placed on the curve. There is no longer just one positions
+   1. The Uniswap v3 migrator contracts are designed to mitigate sniping by adjusting how liquidity is placed on the curve. There is no longer just one position.
+      1. The multiple positions determine the steepness of the curve. The steeper the curve, the more tokens are sold near the migration price of the curve. The modulation of this curve via market forces is supported in the Uniswap v4.
    2. The max share of the entire token supply that can be sent is 50% and the minimum is 5% of the token supply. Whatever amount to send is determined by the Interface.
    3. There is a poke function that migrates the tokens to the next step.
       1. In the Uniswap v4 implementation, this is automatic, and we have other methodologies to make it automatic in the Uniswap v3 implementation.
    4. Once a certain price is met, the asset token (like ETH/USDC/USDT) are sent back to the Airlock, which calls the migrator module
-4. Once receiving ETH or whatever token, the Airlock calls the migrator module. The module finds the most amount of LP tokens possible at the final price of the v3 pool. The migrator then utilizes whatever share of the tokens in the Airlock that it can, before sending the rest to the Timelock.
+4. Once receiving ETH or whatever pre-specified token, the Airlock calls the migrator module. The module finds the most amount of LP tokens possible at the final price of the v3 pool. The migrator then utilizes whatever share of the tokens in the Airlock that it can, before sending the rest to the Timelock.
    1. The Uniswap v2 shares are held by the Timelock, meaning that the share sold to the open market is not lost forever when burned.
    2. The Timelock is gated for a time period of N, eg. 3 months, to ensure that users have time to trust the LP is locked
 5. Bundled shares vest automatically, as does the integrator share and the Doppler share.
@@ -36,7 +37,11 @@ If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitep
 The v4 implementation is coming soon. See [contract addresses](../reference/contract-addresses.md) for supported deployments.&#x20;
 {% endhint %}
 
+The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
 
+
+
+#### Uniswap v4 Permissions
 
 The Doppler Protocol makes use of 4 Uniswap v4 hook functions in its contract:
 
@@ -48,9 +53,18 @@ The Doppler Protocol makes use of 4 Uniswap v4 hook functions in its contract:
   * Used to account the total amount of asset tokens sold, `totalTokensSold`, and the total amount of numeraire tokens received from asset sales, `totalProceeds`
   * The Protocol excludes the swap fee, consisting of the LP fee and the Uniswap Protocol fee, from the accounted amounts such that it doesn't reinvest LP fees or attempt to reinvest protocol fees taken by Uniswap v4
 * `beforeAddLiquidity`
-  * Used to trigger a revert if a user attempts to provide liquidity. This is necessary because The Protocol doesn't want any external liquidity providers
+  * Used to trigger a revert if a user attempts to provide liquidity. This is necessary because the Protocol doesn't want any external liquidity providers beside itself.
+    * External liquidity providers are blocked because it may result in a situation where the Doppler Protocol is unable to reset the underlying Uniswap v4 pool's accounting, creating accounting issues for the Protocol.
 
-### Curve Accumulation
+
+
+As previously stated, the main difference of v4-Doppler vs. v3-Doppler is the modulation of the positions placed is dynamic when compared to the Uniswap v3 version. This is the dynamic part referred to in "dynamic bonding curves".
+
+
+
+### Dynamic Dutch-auctions
+
+Curve Accumulation
 
 The Doppler Protocol rebalance its bonding curve according to token sales along a pre-defined schedule based on the number of tokens to sell, `numTokensToSell`, over the duration, `endingTime - startingTime`. This rebalance occurs immediately preceeding the first swap in every epoch, in the `beforeSwap` hook. If the hook doesn't have any swaps in a given epoch then the rebalance applies retroactively to all missed epochs.
 
@@ -70,7 +84,9 @@ If sales are ahead of schedule, i.e. `totalTokensSold` is greater than the expec
 
 For whichever of the above outcomes the Protocol has hit, it accumulates a tick delta to the `tickAccumulator`. This value is used to derive the current bonding curve at any given time. It is derived by the lowermost tick of the curve, `tickLower`, as the `startingTick + tickAccumulator`. Additionally, it derives the uppermost tick of the curve, `tickUpper`, as the `tickLower + gamma`. We can see how the `tickAccumulator` is accumulated in this [graph](https://www.desmos.com/calculator/fjnd0mcpst), with the red line corresponding to the max dutch auction case, the orange line corresponding to the relative dutch auction case, and the green line corresponding to the oversold case.
 
-### Liquidity Placement (Slugs)
+
+
+### Terminology in Dynamic Bonding Curves (Slugs)
 
 Within the bonding curve, the Protocol places 3 different types of liquidity positions, aka slugs:
 
