@@ -3,7 +3,7 @@ icon: memo
 description: API Reference
 ---
 
-# SDK
+# API specifications
 
 ## Doppler V3 SDK&#x20;
 
@@ -200,5 +200,7 @@ Supported Networks:
 ## Doppler v4 SDK API Reference
 
 {% hint style="info" %}
-Doppler v4 is not currently deployed and the v4 SDK is not ready for implementation yet. Check back soon :heart:
+Doppler v4 is not currently deployed and the v4 SDK is not ready for implementation yet.&#x20;
+
+Check back soon :heart:
 {% endhint %}
