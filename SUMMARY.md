@@ -16,7 +16,7 @@
 
 ## Reference
 
-* [SDK](reference/sdk.md)
+* [API specifications](reference/sdk.md)
 * [Contracts](reference/openapi.md)
 * [Treasury](reference/treasury.md)
 * [Airlock & modules](reference/airlock-and-modules.md)
