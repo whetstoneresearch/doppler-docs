@@ -15,7 +15,6 @@
 
 ## Reference
 
-- [Doppler V3 SDK](reference/sdk-v3/factory.md)
 - [Contracts](reference/openapi.md)
 - [Treasury](reference/treasury.md)
 - [Fees & economics](reference/fees-and-economics.md)
@@ -24,3 +23,9 @@
 - [Security & bug bounties](reference/security-and-bug-bounties.md)
 - [Contract addresses](reference/contract-addresses.md)
 - [GitHub](https://github.com/whetstoneresearch)
+
+## V3 SDK
+
+- [Factory](v3-sdk/factory.md)
+- [Token](v3-sdk/token.md)
+- [Quoter](v3-sdk/quoter.md)
