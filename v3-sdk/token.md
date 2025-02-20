@@ -1,3 +1,8 @@
+---
+icon: square-terminal
+description: Token Class Reference
+---
+
 ## Token Class Overview
 
 The `Token` class is a javascript class representation of a DERC20 token deployed by the airlock contract. It is responsible for serving information about the state of the token, and for performing various actions on Doppler tokens.
@@ -41,7 +46,7 @@ In addition, DERC20 tokens have the following methods:
 
 ## ReadWriteDerc20
 
-Extends ReadDerc20 with write operations.
+Extends ReadDerc20 with basic write operations.
 
 ```typescript
 const token = new ReadWriteDerc20(address: Address, drift: Drift<ReadWriteAdapter>);

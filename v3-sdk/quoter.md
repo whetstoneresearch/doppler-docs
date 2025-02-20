@@ -1,6 +1,6 @@
 ---
-icon: memo
-description: Quoter API Reference
+icon: square-terminal
+description: Quoter Class Reference
 ---
 
 ## Quoter Overview

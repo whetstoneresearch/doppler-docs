@@ -1,6 +1,6 @@
 ---
-icon: memo
-description: Factory API Reference
+icon: square-terminal
+description: Factory Class Reference
 ---
 
 ## Factory Overview&#x20;
@@ -105,45 +105,6 @@ interface CreateParams {
     options?: ContractWriteOptions & OnMinedParam
   ): Promise<Hex>
 ```
-
-### Token Operations
-
-#### ReadDerc20
-
-Read operations for Doppler tokens.
-
-```typescript
-const token = new ReadDerc20(address: Address, drift?: Drift<ReadAdapter>);
-```
-
-Methods:
-
-- `getName(): Promise<string>`
-- `getSymbol(): Promise<string>`
-- `getDecimals(): Promise<number>`
-- `getTokenURI(): Promise<string>`
-- `getAllowance(owner: Address, spender: Address): Promise<bigint>`
-- `getBalanceOf(account: Address): Promise<bigint>`
-- `getTotalSupply(): Promise<bigint>`
-- `getPool(): Promise<Address>`
-- `getIsPoolUnlocked(): Promise<boolean>`
-- `getVestingData(account: Address): Promise<{totalAmount: bigint, releasedAmount: bigint}>`
-- `getVestingDuration(): Promise<bigint>`
-- `getVestingStart(): Promise<bigint>`
-- `getVestedTotalAmount(): Promise<bigint>`
-- `getYearlyMintRate(): Promise<bigint>`
-
-#### ReadWriteDerc20
-
-Extends ReadDerc20 with write operations.
-
-```typescript
-const token = new ReadWriteDerc20(address: Address, drift: Drift<ReadWriteAdapter>);
-```
-
-Methods:
-
-- `approve(spender: Address, value: bigint): Promise<Hash>`
 
 ### Pool Operations
 
