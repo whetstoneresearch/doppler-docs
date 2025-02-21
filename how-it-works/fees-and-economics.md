@@ -12,16 +12,13 @@ These fee's are paid for in $ETH.&#x20;
 
 
 
-*   Integrator Fee - up to 95% of LP fees
+* Integrator Fee - up to 95% of LP fees
+  * This fee is configurable by third party application integrators&#x20;
+    * This can be set between 0 - 95% of total LP fees earned
+    * See more in the [SDK reference](broken-reference)
+*   Protocol Fee - 5% of LP fees
 
-    * This fee is configurable by third party application integrators&#x20;
-      * This can be set between 0 - 95% of total LP fees earned
-      * See more in the [SDK reference](broken-reference)
-
-
-* Protocol Fee - 5% of LP fees
-  * This fee is fixed at 5% of total LP fees earned
-  * See more in the [Treasury](broken-reference) section
+    * This fee is fixed at 5% of total LP fees earned
 
 
 
