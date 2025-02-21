@@ -21,7 +21,7 @@ These fee's are paid for in $ETH.&#x20;
 
 * Protocol Fee - 5% of LP fees
   * This fee is fixed at 5% of total LP fees earned
-  * See more in the [Treasury](treasury.md) section
+  * See more in the [Treasury](broken-reference) section
 
 
 

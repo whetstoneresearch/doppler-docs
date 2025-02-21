@@ -27,7 +27,7 @@ Which enables you to easily...
 {% step %}
 ### Create arbitrary assets
 
-Memecoins, RWAs, any asset you can imagine, can be created on Doppler
+Memecoins, RWAs, governance tokens, any arbitrary asset, can be created on Doppler
 {% endstep %}
 
 {% step %}

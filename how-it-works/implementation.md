@@ -12,8 +12,8 @@ This documentation is a work in progress... We're working on it! Check back soon
 
 ### Uniswap v3 implementation - explainer
 
-1. Applications send a message to the Doppler smart contracts to create a token,. This message can be formed entirely utilizing the [doppler-sdk](../get-started/quickstart.md)
-2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](../reference/airlock-and-modules.md)
+1. Applications send a message to the Doppler smart contracts to create a token,. This message can be formed entirely utilizing the [doppler-sdk](broken-reference)
+2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](airlock-and-modules.md)
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool
    1. The Uniswap v3 migrator contracts are designed to mitigate sniping by adjusting how liquidity is placed on the curve. There is no longer just one position.
@@ -34,7 +34,7 @@ If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitep
 ### Uniswap v4 implementation
 
 {% hint style="info" %}
-The v4 implementation is coming soon. See [contract addresses](../reference/contract-addresses.md) for supported deployments.&#x20;
+The v4 implementation is coming soon. See [contract addresses](../resources/contract-addresses.md) for supported deployments.&#x20;
 {% endhint %}
 
 The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
