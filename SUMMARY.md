@@ -9,11 +9,11 @@
 * [Airlock & modules](how-it-works/airlock-and-modules.md)
 * [Fees & economics](how-it-works/fees-and-economics.md)
 
-## API Reference
+## SDK Reference
 
-* [Factory](api-reference/factory.md)
-* [Token](api-reference/token.md)
-* [Quoter](api-reference/quoter.md)
+* [Factory](sdk-reference/factory.md)
+* [Token](sdk-reference/token.md)
+* [Quoter](sdk-reference/quoter.md)
 
 ## Resources
 
