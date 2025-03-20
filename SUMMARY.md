@@ -12,7 +12,6 @@
 ## Users
 
 * [Pure.st](users/pure.st.md)
-* [O'hara](users/ohara.md)
 
 ## SDK Reference
 
