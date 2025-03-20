@@ -9,6 +9,11 @@
 * [Airlock & modules](how-it-works/airlock-and-modules.md)
 * [Fees & economics](how-it-works/fees-and-economics.md)
 
+## Users
+
+* [Pure.st](users/pure.st.md)
+* [O'hara](users/ohara.md)
+
 ## SDK Reference
 
 * [Factory](sdk-reference/factory.md)
