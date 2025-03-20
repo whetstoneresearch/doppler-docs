@@ -1,19 +1,25 @@
 ---
-description: The easiest place to explore the Doppler ecosystem
+description: The easiest, and pure.st, place to explore the Doppler Ecosystem.
+icon: crown
 ---
 
 # Pure.st
 
-Developed by: [Whestone Research](https://whetstone.cc/).&#x20;
+### Description
 
-The first interface to support the Doppler protocol.
+[Pure.st](https://pure.st) was the first interface supporting Doppler, home to some of the most OG assets on [Unichain](https://www.unichain.org/).&#x20;
 
-[Pure.st](https://pure.st) is home to some of the most OG assets created on [Unichain](https://www.unichain.org/).&#x20;
+### Features
 
-### Explore
+#### Explore
 
 Explore memecoins across the entire Doppler ecosystem, regardless of what app they were created on.
 
-### Create
+#### Create
 
-You can create memecoins on Doppler v3, or Doppler v4 (coming soon)
+Users can create memecoins on Doppler v3, or Doppler v4 (coming soon).
+
+### Socials
+
+:link: [x.com/pure\_markets](https://x.com/pure_markets)&#x20;
+
