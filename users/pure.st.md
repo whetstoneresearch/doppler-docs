@@ -23,3 +23,5 @@ Users can create memecoins on Doppler v3, or Doppler v4 (coming soon).
 
 :link: [x.com/pure\_markets](https://x.com/pure_markets)&#x20;
 
+:link: [t.me/pure\_markets](https://t.me/pure_markets)&#x20;
+
