@@ -24,5 +24,6 @@
 
 * [GitHub](https://github.com/whetstoneresearch)
 * [Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
+* [Demo application](https://github.com/whetstoneresearch/doppler-v3-miniapp)
 * [Contract addresses](resources/contract-addresses.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
