@@ -13,7 +13,7 @@ Save money and focus on what matters: your ideas.&#x20;
 
 ### How it works
 
-Once users are happy with the applications Ohara generated via their prompts, they can publish it alongside the creation of an appcoin (via Doppler), subject to the following implementation details.
+Once users are happy with the applications Ohara generated via their prompts, they can publish it alongside the creation of an App Coin (via Doppler), subject to the following implementation details.
 
 ### Implementation details
 
