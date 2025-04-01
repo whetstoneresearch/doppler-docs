@@ -31,5 +31,5 @@ Implementation details are subject to change and provided for educational purpos
 
 :link: [x.com/tryOharaAI](https://x.com/tryoharaai)
 
-:link: [discord.gg/NyC5uGP5](https://discord.gg/NyC5uGP5)
+:link: [discord.gg/ohara-ai](https://discord.gg/ohara-ai)
 
