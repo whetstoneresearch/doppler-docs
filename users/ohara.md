@@ -29,7 +29,7 @@ Implementation details are subject to change and provided for educational purpos
 
 ### Socials&#x20;
 
-:link: [x.com/tryOharaAI](https://x.com/tryoharaai)
-
 :link: [discord.gg/ohara-ai](https://discord.gg/ohara-ai)
+
+:link: [x.com/tryOharaAI](https://x.com/tryoharaai)
 
