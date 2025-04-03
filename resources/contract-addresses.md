@@ -6,14 +6,25 @@ icon: pen-field
 
 Here are the networks that Doppler is officially deployed to:
 
-- Mainnets: Unichain Mainnet, Ink Mainnet
-- Testnets: Unichain Sepolia, Base Sepolia, Ink Sepolia, Monad Testnet&#x20;
+* Mainnets: Base, Unichain, Ink&#x20;
+* Testnets: Unichain Sepolia, Base Sepolia, Ink Sepolia, Monad Testnet
 
 {% hint style="danger" %}
-If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical. Use with caution. :rotating_light:
+If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical. Use with caution. :rotating\_light:
 {% endhint %}
 
 ## Mainnet Deployments
+
+### Base
+
+| Contract             | Address                                    |
+| -------------------- | ------------------------------------------ |
+| Airlock              | 0x660eAaEdEBc968f8f3694354FA8EC0b4c5Ba8D12 |
+| TokenFactory         | 0xFAafdE6a5b658684cC5eb0C5c2c755B00A246F45 |
+| UniswapV3Initializer | 0xaA47D2977d622DBdFD33eeF6a8276727c52EB4e5 |
+| GovernanceFactory    | 0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9 |
+| UniswapV2Migrator    | 0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731 |
+| Bundler              | 0x136191B46478cAB023cbC01a36160C4Aad81677a |
 
 ### Unichain
 
@@ -36,6 +47,8 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | GovernanceFactory    | [0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9](https://explorer.inkonchain.com/address/0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9) |
 | UniswapV2Migrator    | [0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731](https://explorer.inkonchain.com/address/0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731) |
 | Bundler              | [0x136191B46478cAB023cbC01a36160C4Aad81677a](https://explorer.inkonchain.com/address/0x136191B46478cAB023cbC01a36160C4Aad81677a) |
+
+
 
 ## Testnet Deployments
 
