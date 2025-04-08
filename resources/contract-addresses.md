@@ -76,14 +76,14 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 
 ### Base Sepolia
 
-| Contract             | Address                                                                                                                              |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Airlock              | [0xa24E35a5d71d02a59b41E7c93567626302da1958](https://base-sepolia.blockscout.com/address/0xa24E35a5d71d02a59b41E7c93567626302da1958) |
-| TokenFactory         | [0x91231cDdD8d6C86Df602070a3081478e074b97b7](https://base-sepolia.blockscout.com/address/0x91231cDdD8d6C86Df602070a3081478e074b97b7) |
-| UniswapV3Initializer | [0xBEd386a1Fc62B6598c9b8d2BF634471B6Fe75EB7](https://base-sepolia.blockscout.com/address/0xBEd386a1Fc62B6598c9b8d2BF634471B6Fe75EB7) |
-| GovernanceFactory    | [0xA7A28cB18F73CDd591fa81ead6ffadf749c0d0a2](https://base-sepolia.blockscout.com/address/0xA7A28cB18F73CDd591fa81ead6ffadf749c0d0a2) |
-| UniswapV2Migrator    | [0x166109C4EE7fE69164631Caa937dAA5F5cEbFef0](https://base-sepolia.blockscout.com/address/0x166109C4EE7fE69164631Caa937dAA5F5cEbFef0) |
-| Bundler              | [0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC](https://base-sepolia.blockscout.com/address/0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC) |
+| Contract             | Address                                                                                                                               |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Airlock              | [0xE0dC4012AC9C868F09c6e4b20d66ED46D6F258d0](https://base-sepolia.blockscout.com/address/0xE0dC4012AC9C868F09c6e4b20d66ED46D6F258d0)  |
+| TokenFactory         | [0x4225C632b62622Bd7B0A3eC9745C0a866Ff94F6F](https://base-sepolia.blockscout.com/address/0x4225C632b62622Bd7B0A3eC9745C0a866Ff94F6F)  |
+| UniswapV3Initializer | [0x620e3fec244e913d73f2163623b62d02DB69638B](https://base-sepolia.blockscout.com/address/0x620e3fec244e913d73f2163623b62d02DB69638B)  |
+| GovernanceFactory    | [0x3AD727ee0FBBb8Ee0920933FdB96F23fD56f1299](https://base-sepolia.blockscout.com/address/0x3AD727ee0FBBb8Ee0920933FdB96F23fD56f1299)  |
+| UniswapV2Migrator    | [0xA3C847eAb58eAa9cbc215C785c9cfBc19CDABD5f](https://base-sepolia.blockscout.com/address/0xA3C847eAb58eAa9cbc215C785c9cfBc19CDABD5f)  |
+| Bundler              | [0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC](https://base-sepolia.blockscout.com/address/0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC)  |
 
 ### World Sepolia
 
