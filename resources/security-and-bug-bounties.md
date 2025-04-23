@@ -2,7 +2,7 @@
 icon: lock
 ---
 
-# Security & bug bounty
+# Security & bug bounties
 
 ## Audits
 
@@ -20,9 +20,15 @@ Additionally, Doppler had a public audit contest done via Cantina.&#x20;
 
 ## Bug Bounty & Issues
 
-Doppler is in progress of establishing a bug bounty program via a reputable third party.&#x20;
+Doppler has an active bug bounty program being ran in collaboration with Cantina.&#x20;
 
-Security issues should in the interim be disclosed to security@whetstone.cc.&#x20;
+Learn more & report bugs: [https://cantina.xyz/bounties/2c7af549-c36c-4432-bae6-3f4b1fa6b217](https://cantina.xyz/bounties/2c7af549-c36c-4432-bae6-3f4b1fa6b217)&#x20;
 
 Please follow best practices for responsible disclosure as there could be user funds at risk.
+
+
+
+### Questions?&#x20;
+
+Contact security@whetstone.cc&#x20;
 
