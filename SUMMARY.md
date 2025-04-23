@@ -8,11 +8,13 @@
 * [Implementation](how-it-works/implementation.md)
 * [Airlock & modules](how-it-works/airlock-and-modules.md)
 * [Fees & economics](how-it-works/fees-and-economics.md)
+* [Treasury & governance](how-it-works/treasury-and-governance.md)
 
-## Users
+## Featured users
 
-* [Pure.st](users/pure.st.md)
-* [Ohara](users/ohara.md)
+* [Pure.st](featured-users/pure.st.md)
+* [Ohara](featured-users/ohara.md)
+* [Zora](featured-users/zora.md)
 
 ## SDK Reference
 
@@ -23,7 +25,8 @@
 ## Resources
 
 * [GitHub](https://github.com/whetstoneresearch)
-* [Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 * [Demo application](https://github.com/whetstoneresearch/doppler-v3-miniapp)
+* [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
+* [Multicurve Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/multicurve/Doppler_Multicurve.pdf)
 * [Contract addresses](resources/contract-addresses.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
