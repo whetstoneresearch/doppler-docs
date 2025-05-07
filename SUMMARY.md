@@ -28,5 +28,6 @@
 * [Demo application](https://github.com/whetstoneresearch/doppler-v3-miniapp)
 * [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 * [Multicurve Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/multicurve/Doppler_Multicurve.pdf)
-* [Contract addresses](resources/contract-addresses.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
+* [Contract addresses](resources/contract-addresses.md)
+* [Protocol roadmap](resources/protocol-roadmap.md)
