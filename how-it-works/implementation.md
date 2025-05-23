@@ -25,7 +25,7 @@ This documentation is a work in progress... We're working on it! Check back soon
 4. Once receiving ETH or whatever pre-specified token, the Airlock calls the migrator module. The module finds the most amount of LP tokens possible at the final price of the v3 pool. The migrator then utilizes whatever share of the tokens in the Airlock that it can, before sending the rest to the Timelock.
    1. The Uniswap v2 shares are held by the Timelock, meaning that the share sold to the open market is not lost forever when burned.
    2. The Timelock is gated for a time period of N, eg. 3 months, to ensure that users have time to trust the LP is locked
-5. Bundled shares vest automatically, as does the integrator share and the Doppler share.
+5. Bundled shares vest automatically, as does the integrator share and the Doppler share. Additional vesting can be defined as a percentage of inflation relative to total token supply.
 
 {% hint style="info" %}
 If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf) :point\_left:
