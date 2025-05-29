@@ -12,7 +12,7 @@ Here are the networks that Doppler is officially deployed to:
 Note that contracts addresses are not the same across the different networks.
 
 {% hint style="danger" %}
-If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical. Use with caution. :rotating\_light:
+Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reach out to the Whetstone Research team about implementation and parameterization best practices. :rotating\_light: If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical.
 {% endhint %}
 
 ## Mainnet Deployments

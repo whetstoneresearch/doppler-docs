@@ -4,7 +4,7 @@ icon: square-terminal
 
 # Implementation
 
-Doppler has both a Uniswap v3 and Uniswap v4 implementation. Initially, it will release with the v3 implementation due to the underlying protocols security, ecosystem support, and maturity.&#x20;
+Doppler has both a Uniswap v3 and Uniswap v4 implementation with differing features depending on your use cases.&#x20;
 
 {% hint style="info" %}
 This documentation is a work in progress... We're working on it! Check back soon!
@@ -34,7 +34,7 @@ If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitep
 ### Uniswap v4 implementation
 
 {% hint style="info" %}
-The v4 implementation is coming soon. See [contract addresses](../resources/contract-addresses.md) for supported deployments.&#x20;
+The v4 implementation is now available in beta. See [contract addresses](../resources/contract-addresses.md) for supported deployments. Please reach out to the Whetstone Research team before implementing in production due to potential complexity and/or edge cases that must be accounted for. &#x20;
 {% endhint %}
 
 The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
