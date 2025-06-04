@@ -26,7 +26,7 @@
 
 - [Factory](doppler-v4-sdk-reference/factory.md)
 - [Quoter](doppler-v4-sdk-reference/quoter.md)
-- [Token](doppler-v4-sdk-reference/lens.md)
+- [Lens](doppler-v4-sdk-reference/lens.md)
 
 ## Resources
 
