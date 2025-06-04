@@ -16,11 +16,18 @@
 * [Ohara](featured-users/ohara.md)
 * [Zora](featured-users/zora.md)
 
-## SDK Reference
+## Doppler-v3 SDK Reference
 
-* [Factory](sdk-reference/factory.md)
-* [Token](sdk-reference/token.md)
-* [Quoter](sdk-reference/quoter.md)
+* [Factory](doppler-v3-sdk-reference/factory.md)
+* [Token](doppler-v3-sdk-reference/token.md)
+* [Quoter](doppler-v3-sdk-reference/quoter.md)
+
+## Doppler-v4 SDK Reference
+
+* [Factory](doppler-v4-sdk-reference/factory.md)
+* [Token](doppler-v4-sdk-reference/token.md)
+* [Quoter](doppler-v4-sdk-reference/quoter.md)
+
 
 ## Resources
 
