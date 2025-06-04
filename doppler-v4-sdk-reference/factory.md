@@ -221,24 +221,30 @@ const factory = new ReadWriteFactory(airlockAddress, drift);
 // Build complete configuration
 const { createParams, hook, token } = factory.buildConfig(
   {
-    name: "Community Token",
-    symbol: "COMM",
-    totalSupply: parseEther("1000000"),
-    numTokensToSell: parseEther("500000"),
-    tickRange: { startTick: -276320, endTick: -230260 },
-    duration: 30, // 30 days
-    epochLength: 3600, // 1 hour epochs
-    tickSpacing: 60,
-    fee: 3000,
-    minProceeds: parseEther("1000"),
-    maxProceeds: parseEther("10000"),
+    name: "MyToken",
+    symbol: "MYT",
+    totalSupply: parseEther("1000000000"), // 1b tokens
+    numTokensToSell: parseEther("600000000"), // 600m tokens
+    tokenURI: "some_ipfs_cid",
     blockTimestamp: Math.floor(Date.now() / 1000),
-    yearlyMintRate: parseEther("100000"),
-    vestingDuration: BigInt(365 * 24 * 3600), // 1 year
-    recipients: [recipient1, recipient2],
-    amounts: [parseEther("50000"), parseEther("25000")],
-    tokenURI: "https://example.com/token.json",
-    integrator: zeroAddress,
+    startTimeOffset: 1,
+    duration: 1 / 4, // 6 hour duration, must be divisible by epochLength
+    epochLength: 200, // 200 seconds
+    gamma: 800,
+    tickRange: {
+      startTick: 174_312,
+      endTick: 186_840,
+    },
+    tickSpacing: 2,
+    fee: 20_000, // 2%
+    minProceeds: parseEther("2"),
+    maxProceeds: parseEther("4"),
+    yearlyMintRate: 0n,
+    vestingDuration: BigInt(24 * 60 * 60 * 365),
+    recipients: [someRecipientAddress],
+    amounts: [parseEther("50000000")], // 5% of totalSupply
+    numPdSlugs: 15,
+    integrator: yourIntegratorAddress,
   },
   addresses
 );
