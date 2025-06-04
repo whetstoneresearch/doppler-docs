@@ -1,6 +1,99 @@
 # Factory
 
-The `ReadWriteFactory` class provides comprehensive read and write operations for the Doppler V4 airlock contract. It extends `ReadFactory` with capabilities for creating pools, mining hook addresses, and migrating assets.
+The Doppler V4 SDK provides two factory classes for interacting with the airlock contract:
+
+- **`ReadFactory`** - Read-only operations for querying deployed pools and modules
+- **`ReadWriteFactory`** - Extends ReadFactory with deployment and migration capabilities
+
+## ReadFactory
+
+The `ReadFactory` class provides read-only operations for the Doppler V4 airlock contract. It handles queries and data retrieval from deployed Doppler pools and their associated contracts.
+
+### Constructor
+
+```typescript
+new ReadFactory(address: Address, drift?: Drift<ReadAdapter>)
+```
+
+**Parameters:**
+
+- `address` - The address of the airlock contract
+- `drift` - Optional Drift instance with read adapter (creates default if not provided)
+
+### Methods
+
+#### getModuleState
+
+Retrieves the current state/type of a module in the Doppler system. Modules serve different roles and must be whitelisted before use.
+
+```typescript
+async getModuleState(module: Address): Promise<ModuleState>
+```
+
+**Parameters:**
+
+- `module` - The address of the module to check
+
+**Returns:** Promise resolving to the module's current state
+
+**Module States:**
+
+- `NotWhitelisted` (0) - Module is not approved for use
+- `TokenFactory` (1) - Module can create tokens
+- `GovernanceFactory` (2) - Module can create governance contracts
+- `HookFactory` (3) - Module can create hooks
+- `Migrator` (4) - Module can migrate liquidity
+
+#### getAssetData
+
+Retrieves comprehensive deployment data for a Doppler asset, including all contract addresses and configuration.
+
+```typescript
+async getAssetData(asset: Address): Promise<AssetData>
+```
+
+**Parameters:**
+
+- `asset` - The address of the deployed asset token
+
+**Returns:** Promise resolving to complete asset deployment data including:
+
+- Numeraire (quote token) used for pricing
+- Timelock and governance contracts
+- Liquidity migrator for post-discovery trading
+- Pool initializer and pool addresses
+- Number of tokens being sold
+- Integrator information
+
+### ReadFactory Example
+
+```typescript
+import { ReadFactory, ModuleState } from "doppler-v4-sdk";
+
+// Create factory instance
+const factory = new ReadFactory(airlockAddress);
+
+// Check module state
+const state = await factory.getModuleState(moduleAddress);
+if (state === ModuleState.TokenFactory) {
+  console.log("Module is a valid token factory");
+}
+
+// Get asset information
+const assetData = await factory.getAssetData(tokenAddress);
+console.log("Asset details:", {
+  numeraire: assetData.numeraire,
+  governance: assetData.governance,
+  pool: assetData.pool,
+  migrationPool: assetData.migrationPool,
+  totalSupply: assetData.totalSupply.toString(),
+  tokensForSale: assetData.numTokensToSell.toString(),
+});
+```
+
+## ReadWriteFactory
+
+The `ReadWriteFactory` class extends `ReadFactory` with comprehensive deployment and migration capabilities for creating complete Doppler ecosystems.
 
 ## Key Features
 
@@ -17,14 +110,15 @@ new ReadWriteFactory(address: Address, drift: Drift<ReadWriteAdapter>)
 ```
 
 **Parameters:**
-- `address` - The address of the factory contract
+
+- `address` - The address of the airlock contract
 - `drift` - A Drift instance with read-write adapter capabilities
 
 ## Core Methods
 
 ### buildConfig
 
-Builds complete configuration for creating a new Doppler pool. This method validates parameters, converts price ranges to tick ranges, computes optimal gamma, mines hook addresses, and encodes factory data.
+Builds complete configuration for creating a new Doppler pool. This method validates parameters and tick ranges, optionally computes a valid gamma, mines hook addresses, and encodes factory data.
 
 ```typescript
 buildConfig(
@@ -38,6 +132,7 @@ buildConfig(
 ```
 
 **Parameters:**
+
 - `params` - Pre-deployment configuration parameters
 - `addresses` - Addresses of required Doppler V4 contracts
 
@@ -55,6 +150,7 @@ async create(
 ```
 
 **Parameters:**
+
 - `params` - Complete creation parameters from `buildConfig()`
 - `options` - Optional transaction options (gas, value, etc.)
 
@@ -71,6 +167,7 @@ async simulateCreate(
 ```
 
 **Parameters:**
+
 - `params` - Complete creation parameters from `buildConfig()`
 
 **Returns:** Promise resolving to simulation results including gas estimates
@@ -87,6 +184,7 @@ async migrate(
 ```
 
 **Parameters:**
+
 - `asset` - The address of the asset token to migrate
 - `options` - Optional transaction options
 
@@ -107,6 +205,7 @@ encodeCustomLPLiquidityMigratorData(customLPConfig: {
 ```
 
 **Parameters:**
+
 - `customLPConfig` - Configuration for custom LP migration
 
 **Returns:** Encoded migrator data
@@ -114,32 +213,35 @@ encodeCustomLPLiquidityMigratorData(customLPConfig: {
 ## Example Usage
 
 ```typescript
-import { ReadWriteFactory } from '@delvtech/drift';
+import { ReadWriteFactory } from "doppler-v4-sdk";
 
 // Create factory instance
 const factory = new ReadWriteFactory(airlockAddress, drift);
 
 // Build complete configuration
-const { createParams, hook, token } = factory.buildConfig({
-  name: "Community Token",
-  symbol: "COMM",
-  totalSupply: parseEther("1000000"),
-  numTokensToSell: parseEther("500000"),
-  tickRange: { startTick: -276320, endTick: -230260 },
-  duration: 30, // 30 days
-  epochLength: 3600, // 1 hour epochs
-  tickSpacing: 60,
-  fee: 3000,
-  minProceeds: parseEther("1000"),
-  maxProceeds: parseEther("10000"),
-  blockTimestamp: Math.floor(Date.now() / 1000),
-  yearlyMintRate: parseEther("100000"),
-  vestingDuration: BigInt(365 * 24 * 3600), // 1 year
-  recipients: [recipient1, recipient2],
-  amounts: [parseEther("50000"), parseEther("25000")],
-  tokenURI: "https://example.com/token.json",
-  integrator: zeroAddress
-}, addresses);
+const { createParams, hook, token } = factory.buildConfig(
+  {
+    name: "Community Token",
+    symbol: "COMM",
+    totalSupply: parseEther("1000000"),
+    numTokensToSell: parseEther("500000"),
+    tickRange: { startTick: -276320, endTick: -230260 },
+    duration: 30, // 30 days
+    epochLength: 3600, // 1 hour epochs
+    tickSpacing: 60,
+    fee: 3000,
+    minProceeds: parseEther("1000"),
+    maxProceeds: parseEther("10000"),
+    blockTimestamp: Math.floor(Date.now() / 1000),
+    yearlyMintRate: parseEther("100000"),
+    vestingDuration: BigInt(365 * 24 * 3600), // 1 year
+    recipients: [recipient1, recipient2],
+    amounts: [parseEther("50000"), parseEther("25000")],
+    tokenURI: "https://example.com/token.json",
+    integrator: zeroAddress,
+  },
+  addresses
+);
 
 // Simulate creation to estimate gas
 const simulation = await factory.simulateCreate(createParams);
@@ -147,7 +249,7 @@ console.log(`Estimated gas: ${simulation.request.gas}`);
 
 // Create the pool
 const txHash = await factory.create(createParams, {
-  gasLimit: 5000000n
+  gasLimit: 5000000n,
 });
 
 // Later, migrate liquidity after price discovery ends
@@ -177,6 +279,7 @@ The `DopplerPreDeploymentConfig` includes:
 ## Gas Optimization
 
 The factory automatically:
+
 - Mines optimal hook addresses with required flags
 - Validates parameter compatibility before deployment
 - Provides gas estimation through simulation
