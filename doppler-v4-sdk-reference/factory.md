@@ -12,13 +12,13 @@ The `ReadFactory` class provides read-only operations for the Doppler V4 airlock
 ### Constructor
 
 ```typescript
-new ReadFactory(address: Address, drift?: Drift<ReadAdapter>)
+new ReadFactory(address: Address, drift: Drift<ReadAdapter>)
 ```
 
 **Parameters:**
 
 - `address` - The address of the airlock contract
-- `drift` - Optional Drift instance with read adapter (creates default if not provided)
+- `drift` - Drift instance with read adapter (creates default if not provided)
 
 ### Methods
 
