@@ -29,7 +29,7 @@ Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reac
 | GovernanceFactory    | [0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9](https://basescan.org/address/0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9) |
 | UniswapV2Migrator    | [0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731](https://basescan.org/address/0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731) |
 | Bundler              | [0x136191B46478cAB023cbC01a36160C4Aad81677a](https://basescan.org/address/0x136191B46478cAB023cbC01a36160C4Aad81677a) |
-| Lens                 | [0x094d926a969b3024ca46d2186bf13fd5cdba9ce2](https://basescan.org/address/0x094d926a969b3024ca46d2186bf13fd5cdba9ce2) |
+| Lens                 | [0x43d0D97EC9241A8F05A264f94B82A1d2E600f2B3](https://basescan.org/address/0x43d0D97EC9241A8F05A264f94B82A1d2E600f2B3) |
 
 ### Unichain (130)
 
@@ -43,7 +43,7 @@ Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reac
 | GovernanceFactory    | [0x99C94B9Df930E1E21a4E4a2c105dBff21bF5c5aE](https://unichain.blockscout.com/address/0x99C94B9Df930E1E21a4E4a2c105dBff21bF5c5aE) |
 | UniswapV2Migrator    | [0xf6023127f6E937091D5B605680056A6D27524bad](https://unichain.blockscout.com/address/0xf6023127f6E937091D5B605680056A6D27524bad) |
 | Bundler              | [0x91231cDdD8d6C86Df602070a3081478e074b97b7](https://unichain.blockscout.com/address/0x91231cDdD8d6C86Df602070a3081478e074b97b7) |
-| Lens                 | [0x166109C4EE7fE69164631Caa937dAA5F5cEbFef0](https://unichain.blockscout.com/address/0x166109C4EE7fE69164631Caa937dAA5F5cEbFef0) |
+| Lens                 | [0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC](https://unichain.blockscout.com/address/0x82Ac010C67f70BACf7655cd8948a4AD92A173CAC) |
 
 ### Ink (57073)
 
@@ -57,7 +57,7 @@ Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reac
 | GovernanceFactory    | [0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9](https://explorer.inkonchain.com/address/0xb4deE32EB70A5E55f3D2d861F49Fb3D79f7a14d9) |
 | UniswapV2Migrator    | [0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731](https://explorer.inkonchain.com/address/0x5F3bA43D44375286296Cb85F1EA2EBfa25dde731) |
 | Bundler              | [0x136191B46478cAB023cbC01a36160C4Aad81677a](https://explorer.inkonchain.com/address/0x136191B46478cAB023cbC01a36160C4Aad81677a) |
-| DopplerLensQuoter    | [0xCe3099B2F07029b086E5e92a1573C5f5A3071783](https://explorer.inkonchain.com/address/0xCe3099B2F07029b086E5e92a1573C5f5A3071783) |
+| DopplerLensQuoter    | [0x8AF018e28c273826e6b2d5a99e81c8fB63729b07](https://explorer.inkonchain.com/address/0x8AF018e28c273826e6b2d5a99e81c8fB63729b07) |
 
 ## Testnet Deployments
 
