@@ -1,6 +1,6 @@
 ---
 icon: square-terminal
-description: Quoter Class Reference
+description: Factory Class Reference
 ---
 
 # Factory
