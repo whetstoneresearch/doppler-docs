@@ -10,13 +10,13 @@ The `ReadQuoter` class provides a read-only interface to the Uniswap V4 Quoter c
 ## Constructor
 
 ```typescript
-new ReadQuoter(quoteV4Address: Address, drift?: Drift<ReadAdapter>)
+new ReadQuoter(quoteV4Address: Address, drift: Drift<ReadAdapter>)
 ```
 
 **Parameters:**
 
 - `quoteV4Address` - Contract address of the V4 Quoter
-- `drift` - Optional Drift instance for blockchain interaction (defaults to new instance)
+- `drift` - Drift instance for blockchain interaction (defaults to new instance)
 
 ## Methods
 
@@ -55,7 +55,7 @@ async quoteExactOutputV4(
 ## Example Usage
 
 ```typescript
-import { ReadQuoter } from "@delvtech/drift";
+import { ReadQuoter } from "doppler-v4-sdk";
 
 // Create quoter instance
 const quoter = new ReadQuoter("0x...");
