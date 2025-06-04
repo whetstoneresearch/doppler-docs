@@ -12,7 +12,7 @@ The factory is the main entrypoint for interacting with and creating tokens on t
 Read-only operations for the Doppler factory.
 
 ```typescript
-const factory = new ReadFactory(address: Address, drift?: Drift<ReadAdapter>);
+const factory = new ReadFactory(address: Address, drift: Drift<ReadAdapter>);
 ```
 
 Methods:
