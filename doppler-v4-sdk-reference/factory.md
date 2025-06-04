@@ -93,11 +93,11 @@ console.log("Asset details:", {
 
 ## ReadWriteFactory
 
-The `ReadWriteFactory` class extends `ReadFactory` with comprehensive deployment and migration capabilities for creating complete Doppler ecosystems.
+The `ReadWriteFactory` class extends `ReadFactory` with comprehensive deployment and migration capabilities for creating tokens with Doppler.
 
 ## Key Features
 
-- **Pool Creation**: Deploy complete Doppler ecosystems with tokens, hooks, and governance
+- **Pool Creation**: Deploy requisite doppler contracts, with tokens, hooks, and governance
 - **Hook Mining**: Find optimal hook addresses with required flags
 - **Asset Migration**: Move liquidity from price discovery to standard trading
 - **Parameter Validation**: Automatic validation and optimization of deployment parameters
@@ -190,26 +190,6 @@ async migrate(
 
 **Returns:** Promise resolving to the transaction hash
 
-## Utility Methods
-
-### encodeCustomLPLiquidityMigratorData
-
-Encodes custom LP liquidity migrator data for specialized migration scenarios.
-
-```typescript
-encodeCustomLPLiquidityMigratorData(customLPConfig: {
-  customLPWad: bigint;
-  customLPRecipient: Address;
-  lockupPeriod: number;
-}): Hex
-```
-
-**Parameters:**
-
-- `customLPConfig` - Configuration for custom LP migration
-
-**Returns:** Encoded migrator data
-
 ## Example Usage
 
 ```typescript
@@ -282,7 +262,7 @@ The `DopplerPreDeploymentConfig` includes:
 - Tick spacing must be positive and divide gamma evenly
 - Epoch length must divide total duration evenly
 
-## Gas Optimization
+## Workflow Optimization
 
 The factory automatically:
 
