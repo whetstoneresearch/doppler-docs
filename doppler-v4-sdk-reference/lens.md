@@ -1,3 +1,8 @@
+---
+icon: square-terminal
+description: Quoter Class Reference
+---
+
 # Doppler Lens
 
 The `ReadDopplerLens` class provides read-only access to the Doppler Lens contract, which fetches virtual updates to the Doppler Dutch auction that aren't reflected in the current chain state. This is essential for getting accurate real-time pricing and liquidity information during active price discovery phases.

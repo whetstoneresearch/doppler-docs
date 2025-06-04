@@ -1,3 +1,8 @@
+---
+icon: square-terminal
+description: Quoter Class Reference
+---
+
 # Quoter
 
 The `ReadQuoter` class provides a read-only interface to the Uniswap V4 Quoter contract for getting price quotes without executing transactions.
@@ -9,6 +14,7 @@ new ReadQuoter(quoteV4Address: Address, drift?: Drift<ReadAdapter>)
 ```
 
 **Parameters:**
+
 - `quoteV4Address` - Contract address of the V4 Quoter
 - `drift` - Optional Drift instance for blockchain interaction (defaults to new instance)
 
@@ -25,6 +31,7 @@ async quoteExactInputV4(
 ```
 
 **Parameters:**
+
 - `params` - Arguments for the quoteExactInputSingle contract method
 
 **Returns:** Promise resolving to raw contract return values
@@ -40,6 +47,7 @@ async quoteExactOutputV4(
 ```
 
 **Parameters:**
+
 - `params` - Arguments for the quoteExactOutputSingle contract method
 
 **Returns:** Promise resolving to raw contract return values
@@ -47,7 +55,7 @@ async quoteExactOutputV4(
 ## Example Usage
 
 ```typescript
-import { ReadQuoter } from '@delvtech/drift';
+import { ReadQuoter } from "@delvtech/drift";
 
 // Create quoter instance
 const quoter = new ReadQuoter("0x...");
@@ -58,7 +66,7 @@ const inputQuote = await quoter.quoteExactInputV4({
   tokenOut: "0x...",
   amountIn: 1000000n,
   fee: 3000,
-  sqrtPriceLimitX96: 0n
+  sqrtPriceLimitX96: 0n,
 });
 
 // Get quote for exact output
@@ -67,7 +75,7 @@ const outputQuote = await quoter.quoteExactOutputV4({
   tokenOut: "0x...",
   amountOut: 1000000n,
   fee: 3000,
-  sqrtPriceLimitX96: 0n
+  sqrtPriceLimitX96: 0n,
 });
 ```
 

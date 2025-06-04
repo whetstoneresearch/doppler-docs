@@ -1,3 +1,8 @@
+---
+icon: square-terminal
+description: Quoter Class Reference
+---
+
 # Factory
 
 The Doppler V4 SDK provides two factory classes for interacting with the airlock contract:
