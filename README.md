@@ -59,16 +59,19 @@ Doppler is currently deployed to Base, Unichain, and Ink, with others coming soo
 
 ### Get started
 
-#### Demo app
+#### Demo apps
 
-Doppler has an open source demo application that targets Doppler v3.&#x20;
+Doppler has open source demo applications that target both Doppler v3 and Doppler v4.&#x20;
 
-It is written in React, TypeScript and other familiar frameworks. The demo application is the easiest way to get familiar with what applications built ontop of the protocol look like.&#x20;
+They are both written in React, TypeScript and other familiar frameworks. The demo applications are the easiest way to get familiar with what applications built ontop of the Doppler look like.&#x20;
 
 :link: [https://github.com/whetstoneresearch/doppler-v3-miniapp](https://github.com/whetstoneresearch/doppler-v3-miniapp)&#x20;
+:link: [https://github.com/whetstoneresearch/doppler-v4-miniapp](https://github.com/whetstoneresearch/doppler-v4-miniapp)&#x20;
 
-#### SDK
+#### SDKs
 
-Doppler has an open source SDK that is written in TypeScript. It provides friendly and familiar interfaces for interacting with the onchain smart contracts. Additionally developers are able to interact with the smart contracts directly with their favorite toolchains. View the [SDK reference](broken-reference).
+Doppler has an open source SDK that is written in TypeScript. It provides familiar interfaces for interacting with the onchain smart contracts. Additionally developers are able to interact with the smart contracts directly with their favorite toolchains. View the [V3 SDK Reference](https://docs.doppler.lol/doppler-v3-sdk-reference/factory) or [v4 SDK Reference](https://docs.doppler.lol/doppler-v4-sdk-reference/factory).
 
 :link: [https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v3-sdk](https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v3-sdk)&#x20;
+
+:link: [https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v4-sdk](https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v4-sdk)&#x20;

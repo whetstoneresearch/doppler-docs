@@ -32,12 +32,19 @@ Once a specific value of tokens have been purchased or swapped, the tokens and L
 {% endstep %}
 
 {% step %}
-### Complete :tada:
+### Migration complete 
 
 This newly created token is freely swappable across all Uniswap supported interfaces and able to be utilized throughout your favorite applications or Ethereum DeFi protocols
 {% endstep %}
+
+{% step %}
+### Long term governance
+
+Tokens can be created with OpenZeppelin Governor Treasuries to give communities a canonical home for their ecosystem where they can propose and vote on actions as a collective
+{% endstep %}
 {% endstepper %}
 
+![Doppler Overview](../img/doppler-overview-dark.png)
 
 
 ### Design principles
