@@ -14,37 +14,36 @@ These tokens can be memecoins, RWAs, governance tokens — whatever your app foc
 {% endstep %}
 
 {% step %}
-### Onchain dutch auction occurs
+### Creation
 
-Tokens go through a price discovery period, fully onchain
+Tokens get created by calling the Doppler smart contracts with customized input parameters.
 {% endstep %}
 
 {% step %}
-### Dynamic bonding curve starts
-
-Once a floor price is reached, tokens are available on a customized, dynamic bonding curve
+### Price discovery
+Tokens go through a price discovery period, fully onchain. Doppler v3 uses a static bonding curve while Doppler v4 uses a dynamic bonding curve, based on a dutch auction. 
 {% endstep %}
 
 {% step %}
-### Liquidity moved to AMM
+### Migration 
 
-Once a specific value of tokens have been purchased or swapped, the tokens and LP positions automatically get migrated to Uniswap (v2 or v4), bootstrapping their initial liquidity&#x20;
+Once the parameterized amount of tokens have been purchased or swapped, the tokens and LP positions automatically get migrated to Uniswap (v2, to grow liquidity overtime through fees), bootstrapping their initial liquidity and triggering other contract interactions. 
 {% endstep %}
 
 {% step %}
-### Migration complete 
+### Treasury
 
-This newly created token is freely swappable across all Uniswap supported interfaces and able to be utilized throughout your favorite applications or Ethereum DeFi protocols
+Tokens can be created with OpenZeppelin Governor Treasuries to give communities a canonical home for their ecosystem where they can propose and vote on actions as a collective.
 {% endstep %}
 
 {% step %}
-### Long term governance
+### Complete :tada:  
 
-Tokens can be created with OpenZeppelin Governor Treasuries to give communities a canonical home for their ecosystem where they can propose and vote on actions as a collective
+This newly created token is freely swappable across all Uniswap supported interfaces and able to be utilized throughout your favorite applications, DeFi protocols, and interfaces
 {% endstep %}
+
 {% endstepper %}
 
-![Doppler Overview](../img/doppler-overview-dark.png)
 
 
 ### Design principles
@@ -59,5 +58,7 @@ Tokens can be created with OpenZeppelin Governor Treasuries to give communities 
 * **EVM & DeFI native**
   * Automatically integrate your tokens into the latest & greatest Ethereum based DeFi protocols.
 * **Uniswap compatibility**
-  * Tokens created on Doppler that reach their specific goals of liquidity will automatically get migrated to their own Uniswap v2 or Uniswap v4 pools and swappable from Uniswap supported interfaces.
+  * Tokens created on Doppler that reach their specific goals of liquidity will automatically get migrated to their own Uniswap v2 or Uniswap v4 pools and swappable from Uniswap supported interfaces. Eventually other AMMs may be supported. 
+
+See the [Doppler Roadmap](/resources/protocol-roadmap.md) for insights as to what might be coming next. 
 

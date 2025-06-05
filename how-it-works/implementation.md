@@ -6,13 +6,17 @@ icon: square-terminal
 
 Doppler has both a Uniswap v3 and Uniswap v4 implementation with differing features depending on your use cases.&#x20;
 
-{% hint style="info" %}
-This documentation is a work in progress... We're working on it! Check back soon!
-{% endhint %}
+### Which to use? 
 
-### Uniswap v3 implementation - explainer
+Doppler v3 uses static bonding curves to issue assets at incredibly low market capitalizations, eg. $50 or less. Doppler v3 is great for filtering through high volume content and assessing what may or may not be valuable, especially for use cases that the assets being created do not have any prior pricing history or market comparisons. 
 
-1. Applications send a message to the Doppler smart contracts to create a token,. This message can be formed entirely utilizing the [doppler-sdk](broken-reference)
+Doppler v4 uses dynamic bonding curves based on an onchain dutch auction, implemented in a Uniswap v4 hook. Doppler v4 is great for assets that have some sembalance of a known price that can be used to set the upper (max proceeds) and lower bounds (min proceeds) of the dutch auction.  
+
+Here's a bit more about how this works... 
+
+### Doppler v3 explainer
+
+1. Applications send a message to the Doppler smart contracts to create a token. This message can be formed entirely utilizing the [doppler-sdk](/doppler-v3-sdk-reference/factory.md)
 2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](airlock-and-modules.md)
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool
@@ -31,15 +35,13 @@ This documentation is a work in progress... We're working on it! Check back soon
 If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf) :point\_left:
 {% endhint %}
 
-### Uniswap v4 implementation
+### Doppler v4 explainer
 
 {% hint style="info" %}
 The v4 implementation is now available in beta. See [contract addresses](../resources/contract-addresses.md) for supported deployments. Please reach out to the Whetstone Research team before implementing in production due to potential complexity and/or edge cases that must be accounted for. &#x20;
 {% endhint %}
 
 The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
-
-
 
 #### Uniswap v4 Permissions
 
@@ -56,11 +58,7 @@ The Doppler Protocol makes use of 4 Uniswap v4 hook functions in its contract:
   * Used to trigger a revert if a user attempts to provide liquidity. This is necessary because the Protocol doesn't want any external liquidity providers beside itself.
     * External liquidity providers are blocked because it may result in a situation where the Doppler Protocol is unable to reset the underlying Uniswap v4 pool's accounting, creating accounting issues for the Protocol.
 
-
-
 As previously stated, the main difference of v4-Doppler vs. v3-Doppler is the modulation of the positions placed is dynamic when compared to the Uniswap v3 version. This is the dynamic part referred to in "dynamic bonding curves".
-
-
 
 ### Dynamic Dutch-auctions
 
@@ -83,8 +81,6 @@ If sales are ahead of schedule, i.e. `totalTokensSold` is greater than the expec
 #### `tickAccumulator`
 
 For whichever of the above outcomes the Protocol has hit, it accumulates a tick delta to the `tickAccumulator`. This value is used to derive the current bonding curve at any given time. It is derived by the lowermost tick of the curve, `tickLower`, as the `startingTick + tickAccumulator`. Additionally, it derives the uppermost tick of the curve, `tickUpper`, as the `tickLower + gamma`. We can see how the `tickAccumulator` is accumulated in this [graph](https://www.desmos.com/calculator/fjnd0mcpst), with the red line corresponding to the max dutch auction case, the orange line corresponding to the relative dutch auction case, and the green line corresponding to the oversold case.
-
-
 
 ### Terminology in Dynamic Bonding Curves (Slugs)
 
