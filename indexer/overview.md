@@ -1,8 +1,8 @@
-# Doppler V3 Indexer Overview
+# Doppler Indexer Overview
 
-## What is the Doppler V3 Indexer?
+## What is the Doppler Indexer?
 
-The Doppler V3 Indexer is a multi-chain blockchain indexing service built for tracking the state of Doppler protocol contracts and the tokens created by those contracts. It's built to track and process real-time data from Uniswap V2, V3, and V4 protocol deployments across multiple EVM-compatible chains.
+The Doppler Indexer is a multi-chain blockchain indexing service built for tracking the state of Doppler protocol contracts and the tokens created by those contracts. It's built to track and process real-time data from Uniswap V2, V3, and V4 protocol deployments across multiple EVM-compatible chains.
 
 The primary goal of this indexer is to provide a reliable, fast, and queryable data source for Doppler-related analytics, front-end applications, and market analysis tools. It aggregates data on pools, tokens, swaps, liquidity, and user activity, normalizing it into a consistent schema.
 
