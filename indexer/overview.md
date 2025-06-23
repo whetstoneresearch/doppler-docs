@@ -88,7 +88,7 @@ The indexer attempts to fetch and store metadata (name, symbol, image) for each 
     2.  **HTTP(S)**: Direct HTTP/S links are fetched.
 
 -   **Retry Mechanism for Failed Fetches**:
-    -   If fetching metadata from an "ohara" URL fails, the token is added to a `pending_token_images` table in the database.
+    -   If fetching metadata fails, the token is added to a `pending_token_images` table in the database.
     -   A periodic block handler (`PendingTokenImagesBase:block`) runs every 50 blocks.
     -   This handler retries fetching the images for pending tokens.
     -   Each token has a 5-minute cooldown between retries and a maximum of 10 retry attempts before being abandoned.
