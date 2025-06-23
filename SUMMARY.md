@@ -22,6 +22,13 @@
 * [Quoter](doppler-v4-sdk-reference/quoter.md)
 * [Lens](doppler-v4-sdk-reference/lens.md)
 
+## Indexer
+
+* [Overview](indexer/overview.md)
+* [Getting Started](indexer/getting-started.md)
+* [API Usage](indexer/api-usage.md)
+* [Development](indexer/development.md)
+
 ## Featured users
 
 * [Pure.st](featured-users/pure.st.md)
