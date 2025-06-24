@@ -25,7 +25,7 @@ The **StreamableFeesLocker** is a new mechanism for distributing trading fees to
 
 ### How it works
 
-When launching a token on Doppler V4, creators can choose:
+When launching a token with fee streaming enabled, creators can choose:
 
 * **Standard Governance**: 90% of liquidity goes to a timelock contract, 10% goes to the StreamableFeesLocker
 * **No-op Governance**: 100% of liquidity is permanently locked in the StreamableFeesLocker
@@ -36,7 +36,16 @@ The StreamableFeesLocker then distributes trading fees from the locked liquidity
 
 * Multiple beneficiaries can receive ongoing fee distributions
 * Beneficiaries can update their receiving address
-* Anyone can trigger fee distributions (permissionless)
+* Anyone can trigger fee distributions (permissionless)  
 * Supports both temporary locks (standard governance) and permanent locks (no-op governance)
+* **Compatible with both Doppler V3 and V4 pools** - any pool type can use fee streaming by selecting the UniswapV4Migrator
+
+### Pool Compatibility
+
+Fee streaming is available for:
+- **Doppler V3 pools**: Use `UniswapV3Initializer` (creates Doppler V3 pool) + `UniswapV4Migrator` (enables fee streaming)
+- **Doppler V4 pools**: Use `UniswapV4Initializer` (creates Doppler V4 pool) + `UniswapV4Migrator` (enables fee streaming)
+
+Both pool types migrate to Uniswap V4 and can leverage the StreamableFeesLocker for ongoing fee distribution.
 
 For detailed implementation examples, see the [StreamableFeesLocker guide](/doppler-v4-sdk-reference/streamable-fees-locker.md) and [Token Launch Examples](/doppler-v4-sdk-reference/token-launch-examples.md).

@@ -1,6 +1,6 @@
 # StreamableFeesLocker Integration Guide
 
-This guide explains how to use the StreamableFeesLocker with the Doppler V4 SDK for fee distribution and no-op governance.
+This guide explains how to use the StreamableFeesLocker for fee distribution and no-op governance with Doppler pools.
 
 
 ## Overview
@@ -9,6 +9,7 @@ The StreamableFeesLocker is a contract that:
 - Locks Uniswap V4 positions for a specified duration
 - Streams trading fees to multiple beneficiaries
 - Supports perpetual fee collection for no-op governance
+- **Compatible with both Doppler V3 and V4 pools** when migrating to Uniswap V4
 
 ## Basic Usage
 
@@ -198,4 +199,9 @@ const tx = await factory.create(config.createParams);
 4. **Migration Types**:
    - Standard: Creates 2 NFTs, locks 10% in StreamableFeesLocker
    - No-op: Creates 1 NFT, locks 100% in StreamableFeesLocker permanently
+
+5. **Pool Compatibility**:
+   - **Doppler V3 Pools**: Use `UniswapV3Initializer` + `UniswapV4Migrator` to get fee streaming
+   - **Doppler V4 Pools**: Use `UniswapV4Initializer` + `UniswapV4Migrator` to get fee streaming
+   - Both pool types can leverage the StreamableFeesLocker when migrating to Uniswap V4
 

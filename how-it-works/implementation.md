@@ -43,6 +43,13 @@ The v4 implementation is now available in beta. See [contract addresses](../reso
 
 The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
 
+{% hint style="info" %}
+**Module Combinations**: Both Doppler V3 and V4 pools can use fee streaming functionality. Simply combine any pool initializer (V3 or V4) with the UniswapV4Migrator to enable fee streaming when migrating to Uniswap V4. The modular architecture allows flexible combinations:
+- V3 Initializer + V2 Migrator = Standard V3 pool → V2 migration
+- V3 Initializer + V4 Migrator = V3 pool → V4 migration with fee streaming
+- V4 Initializer + V4 Migrator = V4 pool → V4 migration with fee streaming
+{% endhint %}
+
 #### Uniswap v4 Permissions
 
 The Doppler Protocol makes use of 4 Uniswap v4 hook functions in its contract:
