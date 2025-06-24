@@ -2,9 +2,6 @@
 
 This guide provides complete examples for launching tokens using Doppler V4 with StreamableFeesLocker integration.
 
-{% hint style="warning" %}
-These examples are specifically for **Doppler V4 token launches**. The StreamableFeesLocker and migration features shown here are not compatible with Doppler V3 or other protocols.
-{% endhint %}
 
 > **Note on startTimeOffset**: The `startTimeOffset` parameter is included in the type definitions but is not currently used by the SDK implementation. All pools will start 30 seconds after the transaction is confirmed. This will be addressed in a future update.
 
@@ -375,12 +372,6 @@ async function distributeAndClaimFees(tokenId: bigint) {
 
 ## Important Notes
 
-{% hint style="danger" %}
-These features are **Doppler V4 specific** and require:
-- Doppler V4 Airlock contract
-- Doppler V4 Factory contracts
-- StreamableFeesLocker contract deployed as part of Doppler V4
-{% endhint %}
 
 1. **Governance Choice**: 
    - `useGovernance: true` (default) = 90% to timelock, 10% to locker (this split is automatic and handled by the V4Migrator contract)
@@ -401,7 +392,3 @@ These features are **Doppler V4 specific** and require:
    - Double-check share calculations
    - Ensure sufficient quote token liquidity exists
 
-5. **Doppler V4 Integration**:
-   - The StreamableFeesLocker is integrated with Doppler V4's token launch system
-   - It works in conjunction with the Airlock mechanism
-   - Cannot be used independently of Doppler V4

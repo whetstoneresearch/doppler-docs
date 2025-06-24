@@ -19,13 +19,13 @@ These fee's are paid for in $ETH.&#x20;
 
 It is expected that eventually in subsequent versions of the protocol other tokens may be utilized in order to pay for the protocol fees. This may dependent on the application/interface's parameterization, the token creator's preference, the network the contracts are deployed to, or other tbd configurations.
 
-## Fee Streaming (Doppler V4)
+## Fee Streaming 
 
-Doppler V4 introduces the **StreamableFeesLocker**, a new mechanism for distributing trading fees to multiple beneficiaries over time. This feature is exclusively available for tokens launched through Doppler V4.
+The **StreamableFeesLocker** is a new mechanism for distributing trading fees to multiple beneficiaries over time.
 
 ### How it works
 
-When launching a token on Doppler V4, creators can:
+When launching a token on Doppler V4, creators can choose:
 
 * **Standard Governance**: 90% of liquidity goes to a timelock contract, 10% goes to the StreamableFeesLocker
 * **No-op Governance**: 100% of liquidity is permanently locked in the StreamableFeesLocker
