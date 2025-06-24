@@ -21,6 +21,8 @@
 * [Factory](doppler-v4-sdk-reference/factory.md)
 * [Quoter](doppler-v4-sdk-reference/quoter.md)
 * [Lens](doppler-v4-sdk-reference/lens.md)
+* [StreamableFeesLocker](doppler-v4-sdk-reference/streamable-fees-locker.md)
+* [Token Launch Examples](doppler-v4-sdk-reference/token-launch-examples.md)
 
 ## Indexer
 

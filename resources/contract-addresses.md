@@ -88,15 +88,18 @@ Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reac
 
 | Contract                   | Address                                                                                                                              |
 | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Airlock                    | [0x0d2f38d807bfAd5C18e430516e10ab560D300caF](https://base-sepolia.blockscout.com/address/0x0d2f38d807bfAd5C18e430516e10ab560D300caF) |
-| TokenFactory               | [0x4B0EC16Eb40318Ca5A4346f20F04A2285C19675B](https://base-sepolia.blockscout.com/address/0x4B0EC16Eb40318Ca5A4346f20F04A2285C19675B) |
-| UniswapV3Initializer       | [0x1b8F12484422583FED5694469f94C7839a823980](https://base-sepolia.blockscout.com/address/0x1b8F12484422583FED5694469f94C7839a823980) |
-| UniswapV4Initializer       | [0xA36715dA46Ddf4A769f3290f49AF58bF8132ED8E](https://base-sepolia.blockscout.com/address/0xA36715dA46Ddf4A769f3290f49AF58bF8132ED8E) |
-| DopplerDeployer            | [0x40Bcb4dDA3BcF7dba30C5d10c31EE2791ed9ddCa](https://base-sepolia.blockscout.com/address/0x40Bcb4dDA3BcF7dba30C5d10c31EE2791ed9ddCa) |
-| GovernanceFactory          | [0x65dE470Da664A5be139A5D812bE5FDa0d76CC951](https://base-sepolia.blockscout.com/address/0x65dE470Da664A5be139A5D812bE5FDa0d76CC951) |
-| UniswapV2LiquidityMigrator | [0xC541FBddfEEf798E50d257495D08efe00329109A](https://base-sepolia.blockscout.com/address/0xC541FBddfEEf798E50d257495D08efe00329109A) |
-| Bundler                    | [0x7E5D336A6E9e453c9f02E5102CC039E015Fd8fb8](https://base-sepolia.blockscout.com/address/0x7E5D336A6E9e453c9f02E5102CC039E015Fd8fb8) |
-| Lens                       | [0x31703C016F32aC47aB71B3160b3579EcE05a5E5d](https://base-sepolia.blockscout.com/address/0x31703C016F32aC47aB71B3160b3579EcE05a5E5d) |
+| Airlock                    | [0x3411306Ce66c9469BFF1535BA955503c4Bde1C6e](https://base-sepolia.blockscout.com/address/0x3411306Ce66c9469BFF1535BA955503c4Bde1C6e) |
+| TokenFactory               | [0xc69Ba223c617F7D936B3cf2012aa644815dBE9Ff](https://base-sepolia.blockscout.com/address/0xc69Ba223c617F7D936B3cf2012aa644815dBE9Ff) |
+| UniswapV3Initializer       | [0x4C3062B9ccFdbCB10353F57C1B59a29d4c5CFa47](https://base-sepolia.blockscout.com/address/0x4C3062B9ccFdbCB10353F57C1B59a29d4c5CFa47) |
+| UniswapV4Initializer       | [0xca2079706A4c2a4a1aA637dFB47d7f27Fe58653F](https://base-sepolia.blockscout.com/address/0xca2079706A4c2a4a1aA637dFB47d7f27Fe58653F) |
+| DopplerDeployer            | [0x4Bf819DfA4066Bd7c9f21eA3dB911Bd8C10Cb3ca](https://base-sepolia.blockscout.com/address/0x4Bf819DfA4066Bd7c9f21eA3dB911Bd8C10Cb3ca) |
+| GovernanceFactory          | [0x9dBFaaDC8c0cB2c34bA698DD9426555336992e20](https://base-sepolia.blockscout.com/address/0x9dBFaaDC8c0cB2c34bA698DD9426555336992e20) |
+| UniswapV2LiquidityMigrator | [0x04a898f3722c38F9Def707bD17DC78920EFA977C](https://base-sepolia.blockscout.com/address/0x04a898f3722c38F9Def707bD17DC78920EFA977C) |
+| StreamableFeesLocker       | [0x4dA7d7a8034510c0FFd38a9252237AE8DbA3Cb61](https://base-sepolia.blockscout.com/address/0x4dA7d7a8034510c0FFd38a9252237AE8DbA3Cb61) |
+| UniswapV4MigratorHook      | [0x189ef4D1f328b5D76Df78c5409A72e1e8d1C2000](https://base-sepolia.blockscout.com/address/0x189ef4D1f328b5D76Df78c5409A72e1e8d1C2000) |
+| UniswapV4Migrator          | [0x03430453206Ab11F78C2D5F8aa2c18cb6cF1DDe7](https://base-sepolia.blockscout.com/address/0x03430453206Ab11F78C2D5F8aa2c18cb6cF1DDe7) |
+| Bundler                    | [0xab7BACB0d5C2C10152f92D34e07F530EB3CB0Fb1](https://base-sepolia.blockscout.com/address/0xab7BACB0d5C2C10152f92D34e07F530EB3CB0Fb1) |
+| Lens                       | [0x4a8d81Db741248a36D9eb3bc6eF648Bf798B47a7](https://base-sepolia.blockscout.com/address/0x4a8d81Db741248a36D9eb3bc6eF648Bf798B47a7) |
 
 ### World Sepolia
 
