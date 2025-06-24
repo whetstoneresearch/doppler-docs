@@ -99,6 +99,19 @@ interface CreateParams {
 
 4. Invoke the `create` method
 
+### V4 Migrator Support
+
+The ReadWriteFactory now includes helper functions for configuring V4 migration with fee streaming:
+
+- `sortBeneficiaries(beneficiaries: BeneficiaryData[]): BeneficiaryData[]`
+  - Sorts beneficiaries by address in ascending order (required by the V4 migrator contract)
+  
+- `encodeV4MigratorData(data: V4MigratorData): Hex`
+  - Encodes V4 migrator configuration including fee tier, tick spacing, lock duration, and beneficiaries
+  - Validates that beneficiaries are properly sorted and shares sum to exactly 1e18 (100%)
+
+For detailed V4 migrator usage, see the [V4 Migrator documentation](./v4-migrator.md).
+
 ```typescript
   public async create(
     params: CreateParams,
