@@ -16,6 +16,7 @@
 * [Token](doppler-v3-sdk-reference/token.md)
 * [Quoter](doppler-v3-sdk-reference/quoter.md)
 * [V4 Migrator](doppler-v3-sdk-reference/v4-migrator.md)
+* [Governance Options](doppler-v3-sdk-reference/governance-options.md)
 
 ## Doppler-v4 SDK Reference
 

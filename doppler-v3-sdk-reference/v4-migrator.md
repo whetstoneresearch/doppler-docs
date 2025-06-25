@@ -31,7 +31,20 @@ The StreamableFeesLocker contract:
 - Allows beneficiaries to claim accumulated fees over time
 - Supports beneficiary address updates
 
-## Usage
+## Usage with V3 SDK
+
+The V4 migrator functionality has been backported to the V3 SDK, allowing V3 pools to specify migration parameters at creation time.
+
+### Integration with CreateV3PoolParams
+
+The V3 SDK's `CreateV3PoolParams` interface now includes an optional `liquidityMigratorData` field:
+
+```typescript
+interface CreateV3PoolParams {
+  // ... other parameters ...
+  liquidityMigratorData?: Hex; // Encoded V4 migration configuration
+}
+```
 
 ### Step 1: Configure Beneficiaries
 

@@ -94,6 +94,7 @@ Doppler v4 with dynamic bonding curves is in beta. Use at your own risk and reac
 | UniswapV4Initializer       | [0xca2079706A4c2a4a1aA637dFB47d7f27Fe58653F](https://base-sepolia.blockscout.com/address/0xca2079706A4c2a4a1aA637dFB47d7f27Fe58653F) |
 | DopplerDeployer            | [0x4Bf819DfA4066Bd7c9f21eA3dB911Bd8C10Cb3ca](https://base-sepolia.blockscout.com/address/0x4Bf819DfA4066Bd7c9f21eA3dB911Bd8C10Cb3ca) |
 | GovernanceFactory          | [0x9dBFaaDC8c0cB2c34bA698DD9426555336992e20](https://base-sepolia.blockscout.com/address/0x9dBFaaDC8c0cB2c34bA698DD9426555336992e20) |
+| NoOpGovernanceFactory      | [0x916B8987E4aD325C10d58ED8Dc2036a6FF5EB228](https://base-sepolia.blockscout.com/address/0x916B8987E4aD325C10d58ED8Dc2036a6FF5EB228) |
 | UniswapV2LiquidityMigrator | [0x04a898f3722c38F9Def707bD17DC78920EFA977C](https://base-sepolia.blockscout.com/address/0x04a898f3722c38F9Def707bD17DC78920EFA977C) |
 | StreamableFeesLocker       | [0x4dA7d7a8034510c0FFd38a9252237AE8DbA3Cb61](https://base-sepolia.blockscout.com/address/0x4dA7d7a8034510c0FFd38a9252237AE8DbA3Cb61) |
 | UniswapV4MigratorHook      | [0x189ef4D1f328b5D76Df78c5409A72e1e8d1C2000](https://base-sepolia.blockscout.com/address/0x189ef4D1f328b5D76Df78c5409A72e1e8d1C2000) |
