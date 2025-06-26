@@ -12,6 +12,8 @@
 
 ## Doppler-v3 SDK Reference
 
+* [Overview](doppler-v3-sdk-reference/overview.md)
+* [Getting Started](doppler-v3-sdk-reference/getting-started.md)
 * [Factory](doppler-v3-sdk-reference/factory.md)
 * [Token](doppler-v3-sdk-reference/token.md)
 * [Quoter](doppler-v3-sdk-reference/quoter.md)
@@ -20,6 +22,8 @@
 
 ## Doppler-v4 SDK Reference
 
+* [Overview](doppler-v4-sdk-reference/overview.md)
+* [Getting Started](doppler-v4-sdk-reference/getting-started.md)
 * [Factory](doppler-v4-sdk-reference/factory.md)
 * [Quoter](doppler-v4-sdk-reference/quoter.md)
 * [Lens](doppler-v4-sdk-reference/lens.md)

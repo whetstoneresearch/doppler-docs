@@ -17,3 +17,17 @@ Tokens created on Pure Markets have a community managed treasury that unlocks af
 {% hint style="info" %}
 Refer to [GitHub](https://github.com/whetstoneresearch/doppler/blob/main/src/Governance.sol) to view the open source Doppler Treasury & Governance implementation
 {% endhint %}
+
+## No Token Voting/Governance
+
+For projects that prefer to opt out of onchain token based governance mechanisms, Doppler offers a "no-op governance" option that maintains project control while enabling perpetual fee streaming.
+
+### How It Works
+
+Doppler supports a "No-op" governance pattern that permanently locks 100% of liquidity and streams all trading fees to predefined beneficiaries.
+
+**Implementation**: Set `useGovernance: false` in the creation configuration to use the `noOpGovernanceFactory` while providing a list of beneficiary addresses. 
+
+{% hint style="warning" %}
+**Important**: This is a permanent decision that cannot be reversed or transferred.
+{% endhint %}
