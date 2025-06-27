@@ -4,7 +4,7 @@ icon: building-columns
 
 # Governance Options
 
-Similar to the [Doppler v3 SDK](../v3-sdk/governance-options.md) the Doppler v4 SDK support optional governance.&#x20;
+This guide explains how to configure different governance options when creating tokens with the Doppler V4 SDK, including using the NoOpGovernanceFactory for gas-efficient deployments.
 
 ## Overview
 
@@ -16,8 +16,6 @@ The Doppler V4 SDK supports optional governance with the following models.
 ## Using NoOpGovernanceFactory
 
 The NoOpGovernanceFactory creates tokens without active governance, significantly reducing deployment costs and complexity. This is ideal for projects that don't require on-chain governance.
-
-
 
 ### Examples
 
@@ -52,20 +50,3 @@ const config = await factory.buildConfig({
 // This ensures the position is permanently locked
 ```
 
-## Fee Distribution
-
-### Standard Governance (90/10 Split)
-
-* 90% of liquidity → Timelock (controlled by governance)
-* 10% of liquidity → StreamableFeesLocker (distributed to beneficiaries)
-
-### No-Op Governance (100% Locked)
-
-For permanent liquidity provision, set the recipient to `DEAD_ADDRESS`:
-
-```typescript
-import { DEAD_ADDRESS } from "doppler-v3-sdk";
-
-// In no-op governance, all liquidity goes to the locker
-const recipient = DEAD_ADDRESS; // 0x000...dEaD
-```

@@ -8,31 +8,25 @@ icon: lightbulb
 {% step %}
 #### Tokens get created
 
-Any application can permissonlessly create tokens from the Doppler smart contracts. These tokens can be memecoins, RWAs, governance tokens — whatever your app focuses on.
-{% endstep %}
-
-{% step %}
-#### Creation
-
-Tokens get created by calling the Doppler smart contracts with customized inputs.
+Any application can permissonlessly create tokens by passing cusstomized inputs into the Doppler smart contracts. These tokens can be memecoins, RWAs, governance tokens - whatever your specific application uniquely focuses on.
 {% endstep %}
 
 {% step %}
 #### Price discovery
 
-Tokens go through a price discovery period, fully onchain. Doppler v3 uses a static bonding curve while Doppler v4 uses a dynamic bonding curve, based on a dutch auction.
+Tokens go through a price discovery period, fully onchain, bootstrapping their own liquidity Doppler v3 uses a static bonding curve while Doppler v4 uses a dynamic bonding curve, based on a dynamic dutch auction.
 {% endstep %}
 
 {% step %}
 #### Migration
 
-Once the parameterized amount of tokens have been purchased or swapped, the tokens and LP positions automatically get migrated to Uniswap (v2, to grow liquidity overtime through fees), bootstrapping their initial liquidity and triggering other contract interactions.
+Once the parameterized amount of tokens have been purchased or swapped, the tokens and LP positions get migrated to Uniswap (v2, to grow liquidity overtime through fees), or to Uniswap v4 (with support for custom fees), and triggering other contract interactions.
 {% endstep %}
 
 {% step %}
-#### Treasury
+#### Treasury management & governance
 
-Tokens can be created with OpenZeppelin Governor Treasuries to give communities a canonical home for their ecosystem where they can propose and vote on actions as a collective.
+Tokens can optionally be created with OpenZeppelin Governor Treasuries to give communities a  home for their ecosystem and way to propose and vote on actions as a collective.
 {% endstep %}
 
 {% step %}
@@ -53,10 +47,14 @@ This newly created token is freely swappable across all Uniswap supported interf
 * **Programmability**
   * Doppler's smart contracts are fully onchain and composable with other programs.
   * We envision a large ecosystem and variety of mechanisms for token distribution & management, such as: vesting, airdrops, incentives, dao management, and more.
+* **Optionality**
+  * Turn on and off different modules, eg. use governance, or opt out of it entirely.
 * **EVM & DeFI native**
   * Automatically integrate your tokens into the latest & greatest Ethereum based DeFi protocols.
 * **Uniswap compatibility**
   * Tokens created on Doppler that reach their specific goals of liquidity will automatically get migrated to their own Uniswap v2 or Uniswap v4 pools and swappable from Uniswap supported interfaces. Eventually other AMMs may be supported.
+* **Custom fees**
+  * Applications can customize multiple benefeciary addresses with different fee tiers, enabling a flexible model that better fits into a businesses and their customer's unique goals.&#x20;
 
 
 

@@ -26,7 +26,30 @@ For projects that prefer to opt out of onchain token based governance mechanisms
 
 Doppler supports a "No-op" governance pattern that permanently locks 100% of liquidity and streams all trading fees to predefined beneficiaries.&#x20;
 
-**Implementation**: Set `useGovernance: false` in the creation configuration to use the `noOpGovernanceFactory` while providing a list of beneficiary addresses.
+## Benefits of NoOpGovernanceFactory
+
+1. **Gas Savings**: \~30-40% reduction in deployment costs
+2. **Simplicity**: No governance overhead to manage
+3. **Security**: Governance address set to `0xdead`, preventing any governance actions
+4. **V4 Compatible**: Works seamlessly with V4 migration features
+
+## When to Use Each Option
+
+### Use NoOpGovernanceFactory when:
+
+* Governance is not required for your token
+* Gas efficiency is a priority
+* You want a simpler deployment process
+* Community governance will be handled off-chain
+
+### Use Standard Governance when:
+
+* On-chain governance is required
+* Token holders need voting capabilities
+* Protocol parameters may need updates
+* Systems equire governance mechanisms
+
+
 
 {% hint style="warning" %}
 **Important**: This is a permanent decision that cannot be reversed or transferred.

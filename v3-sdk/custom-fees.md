@@ -5,36 +5,16 @@ icon: arrow-right-arrow-left
 
 # Custom Fees
 
-The V3 SDK includes support for creating Doppler V3 pools  that can migrate their liquidity to Uniswap V4 with customizable fee streaming capabilities. This allows protocols to distribute trading fees to multiple beneficiaries over time, and importantly, customize the post-graduation fee amounts.&#x20;
+The V3 SDK includes support for creating Doppler V3 pools that can migrate their liquidity to Uniswap V4 with customizable fee streaming. This allows protocols to distribute trading fees to multiple beneficiaries over time, and importantly, customize the post-graduation fee amounts.&#x20;
 
 ## Overview
 
-The V4 migrator enables:
+The "V4 migrator" enables:
 
 * Migration from v3 or v4 Doppler pools to Uniswap V4 pools
 * Fee streaming to multiple beneficiaries with custom shares
 * Time-locked liquidity with configurable duration
 * Support for both standard and no-op governance models
-
-## Key Concepts
-
-### Beneficiaries
-
-Beneficiaries are addresses that receive a share of trading fees from the locked liquidity.&#x20;
-
-Each beneficiary has:
-
-* **Address**: The recipient address for fee claims
-* **Shares**: The proportion of fees they receive (in WAD units, where 1e18 = 100%)
-
-### Custom Fee Streaming
-
-The StreamableFeesLocker smart contract:
-
-* Holds 10% of migrated liquidity in a locked position
-* Distributes trading fees to beneficiaries based on their shares
-* Allows beneficiaries to claim accumulated fees over time
-* Supports beneficiary address updates
 
 ## Usage with V3 SDK
 
@@ -243,6 +223,6 @@ const config: V4MigratorData = {
 
 ## See Also
 
-* [StreamableFeesLocker Reference](../v4-sdk/streamable-fees-locker.md)
+* [StreamableFeesLocker Reference](../v4-sdk/custom-fees.md)
 * [Factory Reference](factory.md)
 * [V4 SDK Documentation](../v4-sdk/factory.md)

@@ -1,18 +1,18 @@
 ---
-icon: rocket
 description: Getting Started with Doppler V4 SDK
+icon: rocket
 ---
 
-# Getting Started
+# Get Started
 
 This section guides you through setting up and using the Doppler V4 SDK to interact with the latest version of the Doppler protocol.
 
 ## Prerequisites
 
-- **Node.js**: Version `18.14` or higher
-- **npm** or **yarn**: Package manager for installing dependencies
-- **Web3 Provider**: Access to Ethereum RPC endpoints (Infura, Alchemy, etc.)
-- **Wallet**: MetaMask or similar wallet for transaction signing
+* **Node.js**: Version `18.14` or higher
+* **npm** or **yarn**: Package manager for installing dependencies
+* **Web3 Provider**: Access to Ethereum RPC endpoints (Infura, Alchemy, etc.)
+* **Wallet**: MetaMask or similar wallet for transaction signing
 
 ## Installation
 
@@ -73,12 +73,12 @@ const airlockAddress = addresses.airlock;
 
 The V4 SDK provides two main factory classes:
 
-- **`ReadFactory`**: For querying protocol state and reading data
-- **`ReadWriteFactory`**: For creating tokens with hooks
+* **`ReadFactory`**: For querying protocol state and reading data
+* **`ReadWriteFactory`**: For creating tokens with hooks
 
 ### Key V4 Features
 
-- **Dynamic bonding curves**: Custom hooks supporting dynamic bonding curves
+* **Dynamic bonding curves**: Custom hooks supporting dynamic bonding curves
 
 ### Asset Lifecycle
 
@@ -198,8 +198,6 @@ console.log('Pool state:', {
 });
 ```
 
-
-
 ## Environment Configuration
 
 ### Required Environment Variables
@@ -219,17 +217,15 @@ CHAIN_ID=84532
 
 The V4 SDK supports multiple networks:
 
-- **Base Sepolia** (chainId: 84532) - Testnet
-- **Base Mainnet** (chainId: 8453) - Production
-- **Unichain Mainnet** (chainId: 130) - Production
-- **Unichain Sepolia** (chainId: 1301) - Testnet
-- **Ink** (chainId: 57073) - Production
+* **Base Sepolia** (chainId: 84532) - Testnet
+* **Base Mainnet** (chainId: 8453) - Production
+* **Unichain Mainnet** (chainId: 130) - Production
+* **Unichain Sepolia** (chainId: 1301) - Testnet
+* **Ink** (chainId: 57073) - Production
 
 For complete network addresses and additional supported networks, see the [Contract Addresses](../resources/contract-addresses.md) documentation.
 
 You can get free Base Sepolia ETH from the [Base Sepolia faucet](https://docs.base.org/tools/network-faucets) to test your applications.
-
-
 
 ## Error Handling
 
@@ -251,15 +247,15 @@ try {
 
 ## Next Steps
 
-- Explore the [Factory Reference](./factory.md) for detailed API documentation
-- Learn about [Doppler Lens Usage](./lens.md) for advanced data querying
-- Understand [Quoter Usage](./quoter.md) for price calculations
-- Review [Token Launch Examples](./token-launch-examples.md) for comprehensive deployment scenarios
+* Explore the [Factory Reference](factory.md) for detailed API documentation
+* Learn about [Doppler Lens Usage](lens.md) for advanced data querying
+* Understand [Quoter Usage](quoter.md) for price calculations
+* Review [Token Launch Examples](examples.md) for comprehensive deployment scenarios
 
 ## Support
 
 For additional help and examples:
 
-- Check the [Token Launch Examples](./token-launch-examples.md) for comprehensive deployment scenarios
-- Review the [Implementation Guide](../how-it-works/implementation.md) for protocol details
-- Join the community for discussions and support 
+* Check the [Token Launch Examples](examples.md) for comprehensive deployment scenarios
+* Review the [Implementation Guide](../how-it-works/implementation.md) for protocol details
+* Join the community for discussions and support

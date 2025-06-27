@@ -17,18 +17,18 @@
 * [Factory](v3-sdk/factory.md)
 * [Token](v3-sdk/token.md)
 * [Quoter](v3-sdk/quoter.md)
-* [Custom Fees](v3-sdk/v4-migrator.md)
+* [Custom Fees](v3-sdk/custom-fees.md)
 * [Governance Options](v3-sdk/governance-options.md)
 
 ## v4 SDK
 
 * [Overview](v4-sdk/overview.md)
 * [Get Started](v4-sdk/getting-started.md)
-* [Examples](v4-sdk/token-launch-examples.md)
+* [Examples](v4-sdk/examples.md)
 * [Factory](v4-sdk/factory.md)
 * [Quoter](v4-sdk/quoter.md)
 * [Lens](v4-sdk/lens.md)
-* [Custom Fees](v4-sdk/streamable-fees-locker.md)
+* [Custom Fees](v4-sdk/custom-fees.md)
 * [Governance Options](v4-sdk/governance-options.md)
 
 ## Indexer

@@ -235,12 +235,12 @@ try {
 * Explore the [Factory Reference](factory.md) for detailed API documentation
 * Learn about [Token Operations](token.md) for managing deployed tokens
 * Understand [Quoter Usage](quoter.md) for price calculations
-* Check out [V4 Migration](v4-migrator.md) for upgrading to V4
+* Check out [V4 Migration](custom-fees.md) for upgrading to V4
 
 ## Support
 
 For additional help and examples:
 
-* Check the [Token Launch Examples](../v4-sdk/token-launch-examples.md) for comprehensive deployment scenarios
+* Check the [Token Launch Examples](../v4-sdk/examples.md) for comprehensive deployment scenarios
 * Review the [Implementation Guide](../how-it-works/implementation.md) for protocol details
 * Join the community for discussions and support

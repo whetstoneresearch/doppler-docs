@@ -4,7 +4,7 @@ icon: arrow-right-arrow-left
 
 # Custom Fees
 
-This guide explains how to customize fees for Doppler v4 tokens using the StreamableFeesLocker.
+The V4 SDK includes support for creating Doppler V4 pools that can migrate their liquidity to other Uniswap V4 pools with customizable fee streaming. This allows protocols to distribute trading fees to multiple beneficiaries over time, and importantly, customize the post-graduation fee amounts.&#x20;
 
 ## Overview
 
@@ -14,24 +14,6 @@ The StreamableFeesLocker is a contract that:
 * Streams trading fees to multiple beneficiaries
 * Supports perpetual fee collection for no-op governance
 * **Compatible with both Doppler V3 and V4 pools** when migrating to Uniswap V4
-
-### Beneficiaries
-
-Beneficiaries are addresses that receive a share of trading fees from the locked liquidity.&#x20;
-
-Each beneficiary has:
-
-* **Address**: The recipient address for fee claims
-* **Shares**: The proportion of fees they receive (in WAD units, where 1e18 = 100%)
-
-### Custom Fee Streaming
-
-The StreamableFeesLocker smart contract:
-
-* Holds 10% of migrated liquidity in a locked position
-* Distributes trading fees to beneficiaries based on their shares
-* Allows beneficiaries to claim accumulated fees over time
-* Supports beneficiary address updates
 
 ## Basic Usage
 
@@ -132,7 +114,7 @@ const hash = await client.writeContract({
 
 For detailed, production-ready examples of launching tokens with StreamableFeesLocker:
 
-* [**Token Launch Examples**](token-launch-examples.md) - Complete guide with:
+* [**Token Launch Examples**](examples.md) - Complete guide with:
   * Standard governance launch (90/10 split)
   * No-op governance launch (100% locked)
   * Custom quote token launch

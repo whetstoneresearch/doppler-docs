@@ -1,13 +1,15 @@
 ---
-icon: square-terminal
 description: Factory Class Reference
+icon: square-terminal
 ---
 
-## Factory Overview&#x20;
+# Factory
+
+### Factory Overview
 
 The factory is the main entrypoint for interacting with and creating tokens on the Doppler protocol. It is responsible for deploying new tokens, parameterizing pools, migrating existing tokens, and serving information about the state of the protocol.
 
-### ReadFactory
+#### ReadFactory
 
 Read-only operations for the Doppler factory.
 
@@ -17,31 +19,29 @@ const factory = new ReadFactory(address: Address, drift: Drift<ReadAdapter>);
 
 Methods:
 
-- `getModuleState(address: Address): Promise<ModuleState>`
-  - Returns the state of a module (NotWhitelisted, TokenFactory, GovernanceFactory, HookFactory, Migrator)
-- `getAssetData(asset: Address): Promise<AssetData>`
+* `getModuleState(address: Address): Promise<ModuleState>`
+  * Returns the state of a module (NotWhitelisted, TokenFactory, GovernanceFactory, HookFactory, Migrator)
+* `getAssetData(asset: Address): Promise<AssetData>`
+  *   Returns information about a DERC20 token deployed by the airlock contract:
 
-  - Returns information about a DERC20 token deployed by the airlock contract:
+      ```typescript
+      interface AssetData {
+        numeraire: Address;
+        timelock: Address;
+        governance: Address;
+        liquidityMigrator: Address;
+        poolInitializer: Address;
+        pool: Address;
+        migrationPool: Address;
+        numTokensToSell: bigint;
+        totalSupply: bigint;
+        integrator: Address;
+      }
+      ```
+* `getCreateEvents(): Promise<Event[]>`
+* `getMigrateEvents(): Promise<Event[]>`
 
-    ```typescript
-    interface AssetData {
-      numeraire: Address;
-      timelock: Address;
-      governance: Address;
-      liquidityMigrator: Address;
-      poolInitializer: Address;
-      pool: Address;
-      migrationPool: Address;
-      numTokensToSell: bigint;
-      totalSupply: bigint;
-      integrator: Address;
-    }
-    ```
-
-- `getCreateEvents(): Promise<Event[]>`
-- `getMigrateEvents(): Promise<Event[]>`
-
-### ReadWriteFactory
+#### ReadWriteFactory
 
 Extends ReadFactory with write operations.
 
@@ -99,18 +99,17 @@ interface CreateParams {
 
 4. Invoke the `create` method
 
-### V4 Migrator Support
+#### V4 Migrator Support
 
 The ReadWriteFactory now includes helper functions for configuring V4 migration with fee streaming:
 
-- `sortBeneficiaries(beneficiaries: BeneficiaryData[]): BeneficiaryData[]`
-  - Sorts beneficiaries by address in ascending order (required by the V4 migrator contract)
-  
-- `encodeV4MigratorData(data: V4MigratorData): Hex`
-  - Encodes V4 migrator configuration including fee tier, tick spacing, lock duration, and beneficiaries
-  - Validates that beneficiaries are properly sorted and shares sum to exactly 1e18 (100%)
+* `sortBeneficiaries(beneficiaries: BeneficiaryData[]): BeneficiaryData[]`
+  * Sorts beneficiaries by address in ascending order (required by the V4 migrator contract)
+* `encodeV4MigratorData(data: V4MigratorData): Hex`
+  * Encodes V4 migrator configuration including fee tier, tick spacing, lock duration, and beneficiaries
+  * Validates that beneficiaries are properly sorted and shares sum to exactly 1e18 (100%)
 
-For detailed V4 migrator usage, see the [V4 Migrator documentation](./v4-migrator.md).
+For detailed V4 migrator usage, see the [V4 Migrator documentation](custom-fees.md).
 
 ```typescript
   public async create(
@@ -119,9 +118,9 @@ For detailed V4 migrator usage, see the [V4 Migrator documentation](./v4-migrato
   ): Promise<Hex>
 ```
 
-### Pool Operations
+#### Pool Operations
 
-#### ReadUniswapV3Pool
+**ReadUniswapV3Pool**
 
 Read operations for Doppler V3 pools.
 
@@ -131,17 +130,17 @@ const pool = new ReadUniswapV3Pool(address: Address, drift?: Drift<ReadAdapter>)
 
 Methods:
 
-- `getMintEvents(): Promise<Event[]>`
-- `getBurnEvents(): Promise<Event[]>`
-- `getSwapEvents(): Promise<Event[]>`
-- `getSlot0(): Promise<{sqrtPriceX96: bigint, tick: number}>`
-- `getToken0(): Promise<Address>`
-- `getToken1(): Promise<Address>`
-- `getFee(): Promise<number>`
+* `getMintEvents(): Promise<Event[]>`
+* `getBurnEvents(): Promise<Event[]>`
+* `getSwapEvents(): Promise<Event[]>`
+* `getSlot0(): Promise<{sqrtPriceX96: bigint, tick: number}>`
+* `getToken0(): Promise<Address>`
+* `getToken1(): Promise<Address>`
+* `getFee(): Promise<number>`
 
-### Event Types
+#### Event Types
 
-#### Factory Events
+**Factory Events**
 
 ```typescript
 interface CreateEvent {
@@ -157,7 +156,7 @@ interface MigrateEvent {
 }
 ```
 
-#### Pool Events
+**Pool Events**
 
 ```typescript
 interface MintEvent {
@@ -189,7 +188,7 @@ interface SwapEvent {
 }
 ```
 
-### Network Configuration
+#### Network Configuration
 
 ```typescript
 const DOPPLER_V3_ADDRESSES: { [chainId: number]: DopplerV3Addresses };
@@ -197,9 +196,9 @@ const DOPPLER_V3_ADDRESSES: { [chainId: number]: DopplerV3Addresses };
 
 Supported Networks:
 
-- Unichain Sepolia (chainId: 1301)
-- Unichain (chainId: 130)
+* Unichain Sepolia (chainId: 1301)
+* Unichain (chainId: 130)
 
-## Doppler v4 SDK API Reference
+### Doppler v4 SDK API Reference
 
 Coming Soon!

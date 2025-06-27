@@ -15,9 +15,9 @@ layout:
 
 # Welcome
 
-Doppler is an Ethereum Virtual Machine (EVM) based token launchpad & liquidity bootstrapping protocol. It utilizes a new onchain mechanism we call a 'Dutch Auction Dynamic Bonding Curve'
+Doppler is an Ethereum Virtual Machine (EVM) based token launchpad & liquidity bootstrapping protocol. It supports both static bonding curves ("v3") and dynamic bonding curves ("v4") based on a fully onchain dynamic dutch auction. It additionally manages the end to end lifecycle of asset tokenization beyond simply creation, including optional token holder governance and custom fees.&#x20;
 
-Which enables you to easily...
+Doppler easily enables developers to...
 
 {% stepper %}
 {% step %}
@@ -41,7 +41,7 @@ Build liquidity around the initial price and establish a marketplace for the ass
 {% step %}
 #### Plug into a thriving ecosystem
 
-Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap ecosystems
+Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap ecosystems, configure optional token holder governance, have long term customized fees, and more.&#x20;
 {% endstep %}
 {% endstepper %}
 
@@ -61,12 +61,14 @@ Doppler has open source demo applications that target both Doppler v3 and Dopple
 
 They are both written in React, TypeScript and other familiar frameworks. The demo applications are the easiest way to get familiar with what applications built ontop of the Doppler look like.
 
-:link: [https://github.com/whetstoneresearch/doppler-v3-miniapp](https://github.com/whetstoneresearch/doppler-v3-miniapp):link: [https://github.com/whetstoneresearch/doppler-v4-miniapp](https://github.com/whetstoneresearch/doppler-v4-miniapp)
+:link: [https://github.com/whetstoneresearch/doppler-v3-miniapp](https://github.com/whetstoneresearch/doppler-v3-miniapp)&#x20;
+
+:link: [https://github.com/whetstoneresearch/doppler-v4-miniapp](https://github.com/whetstoneresearch/doppler-v4-miniapp)
 
 #### SDKs
 
-Doppler has an open source SDK that is written in TypeScript. It provides familiar interfaces for interacting with the onchain smart contracts. Additionally developers are able to interact with the smart contracts directly with their favorite toolchains. View the [V3 SDK Reference](https://docs.doppler.lol/doppler-v3-sdk-reference/factory) or [v4 SDK Reference](https://docs.doppler.lol/doppler-v4-sdk-reference/factory).
+Doppler has an open source SDK that is written in TypeScript. It provides familiar interfaces for interacting with the onchain smart contracts. Additionally developers are able to interact with the smart contracts directly with their favorite toolchains.
 
-:link: [https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v3-sdk](https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v3-sdk)
+:link: [Get started with the Doppler v3 SDK](v3-sdk/getting-started.md) for static bonding curves&#x20;
 
-:link: [https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v4-sdk](https://github.com/whetstoneresearch/doppler-sdk/tree/main/packages/doppler-v4-sdk)
+:link: [Get started with the Doppler v4 SDK](v4-sdk/getting-started.md) for dynamic bonding curves&#x20;

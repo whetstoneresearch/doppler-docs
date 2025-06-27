@@ -125,31 +125,10 @@ import { DEAD_ADDRESS } from "doppler-v3-sdk";
 const recipient = DEAD_ADDRESS; // 0x000...dEaD
 ```
 
-## Benefits of NoOpGovernanceFactory
 
-1. **Gas Savings**: \~30-40% reduction in deployment costs
-2. **Simplicity**: No governance overhead to manage
-3. **Security**: Governance address set to `0xdead`, preventing any governance actions
-4. **V4 Compatible**: Works seamlessly with V4 migration features
-
-## When to Use Each Option
-
-### Use NoOpGovernanceFactory when:
-
-* Governance is not required for your token
-* Gas efficiency is a priority
-* You want a simpler deployment process
-* Community governance will be handled off-chain
-
-### Use Standard Governance when:
-
-* On-chain governance is required
-* Token holders need voting rights
-* Protocol parameters may need updates
-* Compliance requires governance mechanisms
 
 ## See Also
 
-* [V4 Migrator Guide](v4-migrator.md) - Configure V4 migration with beneficiaries
+* [V4 Migrator Guide](custom-fees.md) - Configure V4 migration with beneficiaries
 * [Token Launch Examples](../doppler-v3-sdk-reference/token-launch-examples.md) - Complete examples
 * [Contract Addresses](../doppler-v3-sdk-reference/contract-addresses.md) - Deployment addresses by chain
