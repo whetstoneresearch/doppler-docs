@@ -1,12 +1,16 @@
+---
+icon: rocket
+---
+
 # Getting Started
 
 This section guides you through setting up and running the indexer on your local machine.
 
 ## Prerequisites
 
--   **Node.js**: Version `18.14` or higher.
--   **pnpm**: The project uses `pnpm` for package management. Install it with `npm install -g pnpm`.
--   **Docker** & **Docker Compose**: Required to run the PostgreSQL database.
+* **Node.js**: Version `18.14` or higher.
+* **pnpm**: The project uses `pnpm` for package management. Install it with `npm install -g pnpm`.
+* **Docker** & **Docker Compose**: Required to run the PostgreSQL database.
 
 ## Installation
 
@@ -23,11 +27,11 @@ pnpm install
 The indexer requires RPC endpoints for the chains it indexes.
 
 1.  **Create an environment file**:
+
     ```bash
     cp .env.example .env.local
     ```
-
-2.  **Populate the environment file**:
+2.  **Populate the environment file**:\
     You'll need to add your RPC URLs for each supported network. The `ponder.config.ts` file maps these environment variables to the correct chains.
 
     ```.env.local
@@ -53,14 +57,13 @@ The indexer requires RPC endpoints for the chains it indexes.
 
 ## Running the Indexer
 
-1.  **Start the Database**:
+1.  **Start the Database**:\
     The project includes a `docker-compose.yml` file to spin up a PostgreSQL database with performance optimizations.
 
     ```bash
     docker-compose up -d doppler-indexer-database
     ```
-
-2.  **Start the Indexer**:
+2.  **Start the Indexer**:\
     Run the development server, which will start the indexing process with hot-reloading.
 
     ```bash
@@ -68,20 +71,22 @@ The indexer requires RPC endpoints for the chains it indexes.
     ```
 
 Upon starting, Ponder will:
--   Connect to the database and apply the schema.
--   Start fetching and processing events from the `startBlock` defined for each contract.
--   Launch the GraphQL and REST API servers.
+
+* Connect to the database and apply the schema.
+* Start fetching and processing events from the `startBlock` defined for each contract.
+* Launch the GraphQL and REST API servers.
 
 ## Database Management
 
 Ponder provides a set of database management utilities accessible via `pnpm db`.
 
--   **Open a database shell**:
+*   **Open a database shell**:
+
     ```bash
     pnpm db shell
     ```
+*   **Reset the database** (clears all data and re-applies the schema):
 
--   **Reset the database** (clears all data and re-applies the schema):
     ```bash
     pnpm db reset
     ```

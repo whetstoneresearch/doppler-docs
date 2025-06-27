@@ -1,39 +1,44 @@
 ---
+description: Arbitrary migration to Uniswap v4 pools with customizable fees
 icon: arrow-right-arrow-left
-description: V4 Migrator with Fee Streaming
 ---
 
-# V4 Migrator
+# Custom Fees
 
-The V3 SDK includes support for creating Doppler V3 pools that can migrate to Uniswap V4 with advanced fee streaming capabilities. This allows protocols to distribute trading fees to multiple beneficiaries over time.
+The V3 SDK includes support for creating Doppler V3 pools  that can migrate their liquidity to Uniswap V4 with customizable fee streaming capabilities. This allows protocols to distribute trading fees to multiple beneficiaries over time, and importantly, customize the post-graduation fee amounts.&#x20;
 
 ## Overview
 
 The V4 migrator enables:
-- Migration from Doppler V3 pools to Uniswap V4 pools
-- Fee streaming to multiple beneficiaries with custom shares
-- Time-locked liquidity with configurable duration
-- Support for both standard and no-op governance models
+
+* Migration from v3 or v4 Doppler pools to Uniswap V4 pools
+* Fee streaming to multiple beneficiaries with custom shares
+* Time-locked liquidity with configurable duration
+* Support for both standard and no-op governance models
 
 ## Key Concepts
 
 ### Beneficiaries
 
-Beneficiaries are addresses that receive a share of trading fees from the locked liquidity. Each beneficiary has:
-- **Address**: The recipient address for fee claims
-- **Shares**: The proportion of fees they receive (in WAD units, where 1e18 = 100%)
+Beneficiaries are addresses that receive a share of trading fees from the locked liquidity.&#x20;
 
-### Fee Streaming
+Each beneficiary has:
 
-The StreamableFeesLocker contract:
-- Holds 10% of migrated liquidity in a locked position
-- Distributes trading fees to beneficiaries based on their shares
-- Allows beneficiaries to claim accumulated fees over time
-- Supports beneficiary address updates
+* **Address**: The recipient address for fee claims
+* **Shares**: The proportion of fees they receive (in WAD units, where 1e18 = 100%)
+
+### Custom Fee Streaming
+
+The StreamableFeesLocker smart contract:
+
+* Holds 10% of migrated liquidity in a locked position
+* Distributes trading fees to beneficiaries based on their shares
+* Allows beneficiaries to claim accumulated fees over time
+* Supports beneficiary address updates
 
 ## Usage with V3 SDK
 
-The V4 migrator functionality has been backported to the V3 SDK, allowing V3 pools to specify migration parameters at creation time.
+Doppler v3 tokens can specify their usage of the Uniswap v4 migrator at the time of creation.&#x20;
 
 ### Integration with CreateV3PoolParams
 
@@ -144,23 +149,7 @@ const poolManager = await migrator.poolManager(); // V4 PoolManager
 const airlock = await migrator.airlock();         // Airlock address
 ```
 
-## Fee Distribution
 
-### Standard Governance (90/10 Split)
-
-- 90% of liquidity → Timelock (controlled by governance)
-- 10% of liquidity → StreamableFeesLocker (distributed to beneficiaries)
-
-### No-Op Governance (100% Locked)
-
-For permanent liquidity provision, set the recipient to `DEAD_ADDRESS`:
-
-```typescript
-import { DEAD_ADDRESS } from "doppler-v3-sdk";
-
-// In no-op governance, all liquidity goes to the locker
-const recipient = DEAD_ADDRESS; // 0x000...dEaD
-```
 
 ## Important Considerations
 
@@ -173,16 +162,17 @@ const recipient = DEAD_ADDRESS; // 0x000...dEaD
 ### Fee Tiers and Tick Spacing
 
 Common V4 configurations:
-- 0.01% fee → 1 tick spacing
-- 0.05% fee → 10 tick spacing  
-- 0.3% fee → 60 tick spacing
-- 1% fee → 200 tick spacing
+
+* 0.01% fee → 1 tick spacing
+* 0.05% fee → 10 tick spacing
+* 0.3% fee → 60 tick spacing
+* 1% fee → 200 tick spacing
 
 ### Lock Duration
 
-- Minimum: No minimum (can be 0 for immediate unlocking)
-- Maximum: No maximum (can be set to centuries for permanent locks)
-- Typical: 1-4 years for protocol-owned liquidity
+* Minimum: No minimum (can be 0 for immediate unlocking)
+* Maximum: No maximum (can be set to centuries for permanent locks)
+* Typical: 1-4 years for protocol-owned liquidity
 
 ## Helper Functions
 
@@ -201,9 +191,10 @@ const encoded = factory.encodeV4MigratorData(migratorConfig);
 ```
 
 Encodes the V4 migrator configuration for use in pool creation. Validates:
-- Beneficiaries are sorted
-- All shares are positive
-- Total shares equal WAD
+
+* Beneficiaries are sorted
+* All shares are positive
+* Total shares equal WAD
 
 ## Migration Flow
 
@@ -252,6 +243,6 @@ const config: V4MigratorData = {
 
 ## See Also
 
-- [StreamableFeesLocker Reference](../doppler-v4-sdk-reference/streamable-fees-locker.md)
-- [Factory Reference](./factory.md)
-- [V4 SDK Documentation](../doppler-v4-sdk-reference/factory.md)
+* [StreamableFeesLocker Reference](../v4-sdk/streamable-fees-locker.md)
+* [Factory Reference](factory.md)
+* [V4 SDK Documentation](../v4-sdk/factory.md)

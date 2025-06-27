@@ -1,12 +1,17 @@
-# Governance Options in Doppler V3 SDK
+---
+icon: building-columns
+---
+
+# Governance Options
 
 This guide explains how to configure different governance options when creating tokens with the Doppler V3 SDK, including using the NoOpGovernanceFactory for gas-efficient deployments.
 
 ## Overview
 
-The Doppler V3 SDK supports two governance models:
-1. **Standard Governance** - Full on-chain governance with timelock
-2. **No-Op Governance** - Minimal governance for gas savings (sets governance to `0xdead`)
+The Doppler V3 SDK supports optional governance with the following models.
+
+1. **"Standard" Governance** - Full on-chain governance with timelock using OpenZeppelin Governor
+2. **"No-Op" Governance** - Minimal governance for gas savings (sets governance to `0xdead`)
 
 ## Using NoOpGovernanceFactory
 
@@ -15,7 +20,8 @@ The NoOpGovernanceFactory creates tokens without active governance, significantl
 ### Prerequisites
 
 Ensure the NoOpGovernanceFactory is deployed on your target chain. Currently available on:
-- **Base Sepolia**: `0x916B8987E4aD325C10d58ED8Dc2036a6FF5EB228`
+
+* **Base Sepolia**: `0x916B8987E4aD325C10d58ED8Dc2036a6FF5EB228`
 
 ### Implementation
 
@@ -101,9 +107,27 @@ const createParams: CreateV3PoolParams = {
 };
 ```
 
+## Fee Distribution
+
+### Standard Governance (90/10 Split)
+
+* 90% of liquidity → Timelock (controlled by governance)
+* 10% of liquidity → StreamableFeesLocker (distributed to beneficiaries)
+
+### No-Op Governance (100% Locked)
+
+For permanent liquidity provision, set the recipient to `DEAD_ADDRESS`:
+
+```typescript
+import { DEAD_ADDRESS } from "doppler-v3-sdk";
+
+// In no-op governance, all liquidity goes to the locker
+const recipient = DEAD_ADDRESS; // 0x000...dEaD
+```
+
 ## Benefits of NoOpGovernanceFactory
 
-1. **Gas Savings**: ~30-40% reduction in deployment costs
+1. **Gas Savings**: \~30-40% reduction in deployment costs
 2. **Simplicity**: No governance overhead to manage
 3. **Security**: Governance address set to `0xdead`, preventing any governance actions
 4. **V4 Compatible**: Works seamlessly with V4 migration features
@@ -111,19 +135,21 @@ const createParams: CreateV3PoolParams = {
 ## When to Use Each Option
 
 ### Use NoOpGovernanceFactory when:
-- Governance is not required for your token
-- Gas efficiency is a priority
-- You want a simpler deployment process
-- Community governance will be handled off-chain
+
+* Governance is not required for your token
+* Gas efficiency is a priority
+* You want a simpler deployment process
+* Community governance will be handled off-chain
 
 ### Use Standard Governance when:
-- On-chain governance is required
-- Token holders need voting rights
-- Protocol parameters may need updates
-- Compliance requires governance mechanisms
+
+* On-chain governance is required
+* Token holders need voting rights
+* Protocol parameters may need updates
+* Compliance requires governance mechanisms
 
 ## See Also
 
-- [V4 Migrator Guide](./v4-migrator.md) - Configure V4 migration with beneficiaries
-- [Token Launch Examples](./token-launch-examples.md) - Complete examples
-- [Contract Addresses](./contract-addresses.md) - Deployment addresses by chain
+* [V4 Migrator Guide](v4-migrator.md) - Configure V4 migration with beneficiaries
+* [Token Launch Examples](../doppler-v3-sdk-reference/token-launch-examples.md) - Complete examples
+* [Contract Addresses](../doppler-v3-sdk-reference/contract-addresses.md) - Deployment addresses by chain

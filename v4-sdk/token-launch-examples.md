@@ -1,7 +1,10 @@
-# Token Launch Examples with V4 Migrators
+---
+icon: code-merge
+---
 
-This guide provides complete examples for launching tokens using Doppler V4 with StreamableFeesLocker integration.
+# Examples
 
+This guide provides examples for using Doppler V4 with Custom Fees and various optional govenance
 
 > **Note on startTimeOffset**: The `startTimeOffset` parameter is included in the type definitions but is not currently used by the SDK implementation. All pools will start 30 seconds after the transaction is confirmed. This will be addressed in a future update.
 
@@ -372,23 +375,18 @@ async function distributeAndClaimFees(tokenId: bigint) {
 
 ## Important Notes
 
-
-1. **Governance Choice**: 
-   - `useGovernance: true` (default) = 90% to timelock, 10% to locker (this split is automatic and handled by the V4Migrator contract)
-   - `useGovernance: false` = 100% to locker, permanent lock
-
+1. **Governance Choice**:
+   * `useGovernance: true` (default) = 90% to timelock, 10% to locker (this split is automatic and handled by the V4Migrator contract)
+   * `useGovernance: false` = 100% to locker, permanent lock
 2. **Beneficiary Requirements**:
-   - Must be sorted by address (use `sortBeneficiaries()`)
-   - Shares must sum to exactly 1e18
-   - Cannot have duplicate addresses
-
+   * Must be sorted by address (use `sortBeneficiaries()`)
+   * Shares must sum to exactly 1e18
+   * Cannot have duplicate addresses
 3. **Price Ranges**:
-   - For ETH pairs: prices in ETH (18 decimals)
-   - For custom pairs: prices in quote token decimals
-
+   * For ETH pairs: prices in ETH (18 decimals)
+   * For custom pairs: prices in quote token decimals
 4. **Testing Recommendations**:
-   - Test on testnet first (Base Sepolia, Unichain Sepolia, etc.)
-   - Verify beneficiary addresses
-   - Double-check share calculations
-   - Ensure sufficient quote token liquidity exists
-
+   * Test on testnet first (Base Sepolia, Unichain Sepolia, etc.)
+   * Verify beneficiary addresses
+   * Double-check share calculations
+   * Ensure sufficient quote token liquidity exists

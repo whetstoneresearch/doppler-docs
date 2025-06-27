@@ -1,15 +1,37 @@
-# StreamableFeesLocker Integration Guide
+---
+icon: arrow-right-arrow-left
+---
 
-This guide explains how to use the StreamableFeesLocker for fee distribution and no-op governance with Doppler pools.
+# Custom Fees
 
+This guide explains how to customize fees for Doppler v4 tokens using the StreamableFeesLocker.
 
 ## Overview
 
 The StreamableFeesLocker is a contract that:
-- Locks Uniswap V4 positions for a specified duration
-- Streams trading fees to multiple beneficiaries
-- Supports perpetual fee collection for no-op governance
-- **Compatible with both Doppler V3 and V4 pools** when migrating to Uniswap V4
+
+* Locks Uniswap V4 positions for a specified duration
+* Streams trading fees to multiple beneficiaries
+* Supports perpetual fee collection for no-op governance
+* **Compatible with both Doppler V3 and V4 pools** when migrating to Uniswap V4
+
+### Beneficiaries
+
+Beneficiaries are addresses that receive a share of trading fees from the locked liquidity.&#x20;
+
+Each beneficiary has:
+
+* **Address**: The recipient address for fee claims
+* **Shares**: The proportion of fees they receive (in WAD units, where 1e18 = 100%)
+
+### Custom Fee Streaming
+
+The StreamableFeesLocker smart contract:
+
+* Holds 10% of migrated liquidity in a locked position
+* Distributes trading fees to beneficiaries based on their shares
+* Allows beneficiaries to claim accumulated fees over time
+* Supports beneficiary address updates
 
 ## Basic Usage
 
@@ -55,36 +77,7 @@ const v4MigratorConfig: V4MigratorData = {
 const liquidityMigratorData = factory.encodeV4MigratorData(v4MigratorConfig);
 ```
 
-### 3. Standard Governance Configuration
-
-```typescript
-const config = await factory.buildConfig({
-  // ... other parameters
-  liquidityMigratorData,
-  integrator: '0x...integrator',
-}, addresses);
-
-// Create the pool
-const txHash = await factory.create(config.createParams);
-```
-
-### 4. No-Op Governance Configuration
-
-For no-op governance (permanent liquidity lock with perpetual fee streaming):
-
-```typescript
-// Configure for no-op governance
-const config = await factory.buildConfig({
-  // ... other parameters
-  liquidityMigratorData,
-  integrator: '0x...integrator',
-}, addresses, {
-  useGovernance: false // This uses the noOpGovernanceFactory
-});
-
-// The migration will automatically set recipient to DEAD_ADDRESS (0xdead)
-// This ensures the position is permanently locked
-```
+###
 
 ## Post-Migration Operations
 
@@ -139,11 +132,11 @@ const hash = await client.writeContract({
 
 For detailed, production-ready examples of launching tokens with StreamableFeesLocker:
 
-- **[Token Launch Examples](./token-launch-examples.md)** - Complete guide with:
-  - Standard governance launch (90/10 split)
-  - No-op governance launch (100% locked)
-  - Custom quote token launch
-  - Post-launch fee operations
+* [**Token Launch Examples**](token-launch-examples.md) - Complete guide with:
+  * Standard governance launch (90/10 split)
+  * No-op governance launch (100% locked)
+  * Custom quote token launch
+  * Post-launch fee operations
 
 ## Quick Example
 
@@ -182,26 +175,20 @@ const tx = await factory.create(config.createParams);
 
 ## Key Points
 
-
-1. **Beneficiary Validation**: 
-   - Beneficiaries must be sorted by address (ascending)
-   - Total shares must equal exactly 1e18 (WAD)
-   - All shares must be positive
-
-2. **Lock Duration**: 
-   - Standard governance: Position unlocks after duration
-   - No-op governance: Position locked forever (recipient = DEAD_ADDRESS). The lockDuration value is ignored since the position is permanently locked
-
+1. **Beneficiary Validation**:
+   * Beneficiaries must be sorted by address (ascending)
+   * Total shares must equal exactly 1e18 (WAD)
+   * All shares must be positive
+2. **Lock Duration**:
+   * Standard governance: Position unlocks after duration
+   * No-op governance: Position locked forever (recipient = DEAD\_ADDRESS). The lockDuration value is ignored since the position is permanently locked
 3. **Fee Distribution**:
-   - Standard governance: 90% of liquidity goes to timelock, 10% to StreamableFeesLocker (automatic split by V4Migrator contract)
-   - No-op governance: 100% goes to StreamableFeesLocker permanently
-
+   * Standard governance: 90% of liquidity goes to timelock, 10% to StreamableFeesLocker (automatic split by V4Migrator contract)
+   * No-op governance: 100% goes to StreamableFeesLocker permanently
 4. **Migration Types**:
-   - Standard: Creates 2 NFTs, locks 10% in StreamableFeesLocker
-   - No-op: Creates 1 NFT, locks 100% in StreamableFeesLocker permanently
-
+   * Standard: Creates 2 NFTs, locks 10% in StreamableFeesLocker
+   * No-op: Creates 1 NFT, locks 100% in StreamableFeesLocker permanently
 5. **Pool Compatibility**:
-   - **Doppler V3 Pools**: Use `UniswapV3Initializer` + `UniswapV4Migrator` to get fee streaming
-   - **Doppler V4 Pools**: Use `UniswapV4Initializer` + `UniswapV4Migrator` to get fee streaming
-   - Both pool types can leverage the StreamableFeesLocker when migrating to Uniswap V4
-
+   * **Doppler V3 Pools**: Use `UniswapV3Initializer` + `UniswapV4Migrator` to get fee streaming
+   * **Doppler V4 Pools**: Use `UniswapV4Initializer` + `UniswapV4Migrator` to get fee streaming
+   * Both pool types can leverage the StreamableFeesLocker when migrating to Uniswap V4

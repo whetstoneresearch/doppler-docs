@@ -1,3 +1,7 @@
+---
+icon: brackets-curly
+---
+
 # API Usage
 
 The indexer exposes the indexed data through a GraphQL API and a RESTful search endpoint.
@@ -9,6 +13,7 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
 ### Example Queries
 
 1.  **Fetch top 5 pools on Base by USD liquidity:**
+
     ```graphql
     query TopPoolsByLiquidity {
       pools(
@@ -29,8 +34,8 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
       }
     }
     ```
-
 2.  **Get recent swaps for a specific pool:**
+
     ```graphql
     query RecentSwaps {
       swaps(
@@ -48,8 +53,8 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
       }
     }
     ```
-
 3.  **Fetch detailed information for a single token:**
+
     ```graphql
     query TokenDetails {
       token(id: "0x...") {
@@ -74,13 +79,13 @@ A simple REST endpoint is available for searching tokens.
 
 ### Search Endpoint
 
--   **URL**: `/search/:query`
--   **Method**: `GET`
--   **Description**: Searches for tokens by name, symbol, or address.
--   **URL Parameters**:
-    -   `query`: The search term (e.g., "MyToken", "MTK", or "0x...").
--   **Query Parameters**:
-    -   `chain_ids`: A comma-separated list of chain IDs to filter the search (e.g., `?chain_ids=8453,130`).
+* **URL**: `/search/:query`
+* **Method**: `GET`
+* **Description**: Searches for tokens by name, symbol, or address.
+* **URL Parameters**:
+  * `query`: The search term (e.g., "MyToken", "MTK", or "0x...").
+* **Query Parameters**:
+  * `chain_ids`: A comma-separated list of chain IDs to filter the search (e.g., `?chain_ids=8453,130`).
 
 **Example Usage:**
 

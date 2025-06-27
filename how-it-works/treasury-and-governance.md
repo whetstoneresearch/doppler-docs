@@ -4,10 +4,10 @@ icon: building-columns
 
 # Treasury & governance
 
-The Doppler Airlock comes out of the box with optional support for community managed treasuries, via the GovernanceFactory. These are currently implemented using industry standard contracts, specifically, [Open Zeppelin's Governor](https://docs.openzeppelin.com/contracts/4.x/api/governance), which was directly inspired by Compound Finance's Governor Bravo. Treasuries can be customized at the time of creation, including how much of a token gets allocated into the Treasury, how long it takes for a Treasury to unlock, or what the voting requirements are to move assets or take actions on behalf of the Treasury.&#x20;
+The Doppler Airlock comes out of the box with optional support for community managed treasuries, via the GovernanceFactory. These are currently implemented using industry standard contracts, specifically, [Open Zeppelin's Governor](https://docs.openzeppelin.com/contracts/4.x/api/governance), which was directly inspired by Compound Finance's Governor Bravo. Treasuries can be customized at the time of creation, including how much of a token gets allocated into the Treasury, how long it takes for a Treasury to unlock, or what the voting requirements are to move assets or take actions on behalf of the Treasury.
 
 {% hint style="info" %}
-Check out the [OpenZeppelin smart contract Wizard](https://wizard.openzeppelin.com/#governor) to view what customizations are possible within Governor. 
+Check out the [OpenZeppelin smart contract Wizard](https://wizard.openzeppelin.com/#governor) to view what customizations are possible within Governor.
 {% endhint %}
 
 ### Example usage
@@ -18,16 +18,18 @@ Tokens created on Pure Markets have a community managed treasury that unlocks af
 Refer to [GitHub](https://github.com/whetstoneresearch/doppler/blob/main/src/Governance.sol) to view the open source Doppler Treasury & Governance implementation
 {% endhint %}
 
-## No Token Voting/Governance
+## Disabling or opting-out of governance
 
-For projects that prefer to opt out of onchain token based governance mechanisms, Doppler offers a "no-op governance" option that maintains project control while enabling perpetual fee streaming.
+For projects that prefer to opt out of onchain token based governance mechanisms, Doppler offers a "no-op governance" option that maintains project control while enabling perpetual fee streaming.&#x20;
 
 ### How It Works
 
-Doppler supports a "No-op" governance pattern that permanently locks 100% of liquidity and streams all trading fees to predefined beneficiaries.
+Doppler supports a "No-op" governance pattern that permanently locks 100% of liquidity and streams all trading fees to predefined beneficiaries.&#x20;
 
-**Implementation**: Set `useGovernance: false` in the creation configuration to use the `noOpGovernanceFactory` while providing a list of beneficiary addresses. 
+**Implementation**: Set `useGovernance: false` in the creation configuration to use the `noOpGovernanceFactory` while providing a list of beneficiary addresses.
 
 {% hint style="warning" %}
 **Important**: This is a permanent decision that cannot be reversed or transferred.
 {% endhint %}
+
+See the [v3](../v3-sdk/governance-options.md) or [v4](../v4-sdk/governance-options.md) governance options for more information.

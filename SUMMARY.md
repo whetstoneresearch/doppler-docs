@@ -10,25 +10,26 @@
 * [Fees & economics](how-it-works/fees-and-economics.md)
 * [Treasury & governance](how-it-works/treasury-and-governance.md)
 
-## Doppler-v3 SDK Reference
+## v3 sdk
 
-* [Overview](doppler-v3-sdk-reference/overview.md)
-* [Getting Started](doppler-v3-sdk-reference/getting-started.md)
-* [Factory](doppler-v3-sdk-reference/factory.md)
-* [Token](doppler-v3-sdk-reference/token.md)
-* [Quoter](doppler-v3-sdk-reference/quoter.md)
-* [V4 Migrator](doppler-v3-sdk-reference/v4-migrator.md)
-* [Governance Options](doppler-v3-sdk-reference/governance-options.md)
+* [Overview](v3-sdk/overview.md)
+* [Get Started](v3-sdk/getting-started.md)
+* [Factory](v3-sdk/factory.md)
+* [Token](v3-sdk/token.md)
+* [Quoter](v3-sdk/quoter.md)
+* [Custom Fees](v3-sdk/v4-migrator.md)
+* [Governance Options](v3-sdk/governance-options.md)
 
-## Doppler-v4 SDK Reference
+## v4 SDK
 
-* [Overview](doppler-v4-sdk-reference/overview.md)
-* [Getting Started](doppler-v4-sdk-reference/getting-started.md)
-* [Factory](doppler-v4-sdk-reference/factory.md)
-* [Quoter](doppler-v4-sdk-reference/quoter.md)
-* [Lens](doppler-v4-sdk-reference/lens.md)
-* [StreamableFeesLocker](doppler-v4-sdk-reference/streamable-fees-locker.md)
-* [Token Launch Examples](doppler-v4-sdk-reference/token-launch-examples.md)
+* [Overview](v4-sdk/overview.md)
+* [Get Started](v4-sdk/getting-started.md)
+* [Examples](v4-sdk/token-launch-examples.md)
+* [Factory](v4-sdk/factory.md)
+* [Quoter](v4-sdk/quoter.md)
+* [Lens](v4-sdk/lens.md)
+* [Custom Fees](v4-sdk/streamable-fees-locker.md)
+* [Governance Options](v4-sdk/governance-options.md)
 
 ## Indexer
 

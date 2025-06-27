@@ -4,19 +4,19 @@ icon: square-terminal
 
 # Implementation
 
-Doppler has both a Uniswap v3 and Uniswap v4 implementation with differing features depending on your use cases.&#x20;
+Doppler has both a Uniswap v3 and Uniswap v4 implementation with differing features depending on your use cases.
 
-### Which to use? 
+### Which to use?
 
-Doppler v3 uses static bonding curves to issue assets at incredibly low market capitalizations, eg. $50 or less. Doppler v3 is great for filtering through high volume content and assessing what may or may not be valuable, especially for use cases that the assets being created do not have any prior pricing history or market comparisons. 
+Doppler v3 uses static bonding curves to issue assets at incredibly low market capitalizations, eg. $50 or less. Doppler v3 is great for filtering through high volume content and assessing what may or may not be valuable, especially for use cases that the assets being created do not have any prior pricing history or market comparisons.
 
-Doppler v4 uses dynamic bonding curves based on an onchain dutch auction, implemented in a Uniswap v4 hook. Doppler v4 is great for assets that have some sembalance of a known price that can be used to set the upper (max proceeds) and lower bounds (min proceeds) of the dutch auction.  
+Doppler v4 uses dynamic bonding curves based on an onchain dutch auction, implemented in a Uniswap v4 hook. Doppler v4 is great for assets that have some sembalance of a known price that can be used to set the upper (max proceeds) and lower bounds (min proceeds) of the dutch auction.
 
-Here's a bit more about how this works... 
+Here's a bit more about how this works...
 
 ### Doppler v3 explainer
 
-1. Applications send a message to the Doppler smart contracts to create a token. This message can be formed entirely utilizing the [doppler-sdk](/doppler-v3-sdk-reference/factory.md)
+1. Applications send a message to the Doppler smart contracts to create a token. This message can be formed entirely utilizing the [doppler-sdk](../v3-sdk/factory.md)
 2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](airlock-and-modules.md)
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool
@@ -38,16 +38,17 @@ If you're an onchain auction enjoyooor, we recommend reading the [Doppler Whitep
 ### Doppler v4 explainer
 
 {% hint style="info" %}
-The v4 implementation is now available in beta. See [contract addresses](../resources/contract-addresses.md) for supported deployments. Please reach out to the Whetstone Research team before implementing in production due to potential complexity and/or edge cases that must be accounted for. &#x20;
+The v4 implementation is now available in beta. See [contract addresses](../resources/contract-addresses.md) for supported deployments. Please reach out to the Whetstone Research team before implementing in production due to potential complexity and/or edge cases that must be accounted for.
 {% endhint %}
 
 The Uniswap v4 version of Doppler is exactly the same as the Uniswap v3 version for all the features mentioned above **EXCEPT** the liquidity bootstrapping step.
 
 {% hint style="info" %}
 **Module Combinations**: Both Doppler V3 and V4 pools can use fee streaming functionality. Simply combine any pool initializer (V3 or V4) with the UniswapV4Migrator to enable fee streaming when migrating to Uniswap V4. The modular architecture allows flexible combinations:
-- V3 Initializer + V2 Migrator = Doppler V3 pool → Uniswap V2 pool
-- V3 Initializer + V4 Migrator = Doppler V3 pool → Uniswap V4 pool with fee streaming
-- V4 Initializer + V4 Migrator = Doppler V4 pool → Uniswap V4 pool with fee streaming
+
+* V3 Initializer + V2 Migrator = Doppler V3 pool → Uniswap V2 pool
+* V3 Initializer + V4 Migrator = Doppler V3 pool → Uniswap V4 pool with fee streaming
+* V4 Initializer + V4 Migrator = Doppler V4 pool → Uniswap V4 pool with fee streaming
 {% endhint %}
 
 #### Uniswap v4 Permissions
