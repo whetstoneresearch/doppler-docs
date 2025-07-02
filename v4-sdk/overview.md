@@ -13,7 +13,7 @@ The Doppler V4 SDK is a next-generation TypeScript library that provides develop
 
 ### What is Drift?
 
-The Doppler V4 SDK is built on top of [Drift](https://drift.sh/), a modern blockchain interaction framework that simplifies Web3 development by:
+The Doppler V4 SDK is built on top of [Drift](https://delvtech.github.io/drift/), a modern blockchain interaction framework that simplifies Web3 development by:
 
 * Providing unified interfaces for different wallet providers and RPC endpoints
 * Handling transaction lifecycle management with automatic retry logic

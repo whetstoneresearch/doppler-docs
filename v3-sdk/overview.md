@@ -15,7 +15,7 @@ The SDK abstracts the complexity of smart contract interactions, providing type-
 
 ### What is Drift?
 
-The Doppler V3 SDK is built on top of [Drift](https://drift.sh/), a modern blockchain interaction framework that simplifies Web3 development by:
+The Doppler V3 SDK is built on top of [Drift](https://delvtech.github.io/drift/), a modern blockchain interaction framework that simplifies Web3 development by:
 
 * Providing unified interfaces for different wallet providers and RPC endpoints
 * Handling transaction lifecycle management with automatic retry logic
