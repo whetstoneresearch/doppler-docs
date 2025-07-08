@@ -30,11 +30,10 @@ The V3 SDK supports multiple networks where Doppler protocol contracts are deplo
 
 | Network              | Chain ID | Environment | Purpose                       |
 | -------------------- | -------- | ----------- | ----------------------------- |
-| **Base Sepolia**     | `84532`  | Testnet     | Development and testing       |
 | **Base Mainnet**     | `8453`   | Production  | Live token deployments        |
-| **Unichain Mainnet** | `130`    | Production  | Multi-chain token deployments |
-| **Unichain Sepolia** | `1301`   | Testnet     | Development and testing       |
-| **Ink**              | `57073`  | Production  | Specialized chain deployments |
+| **Unichain Mainnet** | `130`    | Production  | Live token deployments        |
+| **Ink**              | `57073`  | Production  | Live token deployments        |
+| **Base Sepolia**     | `84532`  | Testnet     | Development and testing       |
 
 Network addresses and configurations are automatically managed through the `DOPPLER_V3_ADDRESSES` constant, making it easy to switch between networks.
 
