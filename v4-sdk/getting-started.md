@@ -24,6 +24,19 @@ npm install doppler-v4-sdk
 yarn add doppler-v4-sdk
 ```
 
+## Required Environment Variables
+
+```bash
+# RPC Endpoint
+RPC_URL="https://sepolia.base.org"
+
+# Wallet Private Key (for automated transactions)
+PRIVATE_KEY="your-private-key"
+
+# Network Configuration
+CHAIN_ID=84532
+```
+
 ## Basic Setup
 
 ### 1. Import the SDK
@@ -196,21 +209,6 @@ console.log('Pool state:', {
   totalToken0: poolData.amount0.toString(),
   totalToken1: poolData.amount1.toString()
 });
-```
-
-## Environment Configuration
-
-### Required Environment Variables
-
-```bash
-# RPC Endpoint
-RPC_URL="https://sepolia.base.org"
-
-# Wallet Private Key (for automated transactions)
-PRIVATE_KEY="your-private-key"
-
-# Network Configuration
-CHAIN_ID=84532
 ```
 
 ### Network Support

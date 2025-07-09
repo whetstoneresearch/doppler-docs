@@ -24,6 +24,19 @@ npm install doppler-v3-sdk
 yarn add doppler-v3-sdk
 ```
 
+## Required Environment Variables
+
+```bash
+# RPC Endpoint
+RPC_URL="https://sepolia.base.org"
+
+# Wallet Private Key (for automated transactions)
+PRIVATE_KEY="your-private-key"
+
+# Network Configuration
+CHAIN_ID=84532
+```
+
 ## Basic Setup
 
 ### 1. Import the SDK
@@ -183,21 +196,6 @@ console.log(`Found ${mintEvents.length} mint events and ${swapEvents.length} swa
 
 // Note: After migration, liquidity moves to a V2 pool (or V4 if using fee streaming)
 // The migrationPool address can be found at assetData.migrationPool
-```
-
-## Environment Configuration
-
-### Required Environment Variables
-
-```bash
-# RPC Endpoint
-RPC_URL="https://sepolia.base.org"
-
-# Wallet Private Key (for automated transactions)
-PRIVATE_KEY="your-private-key"
-
-# Network Configuration
-CHAIN_ID=84532
 ```
 
 ### Network Support
