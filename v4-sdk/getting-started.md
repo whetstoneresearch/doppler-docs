@@ -16,13 +16,15 @@ This section guides you through setting up and using the Doppler V4 SDK to inter
 
 ## Installation
 
-Install the Doppler V4 SDK package:
+Install the Doppler V3 SDK and Drift packages:
 
 ```bash
-npm install doppler-v4-sdk
+npm install doppler-v3-sdk @delvtech/drift
 # or
-yarn add doppler-v4-sdk
+yarn add doppler-v3-sdk @delvtech/drift
 ```
+
+The SDK uses [Drift](https://github.com/delvtech/drift) for blockchain interactions.
 
 ## Required Environment Variables
 
@@ -52,7 +54,7 @@ import {
 
 ### 2. Initialize Drift Client
 
-The SDK uses Drift for blockchain interactions. Set up your Drift client with both read and write capabilities:
+Set up your Drift client with both read and write capabilities:
 
 ```typescript
 import { Drift } from 'drift';
