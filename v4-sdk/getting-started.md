@@ -16,12 +16,12 @@ This section guides you through setting up and using the Doppler V4 SDK to inter
 
 ## Installation
 
-Install the Doppler V3 SDK and Drift packages:
+Install the Doppler V4 SDK and Drift packages:
 
 ```bash
-npm install doppler-v3-sdk @delvtech/drift
+npm install doppler-v4-sdk @delvtech/drift
 # or
-yarn add doppler-v3-sdk @delvtech/drift
+yarn add doppler-v4-sdk @delvtech/drift
 ```
 
 The SDK uses [Drift](https://github.com/delvtech/drift) for blockchain interactions.
