@@ -16,7 +16,7 @@ This section guides you through setting up and using the Doppler V3 SDK to inter
 
 ## Installation
 
-Install the Doppler V3 SDK and Drift packages:
+Install the Doppler V3 SDK, Viem, and Drift packages:
 
 ```bash
 npm install doppler-v3-sdk viem @delvtech/drift @delvtech/drift-viem
@@ -124,7 +124,7 @@ The SDK provides two main factory classes:
 // Create a read factory instance
 const factory = new ReadFactory(
   airlockAddress,
-  drift
+  drift,
 );
 
 // Get information about a deployed asset
@@ -151,7 +151,7 @@ const bundlerAddress = addresses.bundler;
 // Create a read-write factory instance
 const factory = new ReadWriteFactory(
   airlockAddress,
-  bundlerAddress
+  bundlerAddress,
   driftWithWallet,
 );
 

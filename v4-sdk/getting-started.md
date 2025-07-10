@@ -16,12 +16,12 @@ This section guides you through setting up and using the Doppler V4 SDK to inter
 
 ## Installation
 
-Install the Doppler V4 SDK and Drift packages:
+Install the Doppler V4 SDK, Viem, and Drift packages:
 
 ```bash
-npm install doppler-v4-sdk @delvtech/drift
+npm install doppler-v4-sdk viem @delvtech/drift @delvtech/drift-viem
 # or
-yarn add doppler-v4-sdk @delvtech/drift
+yarn add doppler-v4-sdk viem @delvtech/drift @delvtech/drift-viem
 ```
 
 The SDK uses [Drift](https://github.com/delvtech/drift) for blockchain interactions.
@@ -56,6 +56,8 @@ import {
 
 Set up your Drift client with both read and write capabilities:
 
+#### Read-only operations
+
 ```typescript
 import { Drift } from 'drift';
 
@@ -64,12 +66,28 @@ const drift = new Drift({
   rpcUrl: 'https://sepolia.base.org',
   chainId: 84532 // Base Sepolia
 });
+```
+
+#### Read-write operations
+
+```typescript
+import { createDrift } from "@delvtech/drift";
+import { createPublicClient, createWalletClient, http, PublicClient } from "viem";
+
+const publicClient = createPublicClient({
+  chain: baseSepolia, // replace chain as needed
+  transport: http(),
+});
+
+const walletClient = createWalletClient({
+  chain: baseSepolia, // replace chain as needed
+  transport: http(),
+  account: privateKeyToAccount(WALLET_PRIVATE_KEY),
+});
 
 // For read-write operations (with wallet)
-const driftWithWallet = new Drift({
-  rpcUrl: 'https://sepolia.base.org',
-  chainId: 84532,
-  wallet: yourWalletProvider // MetaMask, WalletConnect, etc.
+const driftWithWallet = createDrift({
+  adapter: viemAdapter({ publicClient, walletClient }),
 });
 ```
 
@@ -107,7 +125,10 @@ The V4 SDK provides two main factory classes:
 
 ```typescript
 // Create a read factory instance
-const factory = new ReadFactory(airlockAddress, drift);
+const factory = new ReadFactory(
+  airlockAddress,
+  drift,
+);
 
 // Get information about a deployed asset
 const assetData = await factory.getAssetData(tokenAddress);
@@ -127,8 +148,16 @@ console.log('Module state:', moduleState);
 ### Creating a New Token with Hooks
 
 ```typescript
+const addresses = DOPPLER_V4_ADDRESSES[chainId];
+const airlockAddress = addresses.airlock;
+const bundlerAddress = addresses.bundler;
+
 // Create a read-write factory instance
-const factory = new ReadWriteFactory(airlockAddress, driftWithWallet);
+const factory = new ReadWriteFactory(
+  airlockAddress,
+  bundlerAddress,
+  driftWithWallet
+);
 
 // Define pre-deployment configuration
 const preDeploymentConfig = {
