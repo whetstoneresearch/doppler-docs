@@ -75,13 +75,13 @@ import { createDrift } from "@delvtech/drift";
 import { createPublicClient, createWalletClient, http, PublicClient } from "viem";
 
 const publicClient = createPublicClient({
-  chain: baseSepolia, // replace chain as needed
-  transport: http(),
+  chain: baseSepolia,
+  transport: http('https://sepolia.base.org'),
 });
 
 const walletClient = createWalletClient({
-  chain: baseSepolia, // replace chain as needed
-  transport: http(),
+  chain: baseSepolia,
+  transport: http('https://sepolia.base.org'),
   account: privateKeyToAccount(WALLET_PRIVATE_KEY),
 });
 
