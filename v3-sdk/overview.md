@@ -78,7 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* **Default Templates**: Pre-configured templates for common use cases with `defaultSaleConfig`, `defaultV3PoolConfig`, and `defaultGovernanceConfig`
+* [**Default Templates**](#default-configurations--customization): Pre-configured templates for common use cases with `defaultSaleConfig`, `defaultV3PoolConfig`, and `defaultGovernanceConfig`
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
@@ -123,87 +123,72 @@ The SDK provides access to important protocol events:
 * **Pool Events**: Access mint, burn, and swap events from individual pools
 * **Transfer Events**: Track token transfers and balance changes
 
-### Configuration & Customization
+### Default Configurations & Customization
 
-#### Default Configurations
 
-The SDK exports several default configurations that can be customized:
-
-```typescript
-// Available default configurations
-import {
-  defaultSaleConfig,
-  defaultV3PoolConfig,
-  defaultGovernanceConfig,
-  defaultVestingConfig
-} from 'doppler-v3-sdk';
-```
-
-### Custom Parameters
-
-Key customizable parameters include:
-
-#### Sale Configuration
+#### **Sale Configuration**
 
 Token sale parameters, pricing, and distribution
 
-| Key                       | Type   |
-| ------------------------- | ------ |
-| initialSupply             | number |
-| numTokensToSell           | number |
 
+```typescript
+import { defaultSaleConfig } from 'doppler-v3-sdk';
+```
 
-<!-- SALE CONFIGURATION
-ORIGINAL SOURCE:
-https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L182
+| Key                         | Type   | Default
+| --------------------------- | ------ | ------
+| `initialSupply`             | number | 1,000,000,000
+| `numTokensToSell`           | number | 900,000,000
 
-->
-
-m/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L90-L93
-
----------- -->
+---
 
 #### Pool Configuration
 Fee tiers, tick spacing, and initial liquidity
 
-| Key               | Type   |
-| ----------------- | ------ |
-| startTick         | number |
-| endTick           | number |
-| numPositions      | number |
-| maxSharesToBeSold | bigint |
-| fee               | number |
+```typescript
+import { defaultV3PoolConfig } from 'doppler-v3-sdk';
+```
 
-<!-- POOL CONFIGURATION
-ORIGINAL SOURCE:
-https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L180
+| Key                 | Type   | Default
+| ------------------- | ------ | --------
+| `startTick`         | number | 175,000
+| `endTick`           | number | 225,000
+| `numPositions`      | number | 15
+| `maxSharesToBeSold` | bigint | 0.35
+| `fee`               | number | 10,000 (1%)
 
-->
-
-https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L77-L83
-
----------- -->
-
+---
 
 #### Governance Configuration
-
 Voting parameters, proposal thresholds, and timelock settings
 
-| Key                           | Type   |
-| ----------------------------- | ------ |
-| initialVotingDelay            | number |
-| initialVotingPeriod           | number |
-| initialProposalThreshold      | bigInt |
+```typescript
+import { defaultGovernanceConfig } from 'doppler-v3-sdk';
+```
+
+| Key                             | Type   | Default
+| ------------------------------- | ------ | --------
+| `initialVotingDelay`            | number | 172,800
+| `initialVotingPeriod`           | number | 1,209,600
+| `initialProposalThreshold`      | bigInt | 0
+
+---
 
 #### Vesting Configuration
 Token vesting schedules and inflation parameters
 
-| Key                       | Type                          |
-| --------------------------| ----------------------------- |
-| yearlyMintRate            | bigint                        |
-| vestingDuration           | number                        |
-| recipients                | [Address[]](https://viem.sh/) |
-| amounts                   | bigint[]                      |
+```typescript
+import { defaultVestingConfig } from 'doppler-v3-sdk';
+```
+
+| Key                         | Type                                                | Default
+| ----------------------------| --------------------------------------------------- | ---------
+| `yearlyMintRate`            | bigint                                              | 0.02
+| `vestingDuration`           | number                                              | 31,536,000 (one year in seconds)
+| `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []
+| `amounts`                   | bigint[]                                            | []
+
+---
 
 ### Error Handling & Validation
 
