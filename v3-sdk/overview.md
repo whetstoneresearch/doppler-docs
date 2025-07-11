@@ -78,11 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* **Config Types**: Pre-configured config types with `DefaultConfigs`
-  * `DefaultConfigs['defaultSaleConfig']`
-  * `DefaultConfigs['defaultV3PoolConfig']`
-  * `DefaultConfigs['defaultGovernanceConfig']`
-  * `DefaultConfigs['defaultVestingConfig']`
+* [**Config Types**](#default-configurations-and-customization): Pre-configured config types with `DefaultConfigs`
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
@@ -136,10 +132,10 @@ The SDK provides access to important protocol events:
 
 Token sale parameters, pricing, and distribution
 
-| Key                         | Type   | Default
-| --------------------------- | ------ | ------
-| `initialSupply`             | bigint | 1,000,000,000
-| `numTokensToSell`           | bigint | 900,000,000
+| Key                         | Type   | Default        | Purpose
+| --------------------------- | ------ | -------------- | ----
+| `initialSupply`             | bigint | 1,000,000,000  | Starting supply of tokens
+| `numTokensToSell`           | bigint | 900,000,000    | Amount of tokens to sell
 
 
 ```typescript
@@ -160,13 +156,13 @@ const saleConfig: DefaultConfigs['defaultSaleConfig'] = {
 #### Pool Configuration
 Fee tiers, tick spacing, and initial liquidity
 
-| Key                 | Type   | Default
-| ------------------- | ------ | --------
-| `startTick`         | number | 175,000
-| `endTick`           | number | 225,000
-| `numPositions`      | number | 15
-| `maxSharesToBeSold` | bigint | 0.35
-| `fee`               | number | 10,000 (1%)
+| Key                 | Type   | Default       | Purpose
+| ------------------- | ------ | ------------- | ---
+| `startTick`         | number | 175,000       | Lower price bound
+| `endTick`           | number | 225,000       | Upper price bound
+| `numPositions`      | number | 15            | 
+| `maxSharesToBeSold` | bigint | 0.35          |
+| `fee`               | number | 10,000 (1%)   |
 
 ```typescript
 import {
@@ -192,11 +188,11 @@ const poolConfig: DefaultConfigs['defaultV3PoolConfig'] = {
 #### Governance Configuration
 Voting parameters, proposal thresholds, and timelock settings
 
-| Key                             | Type   | Default
-| ------------------------------- | ------ | --------
-| `initialVotingDelay`            | number | 172,800
-| `initialVotingPeriod`           | number | 1,209,600
-| `initialProposalThreshold`      | bigInt | 0
+| Key                             | Type   | Default   | Purpose
+| ------------------------------- | ------ | --------- | ---
+| `initialVotingDelay`            | number | 172,800   |
+| `initialVotingPeriod`           | number | 1,209,600 |
+| `initialProposalThreshold`      | bigInt | 0         |
 
 ```typescript
 import {
@@ -218,12 +214,12 @@ const governanceConfig: DefaultConfigs['defaultGovernanceConfig'] = {
 #### Vesting Configuration
 Token vesting schedules and inflation parameters
 
-| Key                         | Type                                                | Default
-| ----------------------------| --------------------------------------------------- | ---------
-| `yearlyMintRate`            | bigint                                              | 0.02
-| `vestingDuration`           | number                                              | 31,536,000 (one year in seconds)
-| `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []
-| `amounts`                   | bigint[]                                            | []
+| Key                         | Type                                                | Default                           | Purpose
+| ----------------------------| --------------------------------------------------- | --------------------------------- | ---
+| `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | 
+| `vestingDuration`           | number                                              | 31,536,000 (one year in seconds)  | vesting cadence
+| `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []                                | vesting recipients
+| `amounts`                   | bigint[]                                            | []                                | vesting amount for each recipient
 
 ```typescript
 import {
@@ -231,12 +227,13 @@ import {
   DEFAULT_YEARLY_MINT_RATE_WAD,
   DEFAULT_VESTING_DURATION,
 } from 'doppler-v3-sdk';
+import { parseEther } from "viem";
 
-const vestingConfig: DefaultConfigs['defaultGovernanceConfig'] = {
+const vestingConfig: DefaultConfigs['defaultVestingConfig'] = {
   yearlyMintRate: DEFAULT_YEARLY_MINT_RATE_WAD, // parseEther("0.02")
   vestingDuration: DEFAULT_VESTING_DURATION, // BigInt(ONE_YEAR_IN_SECONDS)
   recipients: ["0x..."], // custom recipients
-  amounts: [parseEther('50000000')], // custom amounts
+  amounts: [parseEther('50_000_000')], // custom amounts
 };
 ```
 
