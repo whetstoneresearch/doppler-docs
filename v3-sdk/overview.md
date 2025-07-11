@@ -139,14 +139,71 @@ import {
 } from 'doppler-v3-sdk';
 ```
 
-#### Custom Parameters
+### Custom Parameters
 
 Key customizable parameters include:
 
-* **Sale Configuration**: Token sale parameters, pricing, and distribution
-* **Pool Configuration**: Fee tiers, tick spacing, and initial liquidity
-* **Governance Configuration**: Voting parameters, proposal thresholds, and timelock settings
-* **Vesting Configuration**: Token vesting schedules and inflation parameters
+#### Sale Configuration
+
+Token sale parameters, pricing, and distribution
+
+| Key                       | Type   |
+| ------------------------- | ------ |
+| initialSupply             | number |
+| numTokensToSell           | number |
+
+
+<!-- SALE CONFIGURATION
+ORIGINAL SOURCE:
+https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L182
+
+->
+
+m/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L90-L93
+
+---------- -->
+
+#### Pool Configuration
+Fee tiers, tick spacing, and initial liquidity
+
+| Key               | Type   |
+| ----------------- | ------ |
+| startTick         | number |
+| endTick           | number |
+| numPositions      | number |
+| maxSharesToBeSold | bigint |
+| fee               | number |
+
+<!-- POOL CONFIGURATION
+ORIGINAL SOURCE:
+https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L180
+
+->
+
+https://github.com/whetstoneresearch/doppler-sdk/blob/c24d22171828e82513593d7bf05d369528334cc7/packages/doppler-v3-sdk/src/entities/factory/ReadWriteFactory.ts#L77-L83
+
+---------- -->
+
+
+#### Governance Configuration
+
+Voting parameters, proposal thresholds, and timelock settings
+
+| Key                           | Type   |
+| ----------------------------- | ------ |
+| initialVotingDelay            | number |
+| initialVotingPeriod           | number |
+| initialProposalThreshold      | bigInt |
+
+#### Vesting Configuration
+Token vesting schedules and inflation parameters
+
+| Key                       | Type                          |
+| --------------------------| ----------------------------- |
+| yearlyMintRate            | bigint                        |
+| vestingDuration           | number                        |
+| recipients                | [Address[]](https://viem.sh/) |
+| amounts                   | bigint[]                      |
 
 ### Error Handling & Validation
 
