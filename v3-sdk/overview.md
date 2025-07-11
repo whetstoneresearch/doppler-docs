@@ -78,7 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* [**Config Types**](#default-configurations-and-customization): Pre-configured config types with `DefaultConfigs`
+* [**Configuration Types**](#default-configurations-and-customization): Utilize `DefaultConfigs` for predefined config types
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
@@ -217,7 +217,7 @@ Token vesting schedules and inflation parameters
 | Key                         | Type                                                | Default                           | Purpose
 | ----------------------------| --------------------------------------------------- | --------------------------------- | ---
 | `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | 
-| `vestingDuration`           | number                                              | 31,536,000 (one year in seconds)  | vesting cadence
+| `vestingDuration`           | bigint                                              | 31,536,000 (one year in seconds)  | vesting cadence
 | `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []                                | vesting recipients
 | `amounts`                   | bigint[]                                            | []                                | vesting amount for each recipient
 
