@@ -78,7 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* **Default Templates**: Pre-configured templates for common use cases with `defaultSaleConfig`, `defaultV3PoolConfig`, and `defaultGovernanceConfig`
+* [**Configuration Types**](#default-configurations-and-customization): Utilize `DefaultConfigs` for predefined config types
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
@@ -123,30 +123,121 @@ The SDK provides access to important protocol events:
 * **Pool Events**: Access mint, burn, and swap events from individual pools
 * **Transfer Events**: Track token transfers and balance changes
 
-### Configuration & Customization
+---
 
-#### Default Configurations
+### Default Configurations & Customization
 
-The SDK exports several default configurations that can be customized:
+
+#### **Sale Configuration**
+
+Token sale parameters, pricing, and distribution
+
+| Key                         | Type   | Default        | Purpose
+| --------------------------- | ------ | -------------- | ----
+| `initialSupply`             | bigint | 1,000,000,000  | Starting supply of tokens
+| `numTokensToSell`           | bigint | 900,000,000    | Amount of tokens to sell
+
 
 ```typescript
-// Available default configurations
 import {
-  defaultSaleConfig,
-  defaultV3PoolConfig,
-  defaultGovernanceConfig,
-  defaultVestingConfig
+  DefaultConfigs,
+  DEFAULT_INITIAL_SUPPLY_WAD,
+  DEFAULT_NUM_TOKENS_TO_SELL_WAD
 } from 'doppler-v3-sdk';
+
+const saleConfig: DefaultConfigs['defaultSaleConfig'] = {
+  initialSupply: DEFAULT_INITIAL_SUPPLY_WAD, // parseEther("1_000_000_000")
+  numTokensToSell: DEFAULT_NUM_TOKENS_TO_SELL_WAD, // parseEther("900_000_000")
+};
 ```
 
-#### Custom Parameters
+---
 
-Key customizable parameters include:
+#### Pool Configuration
+Fee tiers, tick spacing, and initial liquidity
 
-* **Sale Configuration**: Token sale parameters, pricing, and distribution
-* **Pool Configuration**: Fee tiers, tick spacing, and initial liquidity
-* **Governance Configuration**: Voting parameters, proposal thresholds, and timelock settings
-* **Vesting Configuration**: Token vesting schedules and inflation parameters
+| Key                 | Type   | Default       | Purpose
+| ------------------- | ------ | ------------- | ---
+| `startTick`         | number | 175,000       | Lower price bound
+| `endTick`           | number | 225,000       | Upper price bound
+| `numPositions`      | number | 15            | Uniswap v3 positions placed
+| `maxSharesToBeSold` | bigint | 0.35          | percentage of supply used in the auction
+| `fee`               | number | 10,000 (1%)   | swap fees
+
+```typescript
+import {
+  DefaultConfigs,
+  DEFAULT_START_TICK,
+  DEFAULT_END_TICK,
+  DEFAULT_NUM_POSITIONS,
+  DEFAULT_MAX_SHARE_TO_BE_SOLD,
+  DEFAULT_FEE,
+} from 'doppler-v3-sdk';
+
+const poolConfig: DefaultConfigs['defaultV3PoolConfig'] = {
+  startTick: DEFAULT_START_TICK, // 175_000
+  endTick: DEFAULT_END_TICK, // 225_000
+  numPositions: DEFAULT_NUM_POSITIONS, // 15
+  maxShareToBeSold: DEFAULT_MAX_SHARE_TO_BE_SOLD, // parseEther("0.35")
+  fee: DEFAULT_FEE, // 10_000, 1% fee tier
+};
+```
+
+---
+
+#### Governance Configuration
+Voting parameters, proposal thresholds, and timelock settings
+
+| Key                             | Type   | Default   | Purpose
+| ------------------------------- | ------ | --------- | ---
+| `initialVotingDelay`            | number | 172,800   | when voting can begin
+| `initialVotingPeriod`           | number | 1,209,600 | how long a vote lasts
+| `initialProposalThreshold`      | bigInt | 0         | required tokens to create a proposal
+
+```typescript
+import {
+  DefaultConfigs,
+  DEFAULT_INITIAL_VOTING_DELAY,
+  DEFAULT_INITIAL_VOTING_PERIOD,
+  DEFAULT_INITIAL_PROPOSAL_THRESHOLD,
+} from 'doppler-v3-sdk';
+
+const governanceConfig: DefaultConfigs['defaultGovernanceConfig'] = {
+  initialVotingDelay: DEFAULT_INITIAL_VOTING_DELAY, // 172_800
+  initialVotingPeriod: DEFAULT_INITIAL_VOTING_PERIOD, // 1_209_600
+  initialProposalThreshold: DEFAULT_INITIAL_PROPOSAL_THRESHOLD, // BigInt(0);
+};
+```
+
+---
+
+#### Vesting Configuration
+Token vesting schedules and inflation parameters
+
+| Key                         | Type                                                | Default                           | Purpose
+| ----------------------------| --------------------------------------------------- | --------------------------------- | ---
+| `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | annual token inflation
+| `vestingDuration`           | bigint                                              | 31,536,000 (one year in seconds)  | vesting cadence
+| `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []                                | vesting recipients
+| `amounts`                   | bigint[]                                            | []                                | vesting amount for each recipient
+
+```typescript
+import {
+  DefaultConfigs,
+  DEFAULT_YEARLY_MINT_RATE_WAD,
+  DEFAULT_VESTING_DURATION,
+} from 'doppler-v3-sdk';
+import { parseEther } from "viem";
+
+const vestingConfig: DefaultConfigs['defaultVestingConfig'] = {
+  yearlyMintRate: DEFAULT_YEARLY_MINT_RATE_WAD, // parseEther("0.02")
+  vestingDuration: DEFAULT_VESTING_DURATION, // BigInt(ONE_YEAR_IN_SECONDS)
+  recipients: ["0x..."], // custom recipients
+  amounts: [parseEther('50_000_000')], // custom amounts
+};
+```
+
+---
 
 ### Error Handling & Validation
 
