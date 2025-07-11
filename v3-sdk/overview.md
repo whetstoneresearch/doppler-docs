@@ -78,7 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* [**Default Templates**](#default-configurations--customization): Pre-configured templates for common use cases with `defaultSaleConfig`, `defaultV3PoolConfig`, and `defaultGovernanceConfig`
+* [**Default Templates**](#default-configurations-and-customization): Pre-configured templates for common use cases with `defaultSaleConfig`, `defaultV3PoolConfig`, `defaultGovernanceConfig`, and `defaultVestingConfig`
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
