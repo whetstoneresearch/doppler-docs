@@ -160,9 +160,9 @@ Fee tiers, tick spacing, and initial liquidity
 | ------------------- | ------ | ------------- | ---
 | `startTick`         | number | 175,000       | Lower price bound
 | `endTick`           | number | 225,000       | Upper price bound
-| `numPositions`      | number | 15            | 
-| `maxSharesToBeSold` | bigint | 0.35          |
-| `fee`               | number | 10,000 (1%)   |
+| `numPositions`      | number | 15            | Uniswap v3 positions placed
+| `maxSharesToBeSold` | bigint | 0.35          | percentage of supply used in the auction
+| `fee`               | number | 10,000 (1%)   | swap fees
 
 ```typescript
 import {
@@ -190,9 +190,9 @@ Voting parameters, proposal thresholds, and timelock settings
 
 | Key                             | Type   | Default   | Purpose
 | ------------------------------- | ------ | --------- | ---
-| `initialVotingDelay`            | number | 172,800   |
-| `initialVotingPeriod`           | number | 1,209,600 |
-| `initialProposalThreshold`      | bigInt | 0         |
+| `initialVotingDelay`            | number | 172,800   | when voting can begin
+| `initialVotingPeriod`           | number | 1,209,600 | how long a vote lasts
+| `initialProposalThreshold`      | bigInt | 0         | required tokens to create a proposal
 
 ```typescript
 import {
@@ -216,7 +216,7 @@ Token vesting schedules and inflation parameters
 
 | Key                         | Type                                                | Default                           | Purpose
 | ----------------------------| --------------------------------------------------- | --------------------------------- | ---
-| `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | 
+| `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | annual token inflation
 | `vestingDuration`           | bigint                                              | 31,536,000 (one year in seconds)  | vesting cadence
 | `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []                                | vesting recipients
 | `amounts`                   | bigint[]                                            | []                                | vesting amount for each recipient
