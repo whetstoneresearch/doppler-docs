@@ -5,7 +5,7 @@ icon: map-location
 
 # Protocol roadmap
 
-<figure><img src="../.gitbook/assets/doppler-roadmap-light-final.png" alt=""><figcaption><p>A visual overview of the Doppler Roadmap</p></figcaption></figure>
+<figure><img src="../.gitbook/assets/doppler-roadmap-dark (4).png" alt=""><figcaption></figcaption></figure>
 
 \
 Notably this does not include every designed or planned feature, improvement, nor integration. Rather it aims to provide directional insight to communities interested in building with Doppler so they can make more informed decisions about their own integration roadmaps. Additionally this serves as a vehicle by which teams can request other items they’d love to see prioritized.  _**It is entirely subject to change.**_
@@ -14,11 +14,11 @@ Notably this does not include every designed or planned feature, improvement, no
 
 Up next:
 
-* Doppler Core
-  * Full support for Dutch Auction Dynamic Bonding Curves with Uniswap v4
-  * “Bring your own” network and protocol tokens to auction from other contracts&#x20;
-    * Start auctions at customizable, existing market prices&#x20;
+* ~~Doppler Core~~ - [Read the Core release announcement](https://x.com/dopplerprotocol/status/1933169128166334882) :white\_check\_mark:
+  * ~~Full support for Dutch Auction Dynamic Bonding Curves with Uniswap v4~~
+    * ~~Start auctions at customizable, existing market prices~~&#x20;
 * Doppler Optimized for Mainnet Ethereum (DOME)
+* “Bring your own” network and protocol tokens to auction from other contracts&#x20;
 * Explorers integrations
 * Data visualization platforms integrations
 * Treasury tool integrations&#x20;

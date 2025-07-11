@@ -1,5 +1,5 @@
 ---
-description: Overview of the Doppler V3 SDK
+description: Overview of Doppler V3
 icon: clipboard-question
 ---
 
@@ -12,6 +12,22 @@ icon: clipboard-question
 The Doppler V3 SDK is a TypeScript library that provides developers with comprehensive tools to interact with the Doppler protocol's V3 implementation. It enables seamless integration with Doppler's token creation, price discovery, and liquidity migration systems across multiple EVM-compatible networks.
 
 The SDK abstracts the complexity of smart contract interactions, providing type-safe methods for creating tokens, managing pools, and handling the complete lifecycle of assets on the Doppler protocol. It's designed to support both read-only operations for data querying and write operations for token deployment and pool management.
+
+### How does Doppler v3 work?&#x20;
+
+Doppler v3 has a few configurations depending on an application's goals. It can be created to migrate post-bonding curve liquidity into Uniswap v2 to accumulate more fees overtime, Uniswap v4 to support application specific fee tiers, or left within positions on Uniswap v3. Here's an overview.
+
+With "migration" to Uniswap v2
+
+<figure><img src="../.gitbook/assets/doppler-roadmap-dark (3).png" alt=""><figcaption></figcaption></figure>
+
+With "migration" to Uniswap v4&#x20;
+
+<figure><img src="../.gitbook/assets/doppler-roadmap-dark (5).png" alt=""><figcaption></figcaption></figure>
+
+Without "migration"&#x20;
+
+<figure><img src="../.gitbook/assets/doppler-roadmap-dark (2).png" alt=""><figcaption></figcaption></figure>
 
 ### What is Drift?
 
@@ -28,12 +44,12 @@ The Doppler V3 SDK is built on top of [Drift](https://delvtech.github.io/drift/)
 
 The V3 SDK supports multiple networks where Doppler protocol contracts are deployed:
 
-| Network              | Chain ID | Environment | Purpose                       |
-| -------------------- | -------- | ----------- | ----------------------------- |
-| **Base Mainnet**     | `8453`   | Production  | Live token deployments        |
-| **Unichain Mainnet** | `130`    | Production  | Live token deployments        |
-| **Ink**              | `57073`  | Production  | Live token deployments        |
-| **Base Sepolia**     | `84532`  | Testnet     | Development and testing       |
+| Network              | Chain ID | Environment | Purpose                 |
+| -------------------- | -------- | ----------- | ----------------------- |
+| **Base Mainnet**     | `8453`   | Production  | Live token deployments  |
+| **Unichain Mainnet** | `130`    | Production  | Live token deployments  |
+| **Ink**              | `57073`  | Production  | Live token deployments  |
+| **Base Sepolia**     | `84532`  | Testnet     | Development and testing |
 
 Network addresses and configurations are automatically managed through the `DOPPLER_V3_ADDRESSES` constant, making it easy to switch between networks.
 

@@ -1,16 +1,5 @@
 ---
 icon: hand-wave
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
 ---
 
 # Welcome
@@ -51,7 +40,7 @@ Token issuers and application developers no longer have to worry about the compl
 
 Doppler is currently deployed to Base, Unichain, and Ink, with others coming soon.
 
-[See the contract addresess](resources/contract-addresses.md), including testnet deployments to Arbitrum and Monad.
+[See the contract addresess](resources/contract-addresses.md), including testnet deployments to Arbitrum, World, and Monad.
 
 ### Get started
 

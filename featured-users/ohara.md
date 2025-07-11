@@ -27,6 +27,10 @@ Once users are happy with the applications Ohara generated via their prompts, th
 Implementation details are subject to change and provided for educational purposes only. Verify onchain.
 {% endhint %}
 
+### Website
+
+:link: [https://ohara.ai/](https://ohara.ai/)
+
 ### Socials&#x20;
 
 :link: [discord.gg/ohara-ai](https://discord.gg/ohara-ai)
