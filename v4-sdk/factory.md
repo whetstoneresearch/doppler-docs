@@ -138,7 +138,7 @@ buildConfig(
 
 **Parameters:**
 
-- `params` - Pre-deployment configuration parameters
+- `params` - Pre-deployment configuration parameters ([DopplerPreDeploymentConfig](overview.md#doppler-predeployment-configuration-parameters))
 - `addresses` - Addresses of required Doppler V4 contracts
 
 **Returns:** Object containing creation parameters, hook address, and token address
@@ -249,7 +249,7 @@ const migrationTx = await factory.migrate(token);
 
 ## Configuration Parameters
 
-The `DopplerPreDeploymentConfig` includes:
+The [`DopplerPreDeploymentConfig`](overview.md#doppler-predeployment-configuration-parameters) includes:
 
 - **Token Details**: `name`, `symbol`, `totalSupply`, `tokenURI`
 - **Sale Parameters**: `numTokensToSell`, `duration`, `epochLength`
