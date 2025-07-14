@@ -112,6 +112,10 @@ Sophisticated configuration management system:
 
 ```typescript
 // Advanced configuration building
+const preDeploymentConfig = {
+  
+};
+
 const { createParams, hook, token } = factory.buildConfig(
   preDeploymentConfig, 
   addresses
@@ -132,7 +136,7 @@ Key capabilities include:
 | `name`                        | string                                                   | Name of the token being deployed                                        |
 | `symbol`                      | string                                                   | Symbol representing the token                                           |
 | `totalSupply`                 | bigint                                                   | Total supply of tokens available                                        |
-| `numTokensToSell`             | bigint                                                   | Number of tokens designated for sale                                    |
+| `numTokensToSell`             | bigint                                                   | Amount of tokens to sell                                                |
 | `tokenURI`                    | string                                                   | URI pointing to the token's metadata                                    |
 | `blockTimestamp`              | number                                                   | Timestamp of the block when the configuration is set                    |
 | `startTimeOffset`             | number                                                   | Offset in **days** from the current time to the start of the sale       |
@@ -142,11 +146,11 @@ Key capabilities include:
 | `tickRange` (TickRange)       | { startTick: number, endTick: number } **(optional)**    | Range of ticks for price adjustments                                    |
 | `priceRange` (PriceRange)     | { startPrice: number, endPrice: number } **(optional)**  | Range of prices for the token                                           |
 | `tickSpacing`                 | number                                                   | Spacing between ticks for price adjustments                             |
-| `gamma`                       | number **(optional)**                                    | Gamma value for price calculations, can be directly set                 |
+| `gamma`                       | number **(optional)**                                    | Gamma value for price calculations                                      |
 | `fee`                         | number                                                   | Transaction fee in basis points (bips)                                  |
 | `minProceeds`                 | bigint                                                   | Minimum range for auction target                                        |
 | `maxProceeds`                 | bigint                                                   | Maximum range for auction target                                        |
-| `numPdSlugs`                  | number **(optional)**                                    | Number of price discovery slugs, defaults if not set                    |
+| `numPdSlugs`                  | number **(optional)**                                    | Number of price discovery slugs                                         |
 | `yearlyMintRate`              | bigint                                                   | Rate at which tokens are minted annually                                |
 | `vestingDuration`             | bigint                                                   | Duration of the vesting period in seconds                               |
 | `recipients`                  | Address[]                                                | List of addresses receiving vested tokens                               |

@@ -151,6 +151,8 @@ console.log('Module state:', moduleState);
 const addresses = DOPPLER_V4_ADDRESSES[chainId];
 const airlockAddress = addresses.airlock;
 const bundlerAddress = addresses.bundler;
+const tokenURI = "https://example.com/token-metadata.json";
+const integrator: Address = "0x...";
 
 // Create a read-write factory instance
 const factory = new ReadWriteFactory(
@@ -160,27 +162,31 @@ const factory = new ReadWriteFactory(
 );
 
 // Define pre-deployment configuration
-const preDeploymentConfig = {
-  integrator: integratorAddress,
-  userAddress: userAddress,
-  numeraire: numeraireAddress, // USDC, WETH, etc.
-  tokenConfig: {
-    name: "My V4 Token",
-    symbol: "MTK4",
-    decimals: 18
+const preDeploymentConfig: DopplerPreDeploymentConfig = {
+  name: tokenName,
+  symbol: tokenSymbol,
+  totalSupply: parseEther('1_000_000_000'),
+  numTokensToSell: parseEther('600_000_000'),
+  tokenURI,
+  blockTimestamp: Math.floor(Date.now() / 1000),
+  startTimeOffset: 1,
+  duration: 1 / 4,
+  epochLength: 200,
+  gamma: 800,
+  tickRange: {
+    startTick: 174_312,
+    endTick: 186_840,
   },
-  saleConfig: {
-    // Custom sale configuration
-  },
-  v4PoolConfig: {
-    // V4 pool configuration
-  },
-  vestingConfig: {
-    // Vesting configuration
-  },
-  governanceConfig: {
-    // Governance configuration
-  }
+  tickSpacing: 2,
+  fee: 20_000, // 2%
+  minProceeds: parseEther('2'),
+  maxProceeds: parseEther('4'),
+  yearlyMintRate: 0n,
+  vestingDuration: BigInt(24 * 60 * 60 * 365), // Seconds in a year
+  recipients: [wallet.account.address],
+  amounts: [parseEther('50_000_000')],
+  numPdSlugs: 15,
+  integrator,
 };
 
 // Build the complete configuration
