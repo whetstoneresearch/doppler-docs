@@ -249,7 +249,7 @@ const migrationTx = await factory.migrate(token);
 
 ## Configuration Parameters
 
-The `DopplerPreDeploymentConfig` includes:
+The [`DopplerPreDeploymentConfig`](overview.md#doppler-predeployment-configuration-parameters) includes:
 
 - **Token Details**: `name`, `symbol`, `totalSupply`, `tokenURI`
 - **Sale Parameters**: `numTokensToSell`, `duration`, `epochLength`

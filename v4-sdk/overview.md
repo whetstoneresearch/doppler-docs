@@ -66,7 +66,7 @@ Revolutionary approach to token pricing and liquidity:
 
 Comprehensive configuration management for complex deployments:
 
-* **Pre-deployment Configuration**: `DopplerPreDeploymentConfig` for complete setup specification
+* [**Pre-deployment Configuration**](#doppler-predeployment-configuration-parameters): `DopplerPreDeploymentConfig` for complete setup specification
 * **Hook Mining**: Automatic discovery of optimal hook addresses with required flags
 * **Parameter Validation**: Advanced validation ensuring configuration consistency and mathematical correctness
 * **Gas Optimization**: Intelligent gas estimation and optimization for complex transactions
@@ -124,6 +124,35 @@ Key capabilities include:
 * **Compatibility Checking**: Validation of parameter combinations and constraints
 * **Hook Integration**: Seamless integration of custom hooks with token logic
 * **Gas Estimation**: Accurate gas estimation for complex deployments
+
+## Doppler Predeployment Configuration Parameters
+
+| Key                     | Type                  | Purpose                                                                 |
+| ----------------------- | --------------------- | ----------------------------------------------------------------------- |
+| `name`                  | string                | Name of the token being deployed                                        |
+| `symbol`                | string                | Symbol representing the token                                           |
+| `totalSupply`           | bigint                | Total supply of tokens available                                        |
+| `numTokensToSell`       | bigint                | Number of tokens designated for sale                                    |
+| `tokenURI`              | string                | URI pointing to the token's metadata                                    |
+| `blockTimestamp`        | number                | Timestamp of the block when the configuration is set                    |
+| `startTimeOffset`       | number                | Offset in days from the current time to the start of the sale           |
+| `duration`              | number                | Duration of the sale in days                                            |
+| `epochLength`           | number                | Length of each epoch in seconds                                         |
+| `numeraire`             | Address (optional)    | Address of the numéraire token, defaults to native if not provided      |
+| `tickRange`             | TickRange (optional)  | Range of ticks for price adjustments                                    |
+| `priceRange`            | PriceRange (optional) | Range of prices for the token                                           |
+| `tickSpacing`           | number                | Spacing between ticks for price adjustments                             |
+| `gamma`                 | number (optional)     | Gamma value for price calculations, can be directly set                 |
+| `fee`                   | number                | Transaction fee in basis points (bips)                                  |
+| `minProceeds`           | bigint                | Minimum proceeds expected from the sale                                 |
+| `maxProceeds`           | bigint                | Maximum proceeds expected from the sale                                 |
+| `numPdSlugs`            | number (optional)     | Number of price discovery slugs, defaults if not set                    |
+| `yearlyMintRate`        | bigint                | Rate at which tokens are minted annually                                |
+| `vestingDuration`       | bigint                | Duration of the vesting period in seconds                               |
+| `recipients`            | Address[]             | List of addresses receiving vested tokens                               |
+| `amounts`               | bigint[]              | Amounts of tokens allocated to each recipient                           |
+| `liquidityMigratorData` | Hex (optional)        | Encoded data for liquidity migration                                    |
+| `integrator`            | Address               | Address of the integrator managing the deployment                       |
 
 #### Data Analytics
 
