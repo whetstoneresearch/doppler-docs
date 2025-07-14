@@ -112,10 +112,7 @@ Sophisticated configuration management system:
 
 ```typescript
 // Advanced configuration building
-const preDeploymentConfig = {
-  
-};
-
+const preDeploymentConfig: DopplerPreDeploymentConfig = { ... };
 const { createParams, hook, token } = factory.buildConfig(
   preDeploymentConfig, 
   addresses
