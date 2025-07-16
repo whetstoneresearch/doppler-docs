@@ -19,6 +19,7 @@
 * [Quoter](v3-sdk/quoter.md)
 * [Custom Fees](v3-sdk/custom-fees.md)
 * [Governance Options](v3-sdk/governance-options.md)
+* [Streamable V3](v3-sdk/streamable-v3.md)
 
 ## v4 SDK
 

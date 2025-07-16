@@ -136,6 +136,91 @@ This will:
 1. **Plan Beneficiaries Carefully**: Once set, beneficiaries cannot be changed
 3. **Test on Testnet**: Always test your beneficiary configuration on testnet first
 
+## Migration from Standard V3 Pools
+
+### Feature Comparison
+
+| Feature | Standard V3 Pool | Streamable V3 Pool |
+|---------|------------------|-------------------|
+| **Initializer Contract** | `UniswapV3Initializer` | `LockableUniswapV3Initializer` |
+| **Fee Distribution** | Accumulated in pool until migration | Continuously claimable by beneficiaries |
+| **Pool Migration** | Graduates to V2 or V4 after conditions met | Never migrates (permanent V3) |
+| **Beneficiaries** | Not supported | Multiple beneficiaries with custom shares |
+| **Protocol Fee** | Collected on migration | 5% streamed to protocol continuously |
+| **Liquidity Management** | Full range + migration planning | Full range permanently |
+| **Use Case** | Standard token launches with future migration | Projects needing continuous fee distribution |
+
+### When to Use Each Approach
+
+**Use Standard V3 Pools When:**
+- You want the flexibility to migrate to Uniswap V2 or V4 later
+- You prefer consolidated liquidity in a single graduated pool
+- You don't need immediate fee distribution
+- You want to follow the traditional Doppler launch pattern
+
+**Use Streamable V3 Pools When:**
+- You need continuous revenue distribution to multiple parties
+- You want a "set and forget" pool structure
+- You have stakeholders who need regular fee access
+- You prefer simplicity over migration flexibility
+
+### Key Implementation Differences
+
+The main differences when implementing streamable V3 pools:
+
+1. **Initializer Address**: Use `lockableV3Initializer` instead of `v3Initializer`
+2. **Beneficiaries**: Must be configured with shares summing to exactly 100%
+3. **Liquidity Migrator**: Set to `zeroAddress` (migration is disabled)
+4. **Unlock Time**: Ignored by the contract (pools never unlock)
+
+### Example: Converting Configuration
+
+**Standard V3 Configuration:**
+```typescript
+const standardConfig = {
+  contracts: {
+    v3Initializer: addresses.v3Initializer,
+    liquidityMigrator: addresses.v2Migrator, // Or v4Migrator
+  },
+  v3PoolConfig: {
+    feeTier: 10000,
+    initialEthLiquidity: parseEther("2"),
+    unlockTime: futureTimestamp,
+    shouldLaunch: true
+  }
+};
+```
+
+**Streamable V3 Configuration:**
+```typescript
+const streamableConfig = {
+  contracts: {
+    v3Initializer: addresses.lockableV3Initializer, // Changed
+    liquidityMigrator: zeroAddress, // Changed - no migration
+  },
+  v3PoolConfig: {
+    feeTier: 10000,
+    initialEthLiquidity: parseEther("2"),
+    shouldLaunch: true,
+    beneficiaries: sortedBeneficiaries // Added - enables fee streaming
+    // unlockTime removed (ignored by contract)
+  }
+};
+```
+
+### Migration Checklist
+
+If you're moving from standard V3 to streamable V3 for new deployments:
+
+- [ ] Update initializer address to `lockableV3Initializer`
+- [ ] Define beneficiaries with shares summing to exactly 100%
+- [ ] Include 5% protocol fee to Airlock owner
+- [ ] Sort beneficiaries using `factory.sortBeneficiaries()`
+- [ ] Set liquidityMigrator to `zeroAddress`
+- [ ] Remove unlock time planning (parameter is ignored)
+- [ ] Update fee collection processes to use `collectFees()`
+- [ ] Communicate permanent pool structure to stakeholders
+
 ## FAQ
 
 **Q: Can I change beneficiaries after pool creation?**
@@ -143,3 +228,12 @@ A: No, beneficiaries are immutable once the pool is created.
 
 **Q: Can I create a streamable pool without the 5% protocol fee?**
 A: No, the contract enforces that the Airlock owner receives exactly 5% of fees.
+
+**Q: Can I convert an existing standard V3 pool to streamable?**
+A: No, pool types are determined at creation. You would need to create a new token.
+
+**Q: What happens to tokens already launched with standard V3?**
+A: They continue to work as designed and will migrate according to their configuration.
+
+**Q: Can I use streamable V3 with V4 migration for fee streaming?**
+A: No, streamable V3 pools never migrate. If you want V4 with fee streaming, use standard V3 + V4 migrator.
