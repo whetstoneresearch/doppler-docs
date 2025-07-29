@@ -17,11 +17,11 @@ Once users are happy with the applications Ohara generated via their prompts, th
 
 ### Implementation details
 
-* 10% of the total token supply :point\_right: publisher of an application on Ohara
+* 9% of the total token supply :point\_right: publisher of an application on Ohara
   * Subject to linear vesting ("unlocks") over 12 months&#x20;
-* 3% of the total token supply :point\_right: treasury of an application that gets "remixed" on Ohara
-  * Ohara.ai has the notion or concept of "remixing" an application
-    * This means that an application which was originally created (or prompted) by a specific user was essentially "forked"  often with slight changes. By default, Ohara gives 3% of the token supply of _remixed_ applications to the original application's creator.&#x20;
+* If an application gets "remixed" on Ohara, the publisher of the original app gets 3% and the publisher of the new app gets 6%, also vested over 12 months.
+  * Ohara.ai has the notion or concept of "remixing" an application. This means that an application which was originally created (or prompted) by a specific user was essentially "forked", often with slight changes.
+* Every time an app coin is traded through the Uniswap v3 pool, the app publisher also receives 0.45% of the traded amount. 
 
 {% hint style="info" %}
 Implementation details are subject to change and provided for educational purposes only. Verify onchain.
@@ -36,4 +36,3 @@ Implementation details are subject to change and provided for educational purpos
 :link: [discord.gg/ohara-ai](https://discord.gg/ohara-ai)
 
 :link: [x.com/tryOharaAI](https://x.com/tryoharaai)
-
