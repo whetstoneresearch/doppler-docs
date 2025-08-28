@@ -47,6 +47,7 @@
 
 ## Resources
 
+* [Metadata standards](resources/metadata-standards.md)
 * [GitHub](https://github.com/whetstoneresearch)
 * [V3 demo application](https://github.com/whetstoneresearch/doppler-v3-miniapp)
 * [V4 demo application](https://github.com/whetstoneresearch/doppler-v4-miniapp)
