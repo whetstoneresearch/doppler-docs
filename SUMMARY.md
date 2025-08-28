@@ -10,27 +10,27 @@
 * [Fees & economics](how-it-works/fees-and-economics.md)
 * [Treasury & governance](how-it-works/treasury-and-governance.md)
 
-## v3 sdk
+## SDK
 
-* [Overview](v3-sdk/overview.md)
-* [Get Started](v3-sdk/getting-started.md)
-* [Factory](v3-sdk/factory.md)
-* [Token](v3-sdk/token.md)
-* [Quoter](v3-sdk/quoter.md)
-* [Custom Fees](v3-sdk/custom-fees.md)
-* [Governance Options](v3-sdk/governance-options.md)
-* [Streamable V3](v3-sdk/streamable-v3.md)
-
-## v4 SDK
-
-* [Overview](v4-sdk/overview.md)
-* [Get Started](v4-sdk/getting-started.md)
-* [Examples](v4-sdk/examples.md)
-* [Factory](v4-sdk/factory.md)
-* [Quoter](v4-sdk/quoter.md)
-* [Lens](v4-sdk/lens.md)
-* [Custom Fees](v4-sdk/custom-fees.md)
-* [Governance Options](v4-sdk/governance-options.md)
+* [References](sdk/references/README.md)
+  * [v3](sdk/references/v3/README.md)
+    * [Overview](sdk/references/v3/overview.md)
+    * [Get Started](sdk/references/v3/getting-started.md)
+    * [Factory](sdk/references/v3/factory.md)
+    * [Token](sdk/references/v3/token.md)
+    * [Quoter](sdk/references/v3/quoter.md)
+    * [Custom Fees](sdk/references/v3/custom-fees.md)
+    * [Governance Options](sdk/references/v3/governance-options.md)
+    * [Streamable V3](sdk/references/v3/streamable-v3.md)
+  * [v4](sdk/references/v4/README.md)
+    * [Overview](sdk/references/v4/overview.md)
+    * [Get Started](sdk/references/v4/getting-started.md)
+    * [Examples](sdk/references/v4/examples.md)
+    * [Factory](sdk/references/v4/factory.md)
+    * [Quoter](sdk/references/v4/quoter.md)
+    * [Lens](sdk/references/v4/lens.md)
+    * [Custom Fees](sdk/references/v4/custom-fees.md)
+    * [Governance Options](sdk/references/v4/governance-options.md)
 
 ## Indexer
 
@@ -47,12 +47,12 @@
 
 ## Resources
 
-* [Metadata standards](resources/metadata-standards.md)
 * [GitHub](https://github.com/whetstoneresearch)
 * [V3 demo application](https://github.com/whetstoneresearch/doppler-v3-miniapp)
 * [V4 demo application](https://github.com/whetstoneresearch/doppler-v4-miniapp)
 * [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 * [Multicurve Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/multicurve/Doppler_Multicurve.pdf)
+* [Metadata standards](resources/metadata-standards.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
 * [Contract addresses](resources/contract-addresses.md)
 * [Protocol roadmap](resources/protocol-roadmap.md)

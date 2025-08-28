@@ -13,21 +13,21 @@ The Doppler V3 SDK is a TypeScript library that provides developers with compreh
 
 The SDK abstracts the complexity of smart contract interactions, providing type-safe methods for creating tokens, managing pools, and handling the complete lifecycle of assets on the Doppler protocol. It's designed to support both read-only operations for data querying and write operations for token deployment and pool management.
 
-### How does Doppler v3 work?&#x20;
+### How does Doppler v3 work?
 
 Doppler v3 has a few configurations depending on an application's goals. It can be created to migrate post-bonding curve liquidity into Uniswap v2 to accumulate more fees overtime, Uniswap v4 to support application specific fee tiers, or left within positions on Uniswap v3. Here's an overview.
 
 With "migration" to Uniswap v2
 
-<figure><img src="../.gitbook/assets/doppler-roadmap-dark (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/doppler-roadmap-dark (3).png" alt=""><figcaption></figcaption></figure>
 
-With "migration" to Uniswap v4&#x20;
+With "migration" to Uniswap v4
 
-<figure><img src="../.gitbook/assets/doppler-roadmap-dark (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/doppler-roadmap-dark (5).png" alt=""><figcaption></figcaption></figure>
 
-Without "migration"&#x20;
+Without "migration"
 
-<figure><img src="../.gitbook/assets/doppler-roadmap-dark (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/doppler-roadmap-dark (2).png" alt=""><figcaption></figcaption></figure>
 
 ### What is Drift?
 
@@ -78,7 +78,7 @@ The SDK handles the complete Doppler asset lifecycle:
 The SDK provides comprehensive token creation capabilities:
 
 * **Flexible Configuration**: Support for custom token parameters, sale configurations, and governance settings
-* [**Configuration Types**](#default-configurations-and-customization): Utilize `DefaultConfigs` for predefined config types
+* [**Configuration Types**](overview.md#default-configurations-and-customization): Utilize `DefaultConfigs` for predefined config types
 * **Parameter Validation**: Automatic validation of creation parameters to prevent deployment errors
 * **Gas Estimation**: Built-in simulation capabilities for accurate gas estimation
 
@@ -123,20 +123,18 @@ The SDK provides access to important protocol events:
 * **Pool Events**: Access mint, burn, and swap events from individual pools
 * **Transfer Events**: Track token transfers and balance changes
 
----
+***
 
 ### Default Configurations & Customization
-
 
 #### **Sale Configuration**
 
 Token sale parameters, pricing, and distribution
 
-| Key                         | Type   | Default        | Purpose
-| --------------------------- | ------ | -------------- | ----
-| `initialSupply`             | bigint | 1,000,000,000  | Starting supply of tokens
-| `numTokensToSell`           | bigint | 900,000,000    | Amount of tokens to sell
-
+| Key               | Type   | Default       | Purpose                   |
+| ----------------- | ------ | ------------- | ------------------------- |
+| `initialSupply`   | bigint | 1,000,000,000 | Starting supply of tokens |
+| `numTokensToSell` | bigint | 900,000,000   | Amount of tokens to sell  |
 
 ```typescript
 import {
@@ -151,18 +149,19 @@ const saleConfig: DefaultConfigs['defaultSaleConfig'] = {
 };
 ```
 
----
+***
 
 #### Pool Configuration
+
 Fee tiers, tick spacing, and initial liquidity
 
-| Key                 | Type   | Default       | Purpose
-| ------------------- | ------ | ------------- | ---
-| `startTick`         | number | 175,000       | Lower price bound
-| `endTick`           | number | 225,000       | Upper price bound
-| `numPositions`      | number | 15            | Uniswap v3 positions placed
-| `maxSharesToBeSold` | bigint | 0.35          | percentage of supply used in the auction
-| `fee`               | number | 10,000 (1%)   | swap fees
+| Key                 | Type   | Default     | Purpose                                  |
+| ------------------- | ------ | ----------- | ---------------------------------------- |
+| `startTick`         | number | 175,000     | Lower price bound                        |
+| `endTick`           | number | 225,000     | Upper price bound                        |
+| `numPositions`      | number | 15          | Uniswap v3 positions placed              |
+| `maxSharesToBeSold` | bigint | 0.35        | percentage of supply used in the auction |
+| `fee`               | number | 10,000 (1%) | swap fees                                |
 
 ```typescript
 import {
@@ -183,16 +182,17 @@ const poolConfig: DefaultConfigs['defaultV3PoolConfig'] = {
 };
 ```
 
----
+***
 
 #### Governance Configuration
+
 Voting parameters, proposal thresholds, and timelock settings
 
-| Key                             | Type   | Default   | Purpose
-| ------------------------------- | ------ | --------- | ---
-| `initialVotingDelay`            | number | 172,800   | when voting can begin
-| `initialVotingPeriod`           | number | 1,209,600 | how long a vote lasts
-| `initialProposalThreshold`      | bigInt | 0         | required tokens to create a proposal
+| Key                        | Type   | Default   | Purpose                              |
+| -------------------------- | ------ | --------- | ------------------------------------ |
+| `initialVotingDelay`       | number | 172,800   | when voting can begin                |
+| `initialVotingPeriod`      | number | 1,209,600 | how long a vote lasts                |
+| `initialProposalThreshold` | bigInt | 0         | required tokens to create a proposal |
 
 ```typescript
 import {
@@ -209,17 +209,18 @@ const governanceConfig: DefaultConfigs['defaultGovernanceConfig'] = {
 };
 ```
 
----
+***
 
 #### Vesting Configuration
+
 Token vesting schedules and inflation parameters
 
-| Key                         | Type                                                | Default                           | Purpose
-| ----------------------------| --------------------------------------------------- | --------------------------------- | ---
-| `yearlyMintRate`            | bigint                                              | 0.02 (2%)                         | annual token inflation
-| `vestingDuration`           | bigint                                              | 31,536,000 (one year in seconds)  | vesting cadence
-| `recipients`                | [Address[]](https://viem.sh/ "Viem, type: Address") | []                                | vesting recipients
-| `amounts`                   | bigint[]                                            | []                                | vesting amount for each recipient
+| Key               | Type                            | Default                          | Purpose                           |
+| ----------------- | ------------------------------- | -------------------------------- | --------------------------------- |
+| `yearlyMintRate`  | bigint                          | 0.02 (2%)                        | annual token inflation            |
+| `vestingDuration` | bigint                          | 31,536,000 (one year in seconds) | vesting cadence                   |
+| `recipients`      | [Address\[\]](https://viem.sh/) | \[]                              | vesting recipients                |
+| `amounts`         | bigint\[]                       | \[]                              | vesting amount for each recipient |
 
 ```typescript
 import {
@@ -237,7 +238,7 @@ const vestingConfig: DefaultConfigs['defaultVestingConfig'] = {
 };
 ```
 
----
+***
 
 ### Error Handling & Validation
 

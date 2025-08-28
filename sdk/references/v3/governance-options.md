@@ -130,5 +130,5 @@ const recipient = DEAD_ADDRESS; // 0x000...dEaD
 ## See Also
 
 * [V4 Migrator Guide](custom-fees.md) - Configure V4 migration with beneficiaries
-* [Token Launch Examples](../doppler-v3-sdk-reference/token-launch-examples.md) - Complete examples
-* [Contract Addresses](../doppler-v3-sdk-reference/contract-addresses.md) - Deployment addresses by chain
+* [Token Launch Examples](../../../doppler-v3-sdk-reference/token-launch-examples.md) - Complete examples
+* [Contract Addresses](../../../doppler-v3-sdk-reference/contract-addresses.md) - Deployment addresses by chain

@@ -16,7 +16,7 @@ Here's a bit more about how this works...
 
 ### Doppler v3 explainer
 
-1. Applications send a message to the Doppler smart contracts to create a token. This message can be formed entirely utilizing the [doppler-sdk](../v3-sdk/factory.md)
+1. Applications send a message to the Doppler smart contracts to create a token. This message can be formed entirely utilizing the [doppler-sdk](../sdk/references/v3/factory.md)
 2. The Doppler contracts create an ERC-20, a Uniswap v3 pool, a Uniswap v2 pool, and a Timelock. The code that facilitates this entire process is known as the ["Doppler Airlock"](airlock-and-modules.md)
    1. Each one of these pieces is created by a “module”, which is an interface into the Doppler Airlock to facilitate individual trading actions like the liquidity bootstrapping pool, token factory, migrator (moves to generalized AMM), or timelock.
 3. A share of the tokens set by the Interface are sent immediately to the Uniswap v3 pool

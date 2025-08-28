@@ -223,6 +223,6 @@ const config: V4MigratorData = {
 
 ## See Also
 
-* [StreamableFeesLocker Reference](../v4-sdk/custom-fees.md)
+* [StreamableFeesLocker Reference](../v4/custom-fees.md)
 * [Factory Reference](factory.md)
-* [V4 SDK Documentation](../v4-sdk/factory.md)
+* [V4 SDK Documentation](../v4/factory.md)

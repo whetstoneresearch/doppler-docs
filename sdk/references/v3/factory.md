@@ -106,6 +106,7 @@ The SDK supports creating V3 pools with fee streaming capabilities through the l
 To use the lockable V3 initializer:
 
 1. **Specify the lockable initializer address** in your contracts configuration:
+
 ```typescript
 const contracts = {
   tokenFactory: DOPPLER_V3_ADDRESSES[chainId].tokenFactory,
@@ -116,6 +117,7 @@ const contracts = {
 ```
 
 2. **Add beneficiaries to the v3PoolConfig**:
+
 ```typescript
 const v3PoolConfig = {
   // ... standard pool config
@@ -133,12 +135,13 @@ const v3PoolConfig = {
 ```
 
 **Important requirements:**
-- Total beneficiary shares must equal 1e18 (100%)
-- The Airlock owner must be included with exactly 5% shares
-- Beneficiaries must be sorted by address in ascending order
-- Pools with beneficiaries will be permanently locked and never migrate
 
-For more detailed information about streamable V3 pools, see the [Streamable V3 documentation](./streamable-v3.md).
+* Total beneficiary shares must equal 1e18 (100%)
+* The Airlock owner must be included with exactly 5% shares
+* Beneficiaries must be sorted by address in ascending order
+* Pools with beneficiaries will be permanently locked and never migrate
+
+For more detailed information about streamable V3 pools, see the [Streamable V3 documentation](../../../v3-sdk/streamable-v3.md).
 
 ### V4 Migrator Support
 

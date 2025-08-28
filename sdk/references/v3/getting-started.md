@@ -1,11 +1,11 @@
 ---
-description: Getting Started with Doppler V4 SDK
+description: Getting Started with Doppler V3 SDK
 icon: rocket
 ---
 
 # Get Started
 
-This section guides you through setting up and using the Doppler V4 SDK to interact with the latest version of the Doppler protocol.
+This section guides you through setting up and using the Doppler V3 SDK to interact with the Doppler protocol.
 
 ## Prerequisites
 
@@ -16,12 +16,12 @@ This section guides you through setting up and using the Doppler V4 SDK to inter
 
 ## Installation
 
-Install the Doppler V4 SDK, Viem, and Drift packages:
+Install the Doppler V3 SDK, Viem, and Drift packages:
 
 ```bash
-npm install doppler-v4-sdk viem @delvtech/drift @delvtech/drift-viem
+npm install doppler-v3-sdk viem @delvtech/drift @delvtech/drift-viem
 # or
-yarn add doppler-v4-sdk viem @delvtech/drift @delvtech/drift-viem
+yarn add doppler-v3-sdk viem @delvtech/drift @delvtech/drift-viem
 ```
 
 The SDK uses [Drift](https://github.com/delvtech/drift) for blockchain interactions.
@@ -47,9 +47,9 @@ CHAIN_ID=84532
 import { 
   ReadFactory, 
   ReadWriteFactory, 
-  Lens,
-  DOPPLER_V4_ADDRESSES 
-} from 'doppler-v4-sdk';
+  ReadUniswapV3Pool,
+  DOPPLER_V3_ADDRESSES 
+} from 'doppler-v3-sdk';
 ```
 
 ### 2. Initialize Drift Client
@@ -59,10 +59,10 @@ Set up your Drift client with both read and write capabilities:
 #### Read-only operations
 
 ```typescript
-import { Drift } from 'drift';
+import { createDrift } from "@delvtech/drift";
 
 // For read-only operations
-const drift = new Drift({
+const drift = createDrift({
   rpcUrl: 'https://sepolia.base.org',
   chainId: 84532 // Base Sepolia
 });
@@ -96,7 +96,7 @@ const driftWithWallet = createDrift({
 ```typescript
 // Get addresses for the current network
 const chainId = 84532; // Base Sepolia (change to 8453 for Base Mainnet, 130 for Unichain Mainnet, etc.)
-const addresses = DOPPLER_V4_ADDRESSES[chainId];
+const addresses = DOPPLER_V3_ADDRESSES[chainId];
 const airlockAddress = addresses.airlock;
 ```
 
@@ -104,20 +104,17 @@ const airlockAddress = addresses.airlock;
 
 ### Factory Classes
 
-The V4 SDK provides two main factory classes:
+The SDK provides two main factory classes:
 
 * **`ReadFactory`**: For querying protocol state and reading data
-* **`ReadWriteFactory`**: For creating tokens with hooks
-
-### Key V4 Features
-
-* **Dynamic bonding curves**: Custom hooks supporting dynamic bonding curves
+* **`ReadWriteFactory`**: For creating tokens and interacting with pools
 
 ### Asset Lifecycle
 
-1. **Token Creation**: Deploy new tokens with custom hooks
+1. **Token Creation**: Deploy new tokens through the factory
 2. **Price Discovery**: Initial liquidity provision and price discovery phase
-3. **Trading**: Enhanced trading with V4 features
+3. **Migration**: Move liquidity to standard Uniswap V2 pools (or V4 pools if using fee streaming)
+4. **Trading**: Normal trading on migrated pools
 
 ## Quick Start Examples
 
@@ -136,7 +133,6 @@ console.log('Asset details:', {
   numeraire: assetData.numeraire,
   governance: assetData.governance,
   pool: assetData.pool,
-  migrationPool: assetData.migrationPool,
   totalSupply: assetData.totalSupply.toString()
 });
 
@@ -145,62 +141,48 @@ const moduleState = await factory.getModuleState(moduleAddress);
 console.log('Module state:', moduleState);
 ```
 
-### Creating a New Token with Hooks
+### Creating a New Token
 
 ```typescript
-const addresses = DOPPLER_V4_ADDRESSES[chainId];
+const addresses = DOPPLER_V3_ADDRESSES[chainId];
 const airlockAddress = addresses.airlock;
 const bundlerAddress = addresses.bundler;
-const tokenURI = "https://example.com/token-metadata.json";
-const integrator: Address = "0x...";
 
 // Create a read-write factory instance
 const factory = new ReadWriteFactory(
   airlockAddress,
   bundlerAddress,
-  driftWithWallet
+  driftWithWallet,
 );
 
-// Define pre-deployment configuration
-const preDeploymentConfig: DopplerPreDeploymentConfig = {
-  name: tokenName,
-  symbol: tokenSymbol,
-  totalSupply: parseEther('1_000_000_000'),
-  numTokensToSell: parseEther('600_000_000'),
-  tokenURI,
-  blockTimestamp: Math.floor(Date.now() / 1000),
-  startTimeOffset: 1,
-  duration: 1 / 4,
-  epochLength: 200,
-  gamma: 800,
-  tickRange: {
-    startTick: 174_312,
-    endTick: 186_840,
+// Define token creation parameters
+const createParams = {
+  integrator: integratorAddress,
+  userAddress: userAddress,
+  numeraire: numeraireAddress, // USDC, WETH, etc.
+  contracts: {
+    tokenFactory: addresses.tokenFactory,
+    governanceFactory: addresses.governanceFactory,
+    poolInitializer: addresses.poolInitializer,
+    liquidityMigrator: addresses.liquidityMigrator
   },
-  tickSpacing: 2,
-  fee: 20_000, // 2%
-  minProceeds: parseEther('2'),
-  maxProceeds: parseEther('4'),
-  yearlyMintRate: 0n,
-  vestingDuration: BigInt(24 * 60 * 60 * 365), // Seconds in a year
-  recipients: [wallet.account.address],
-  amounts: [parseEther('50_000_000')],
-  numPdSlugs: 15,
-  integrator,
+  tokenConfig: {
+    name: "My Token",
+    symbol: "MTK",
+    decimals: 18
+  },
+  vestingConfig: "default" // or custom configuration
 };
 
-// Build the complete configuration
-const { createParams, hook, token } = factory.buildConfig(
-  preDeploymentConfig, 
-  addresses
-);
+// Encode the creation parameters
+const { createParams: encodedParams } = factory.encode(createParams);
 
 // Simulate the creation transaction
-const simulation = await factory.simulateCreate(createParams);
+const simulation = await factory.simulateCreate(encodedParams);
 console.log('Gas estimate:', simulation.gasEstimate);
 
 // Execute the creation transaction
-const txHash = await factory.create(createParams);
+const txHash = await factory.create(encodedParams);
 console.log('Transaction hash:', txHash);
 
 // Wait for transaction confirmation and get the deployed asset address
@@ -212,45 +194,44 @@ const deployedTokenAddress = `0x${createEvent.topics[1].slice(26)}`;
 console.log('Deployed token address:', deployedTokenAddress);
 ```
 
-### Using the Doppler Lens for Advanced Queries
+### Interacting with Your Created Pool
 
-After creating your token, you can use the DopplerLensQuoter to get detailed information about your pool:
+Once you've created a token, you can interact with its price discovery pool:
 
 ```typescript
-// Get the asset data to find the pool information
+// Get the asset data to find the price discovery pool address
 const assetData = await factory.getAssetData(deployedTokenAddress);
+const poolAddress = assetData.pool;
 
-// Create a doppler lens instance
-const lens = new ReadDopplerLens(addresses.dopplerLensQuoter, drift);
+// Create a pool instance for the price discovery pool
+const pool = new ReadUniswapV3Pool(poolAddress, drift);
 
-// Define pool key for the created token
-const poolKey = {
-  currency0: assetData.numeraire,
-  currency1: deployedTokenAddress,
-  fee: 20_000, // 2% fee tier
-  tickSpacing: 2,
-  hooks: assetData.hook // Hook address from asset data
-};
+// Get pool information
+const slot0 = await pool.getSlot0();
+const token0 = await pool.getToken0();
+const token1 = await pool.getToken1();
+const fee = await pool.getFee();
 
-// Get comprehensive pool state data
-const poolData = await lens.quoteDopplerLensData({
-  poolKey,
-  zeroForOne: true,
-  exactAmount: 1n, // Minimal amount for state query
-  hookData: "0x"
+console.log('Price discovery pool info:', {
+  sqrtPriceX96: slot0.sqrtPriceX96.toString(),
+  tick: slot0.tick,
+  token0,
+  token1,
+  fee
 });
 
-console.log('Pool state:', {
-  sqrtPriceX96: poolData.sqrtPriceX96.toString(),
-  tick: poolData.tick,
-  totalToken0: poolData.amount0.toString(),
-  totalToken1: poolData.amount1.toString()
-});
+// Get pool events (will show the initial mint from token creation)
+const mintEvents = await pool.getMintEvents();
+const swapEvents = await pool.getSwapEvents();
+console.log(`Found ${mintEvents.length} mint events and ${swapEvents.length} swap events`);
+
+// Note: After migration, liquidity moves to a V2 pool (or V4 if using fee streaming)
+// The migrationPool address can be found at assetData.migrationPool
 ```
 
 ### Network Support
 
-The V4 SDK supports multiple networks:
+The SDK supports multiple networks:
 
 * **Base Sepolia** (chainId: 84532) - Testnet
 * **Base Mainnet** (chainId: 8453) - Production
@@ -258,22 +239,20 @@ The V4 SDK supports multiple networks:
 * **Unichain Sepolia** (chainId: 1301) - Testnet
 * **Ink** (chainId: 57073) - Production
 
-For complete network addresses and additional supported networks, see the [Contract Addresses](../resources/contract-addresses.md) documentation.
+For complete network addresses and additional supported networks, see the [Contract Addresses](../../../resources/contract-addresses.md) documentation.
 
 You can get free Base Sepolia ETH from the [Base Sepolia faucet](https://docs.base.org/tools/network-faucets) to test your applications.
 
 ## Error Handling
 
-The SDK provides comprehensive error handling for V4-specific scenarios:
+The SDK provides comprehensive error handling for common scenarios:
 
 ```typescript
 try {
-  const { createParams } = factory.buildConfig(config, addresses);
+  const assetData = await factory.getAssetData(tokenAddress);
 } catch (error) {
-  if (error.message.includes('Invalid tick range')) {
-    console.log('Tick range is invalid for the specified fee tier');
-  } else if (error.message.includes('Hook mining failed')) {
-    console.log('Could not find suitable hook address');
+  if (error.message.includes('Asset not found')) {
+    console.log('Token not deployed on Doppler');
   } else {
     console.error('Unexpected error:', error);
   }
@@ -283,14 +262,14 @@ try {
 ## Next Steps
 
 * Explore the [Factory Reference](factory.md) for detailed API documentation
-* Learn about [Doppler Lens Usage](lens.md) for advanced data querying
+* Learn about [Token Operations](token.md) for managing deployed tokens
 * Understand [Quoter Usage](quoter.md) for price calculations
-* Review [Token Launch Examples](examples.md) for comprehensive deployment scenarios
+* Check out [V4 Migration](custom-fees.md) for upgrading to V4
 
 ## Support
 
 For additional help and examples:
 
-* Check the [Token Launch Examples](examples.md) for comprehensive deployment scenarios
-* Review the [Implementation Guide](../how-it-works/implementation.md) for protocol details
+* Check the [Token Launch Examples](../v4/examples.md) for comprehensive deployment scenarios
+* Review the [Implementation Guide](../../../how-it-works/implementation.md) for protocol details
 * Join the community for discussions and support

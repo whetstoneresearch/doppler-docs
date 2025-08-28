@@ -58,6 +58,6 @@ They are both written in React, TypeScript and other familiar frameworks. The de
 
 Doppler has an open source SDK that is written in TypeScript. It provides familiar interfaces for interacting with the onchain smart contracts. Additionally developers are able to interact with the smart contracts directly with their favorite toolchains.
 
-:link: [Get started with the Doppler v3 SDK](v3-sdk/getting-started.md) for static bonding curves&#x20;
+:link: [Get started with the Doppler v3 SDK](sdk/references/v3/getting-started.md) for static bonding curves&#x20;
 
-:link: [Get started with the Doppler v4 SDK](v4-sdk/getting-started.md) for dynamic bonding curves&#x20;
+:link: [Get started with the Doppler v4 SDK](sdk/references/v4/getting-started.md) for dynamic bonding curves&#x20;
