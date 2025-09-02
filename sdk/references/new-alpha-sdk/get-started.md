@@ -1,48 +1,4 @@
----
-icon: hand-wave
----
-
-# Welcome
-
-Doppler is an Ethereum Virtual Machine (EVM) based token launchpad & liquidity bootstrapping protocol. It supports both static bonding curves ("v3") and dynamic bonding curves ("v4") based on a fully onchain dynamic dutch auction. It additionally manages the end to end lifecycle of asset tokenization beyond simply creation, including optional token holder governance and custom fees.&#x20;
-
-Doppler easily enables developers to...
-
-{% stepper %}
-{% step %}
-#### Create arbitrary assets
-
-Memecoins, RWAs, governance tokens, any arbitrary asset, can be created on Doppler
-{% endstep %}
-
-{% step %}
-#### Enter price discovery
-
-Efficiently find the correct market driven price for these assets
-{% endstep %}
-
-{% step %}
-#### Bootstrap initial liquidity
-
-Build liquidity around the initial price and establish a marketplace for the assets
-{% endstep %}
-
-{% step %}
-#### Plug into a thriving ecosystem
-
-Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap ecosystems, configure optional token holder governance, have long term customized fees, and more.&#x20;
-{% endstep %}
-{% endstepper %}
-
-Token issuers and application developers no longer have to worry about the complicated, burdensome aspects of a token's lifecycle. From creation to issuance, price discovery to liquidity formation, distribution to ecosystem integrations - Doppler enables you to focus on building compelling, unique applications; not designing auctions, becoming MEV infrastructure experts, or grinding for distribution.
-
-### Deployments
-
-Doppler is currently deployed to Base, Unichain, and Ink, with others coming soon.
-
-[See the contract addresess](resources/contract-addresses.md), including testnet deployments to Arbitrum, World, and Monad.
-
-## Get started
+# Get started
 
 ### Installation&#x20;
 

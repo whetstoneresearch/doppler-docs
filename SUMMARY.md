@@ -31,6 +31,13 @@
     * [Lens](sdk/references/v4/lens.md)
     * [Custom Fees](sdk/references/v4/custom-fees.md)
     * [Governance Options](sdk/references/v4/governance-options.md)
+  * [(new) Alpha SDK](sdk/references/new-alpha-sdk/README.md)
+    * [Overview](sdk/references/new-alpha-sdk/overview.md)
+    * [Get started](sdk/references/new-alpha-sdk/get-started.md)
+    * [API reference](sdk/references/new-alpha-sdk/api-reference.md)
+    * [Quotes & swaps](sdk/references/new-alpha-sdk/quotes-and-swaps.md)
+    * [Liquidity migration options](sdk/references/new-alpha-sdk/liquidity-migration-options.md)
+    * [SDK migration guide](sdk/references/new-alpha-sdk/sdk-migration-guide.md)
 
 ## Indexer
 
