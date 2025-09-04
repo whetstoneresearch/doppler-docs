@@ -38,6 +38,7 @@
     * [Quotes & swaps](sdk/references/new-alpha-sdk/quotes-and-swaps.md)
     * [Liquidity migration options](sdk/references/new-alpha-sdk/liquidity-migration-options.md)
     * [SDK migration guide](sdk/references/new-alpha-sdk/sdk-migration-guide.md)
+    * [Doppler404](sdk/references/new-alpha-sdk/doppler404.md)
 
 ## Indexer
 
