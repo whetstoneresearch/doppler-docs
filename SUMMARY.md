@@ -38,11 +38,12 @@
     * [Quotes & swaps](sdk/references/new-alpha-sdk/quotes-and-swaps.md)
     * [Liquidity migration options](sdk/references/new-alpha-sdk/liquidity-migration-options.md)
     * [SDK migration guide](sdk/references/new-alpha-sdk/sdk-migration-guide.md)
-    * [Doppler404](sdk/references/new-alpha-sdk/doppler404.md)
     * [Examples](sdk/references/new-alpha-sdk/examples/README.md)
       * [Static auctions](sdk/references/new-alpha-sdk/examples/static-auctions.md)
       * [Dynamic auctions](sdk/references/new-alpha-sdk/examples/dynamic-auctions.md)
       * [Quoting, monitoring, and metrics](sdk/references/new-alpha-sdk/examples/quoting-monitoring-and-metrics.md)
+      * [Doppler404](sdk/references/new-alpha-sdk/examples/doppler404.md)
+      * [Multicurve](sdk/references/new-alpha-sdk/examples/multicurve.md)
 
 ## Indexer
 

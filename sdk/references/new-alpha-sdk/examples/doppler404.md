@@ -53,6 +53,6 @@ const dynamicBuilder = new DynamicAuctionBuilder()
 
 The Doppler Demo App supports Doppler404 and is the easiest way to get started.
 
-<figure><img src="../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 View it on GitHub: [https://github.com/whetstoneresearch/doppler-demo-app](https://github.com/whetstoneresearch/doppler-demo-app)&#x20;
