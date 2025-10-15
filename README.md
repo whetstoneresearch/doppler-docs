@@ -4,118 +4,38 @@ icon: hand-wave
 
 # Welcome
 
-Doppler is an Ethereum Virtual Machine (EVM) based token launchpad & liquidity bootstrapping protocol. It supports both static bonding curves ("v3") and dynamic bonding curves ("v4") based on a fully onchain dynamic dutch auction. It additionally manages the end to end lifecycle of asset tokenization beyond simply creation, including optional token holder governance and custom fees.&#x20;
+**Create custom capital markets with efficient price discovery and maximum flexibility.**&#x20;
 
-Doppler easily enables developers to...
+### Use Doppler to...
 
 {% stepper %}
 {% step %}
-#### Create arbitrary assets
+#### Launch tokenized assets
 
-Memecoins, RWAs, governance tokens, any arbitrary asset, can be created on Doppler
+RWAs, governance tokens, NFT collections, any arbitrary asset (even memecoins)&#x20;
 {% endstep %}
 
 {% step %}
-#### Enter price discovery
+#### Discover fair market prices
 
-Efficiently find the correct market driven price for these assets
+Support for multiple different auctions to find optimal pricing through real market demand
 {% endstep %}
 
 {% step %}
-#### Bootstrap initial liquidity
+#### Bootstrap deep liquidity
 
-Build liquidity around the initial price and establish a marketplace for the assets
+Seamlessly transition from onchain price discovery to liquid trading markets
 {% endstep %}
 
 {% step %}
-#### Plug into a thriving ecosystem
+#### Integrate with the broader DeFi ecosystem
 
-Automatically connect your tokens & liquidity to the rich EVM DeFi & Uniswap ecosystems, configure optional token holder governance, have long term customized fees, and more.&#x20;
+Automatically get support from Uniswap integrated apps and the broader EVM ecosystem
+{% endstep %}
+
+{% step %}
+### Manage their end to end lifecycle
+
+Configure vesting, inflation, governance, and other optional features at creation time&#x20;
 {% endstep %}
 {% endstepper %}
-
-Token issuers and application developers no longer have to worry about the complicated, burdensome aspects of a token's lifecycle. From creation to issuance, price discovery to liquidity formation, distribution to ecosystem integrations - Doppler enables you to focus on building compelling, unique applications; not designing auctions, becoming MEV infrastructure experts, or grinding for distribution.
-
-### Deployments
-
-Doppler is currently deployed to Base, Unichain, and Ink, with others coming soon.
-
-[See the contract addresess](resources/contract-addresses.md), including testnet deployments to Arbitrum, World, and Monad.
-
-## Get started
-
-### Installation&#x20;
-
-```bash
-npm install @whetstone-research/doppler-sdk viem
-# or
-yarn add @whetstone-research/doppler-sdk viem
-# or
-pnpm add @whetstone-research/doppler-sdk viem
-```
-
-### Quickstart
-
-```typescript
-import { DopplerSDK } from '@whetstone-research/doppler-sdk';
-import { createPublicClient, createWalletClient, http } from 'viem';
-import { base } from 'viem/chains';
-
-// Set up viem clients
-const publicClient = createPublicClient({
-  chain: base,
-  transport: http(),
-});
-
-const walletClient = createWalletClient({
-  chain: base,
-  transport: http(),
-  account: '0x...', // Your wallet address
-});
-
-// Initialize the SDK
-const sdk = new DopplerSDK({
-  publicClient,
-  walletClient,
-  chainId: base.id,
-});
-```
-
-### Create your first Doppler token & auction :tada:
-
-```typescript
-import { DynamicAuctionBuilder } from '@whetstone-research/doppler-sdk'
-
-const params = new DynamicAuctionBuilder()
-  .tokenConfig({ name: 'My Token', symbol: 'MTK', tokenURI: 'https://example.com/metadata.json' })
-  .saleConfig({ initialSupply: parseEther('1000000'), numTokensToSell: parseEther('900000'), numeraire: '0x...' })
-  .poolConfig({ fee: 3000, tickSpacing: 60 })
-  .auctionByTicks({
-    durationDays: 7,
-    epochLength: 3600,
-    startTick: -92103,
-    endTick: -69080,
-    minProceeds: parseEther('100'),
-    maxProceeds: parseEther('1000'),
-    numPdSlugs: 5,
-  })
-  .withVesting({ duration: BigInt(365 * 24 * 60 * 60) })
-  .withMigration({
-    type: 'uniswapV4',
-    fee: 3000,
-    tickSpacing: 60,
-    streamableFees: {
-      lockDuration: 365 * 24 * 60 * 60,
-      beneficiaries: [
-        { address: '0x...', percentage: 5000 },
-        { address: '0x...', percentage: 5000 },
-      ],
-    },
-  })
-  .withUserAddress('0x...')
-  .build()
-
-const result = await sdk.factory.createDynamicAuction(params)
-console.log('Hook address:', result.hookAddress)
-console.log('Token address:', result.tokenAddress)
-```

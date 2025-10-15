@@ -1,3 +1,7 @@
+---
+icon: rotate
+---
+
 # Quotes & swaps
 
 ## Quotes and Swaps

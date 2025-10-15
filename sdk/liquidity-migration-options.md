@@ -1,4 +1,13 @@
+---
+description: Learn more about how liquidity migration can be customized
+icon: grate-droplet
+---
+
 # Liquidity migration options
+
+## Overview
+
+Doppler supports migrating liquidity from auction contracts to long-term AMM pools optimized for sustained trading. Migration triggers are configurable at creation, typically based on proceeds thresholds that indicate sufficient liquidity for the next growth phase. Currently supported migration targets include Uniswap v2, v3, and v4, with configurable fee structures. Support for additional AMMs and ecosystems is expected.
 
 ## Migration Options Guide
 

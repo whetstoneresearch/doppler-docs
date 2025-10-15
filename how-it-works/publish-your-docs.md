@@ -55,8 +55,3 @@ This newly created token is freely swappable across all Uniswap supported interf
   * Tokens created on Doppler that reach their specific goals of liquidity will automatically get migrated to their own Uniswap v2 or Uniswap v4 pools and swappable from Uniswap supported interfaces. Eventually other AMMs may be supported.
 * **Custom fees**
   * Applications can customize multiple benefeciary addresses with different fee tiers, enabling a flexible model that better fits into a businesses and their customer's unique goals.&#x20;
-
-
-
-See the [Doppler Roadmap](../resources/protocol-roadmap.md) for insights as to what might be coming next.
-

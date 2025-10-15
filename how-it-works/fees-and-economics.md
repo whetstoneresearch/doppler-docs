@@ -13,7 +13,7 @@ These fee's are paid for in $ETH.
 * Integrator Fee - up to 95% of LP fees
   * This fee is configurable by third party application integrators
     * This can be set between 0 - 95% of total LP fees earned
-    * See more in the [SDK reference](../sdk/references/v3/factory.md)
+    * See more in the [SDK reference](../resources/legacy-sdks-and-migration-guides/v3/factory.md)
 * Protocol Fee - 5% of LP fees
   * This fee is fixed at 5% of total LP fees earned
 
@@ -60,4 +60,4 @@ Fee streaming is available for:
 * **Doppler V3 pools**: Use `UniswapV3Initializer` (creates Doppler V3 pool) + `UniswapV4Migrator` (enables fee streaming)
 * **Doppler V4 pools**: Use `UniswapV4Initializer` (creates Doppler V4 pool) + `UniswapV4Migrator` (enables fee streaming)
 
-Both pool types migrate to Uniswap V4 and can leverage the StreamableFeesLocker for ongoing fee distribution. For detailed examples, see the [StreamableFeesLocker guide](../sdk/references/v4/custom-fees.md) and [Token Launch Examples](../sdk/references/v4/examples.md).
+Both pool types migrate to Uniswap V4 and can leverage the StreamableFeesLocker for ongoing fee distribution. For detailed examples, see the [StreamableFeesLocker guide](../resources/legacy-sdks-and-migration-guides/v4/custom-fees.md) and [Token Launch Examples](../resources/legacy-sdks-and-migration-guides/v4/examples.md).

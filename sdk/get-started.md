@@ -1,3 +1,7 @@
+---
+icon: square-code
+---
+
 # Get started
 
 ### Installation&#x20;

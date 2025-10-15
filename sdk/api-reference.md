@@ -1,3 +1,7 @@
+---
+icon: terminal
+---
+
 # API reference
 
 ## Builder API Reference

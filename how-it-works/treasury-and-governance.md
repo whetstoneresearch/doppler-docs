@@ -55,4 +55,4 @@ Doppler supports a "No-op" governance pattern that permanently locks 100% of liq
 **Important**: This is a permanent decision that cannot be reversed or transferred.
 {% endhint %}
 
-See the [v3](../sdk/references/v3/governance-options.md) or [v4](../sdk/references/v4/governance-options.md) governance options for more information.
+See the [v3](../resources/legacy-sdks-and-migration-guides/v3/governance-options.md) or [v4](../resources/legacy-sdks-and-migration-guides/v4/governance-options.md) governance options for more information.
