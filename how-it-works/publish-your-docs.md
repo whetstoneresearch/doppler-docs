@@ -14,13 +14,13 @@ Any application can permissonlessly create tokens by passing cusstomized inputs 
 {% step %}
 #### Price discovery
 
-Tokens go through a price discovery period, fully onchain, bootstrapping their own liquidity Doppler v3 uses a static bonding curve while Doppler v4 uses a dynamic bonding curve, based on a dynamic dutch auction.
+Tokens go through a price discovery period, fully onchain, bootstrapping their own liquidity.
 {% endstep %}
 
 {% step %}
 #### Migration
 
-Once the parameterized amount of tokens have been purchased or swapped, the tokens and LP positions get migrated to Uniswap (v2, to grow liquidity overtime through fees), or to Uniswap v4 (with support for custom fees), and triggering other contract interactions.
+Once the parameterized amount of tokens have been purchased or swapped, the tokens and LP positions can optionally get migrated to Uniswap (v2, to grow liquidity overtime through fees), or to Uniswap v4 (with support for custom fees), or triggering other contract interactions.
 {% endstep %}
 
 {% step %}
@@ -35,8 +35,6 @@ Tokens can optionally be created with OpenZeppelin Governor Treasuries to give c
 This newly created token is freely swappable across all Uniswap supported interfaces and able to be utilized throughout your favorite applications, DeFi protocols, and interfaces.
 {% endstep %}
 {% endstepper %}
-
-<figure><img src="../img/doppler-overview-dark.png" alt=""><figcaption><p>Doppler Overview</p></figcaption></figure>
 
 ### Design principles
 

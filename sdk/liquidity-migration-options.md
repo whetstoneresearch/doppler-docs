@@ -9,12 +9,17 @@ icon: grate-droplet
 
 Doppler supports migrating liquidity from auction contracts to long-term AMM pools optimized for sustained trading. Migration triggers are configurable at creation, typically based on proceeds thresholds that indicate sufficient liquidity for the next growth phase. Currently supported migration targets include Uniswap v2, v3, and v4, with configurable fee structures. Support for additional AMMs and ecosystems is expected.
 
+### Non-migration (&#x72;_&#x65;commended_)
+
+In a variety of use cases, it may often make sense to _not_ migrate liquidity from the pool utilized to auction the token and bootstrap liquidity to another, longer term AMM pool. This can be done to maximize simplicity, for example, providing unified experiences on trading charts and terminals, or a variety of other reasons. To not migrate liquidity, use the `noOp` parameter in the migration config. Notably this is supported for launches using Doppler Multicurve or "Lockable" V3 static auctions.
+
 ## Migration Options Guide
 
 The SDK encodes post‑auction liquidity migration via a discriminated union `MigrationConfig`:
 
 ```ts
 export type MigrationConfig =
+  | { type: 'noOp' }
   | { type: 'uniswapV2' }
   | { type: 'uniswapV3'; fee: number; tickSpacing: number }
   | {
@@ -32,9 +37,18 @@ Internally, the factory resolves the on‑chain migrator address for your chain 
 
 ### Quick Decision Guide
 
-* Want simplest path and immediate trading? Use V2
+* Want the simpliest solution and unified charts/UX?&#x20;
+* Want simplest AMM and immediate trading? Use V2
 * Want a concentrated liquidity range in the resulting pool? Use V3
 * Want programmable fee streaming to beneficiaries and are on a V4‑ready chain? Use V4
+
+### No Migration&#x20;
+
+```ts
+.withMigration({ type: 'noOp' })
+```
+
+* Supported on: UniswapV4MulticurveInitializer, LockableUniswapV3Initializer
 
 ### V2 Migration
 
@@ -96,8 +110,13 @@ Migrator contracts are selected per chain via `getAddresses(chainId)` (see `src/
 
 ### When to choose which
 
+* No migration (noOp)
+  * Simpliest possible solution & fastest time to market
+  * Unified charts for pre and post liquidity bootstrapping
+  * Reduced complexity, debugging, and testing requirements
+  * Utilizing Multicurve or another supported initializer
 * Uniswap V2
-  * Simple constant‑product pool; broad ecosystem tooling
+  * Basic constant‑product pool; broad ecosystem tooling
   * No price range configuration; least complexity
   * Good default if you do not require V3/V4‑specific features
 * Uniswap V3

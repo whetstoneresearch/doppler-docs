@@ -1,6 +1,7 @@
 # Table of contents
 
 * [Welcome](README.md)
+* [Get started](get-started.md)
 
 ## How it works
 
@@ -12,7 +13,6 @@
 
 ## SDK
 
-* [Get started](sdk/get-started.md)
 * [Examples](sdk/examples/README.md)
   * [Multicurve](sdk/examples/multicurve.md)
   * [Static auctions](sdk/examples/static-auctions.md)

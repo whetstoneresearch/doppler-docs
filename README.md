@@ -39,3 +39,9 @@ Automatically get support from Uniswap integrated apps and the broader EVM ecosy
 Configure vesting, inflation, governance, and other optional features at creation time&#x20;
 {% endstep %}
 {% endstepper %}
+
+### Next steps
+
+Doppler has an open source TypeScript SDK that's easy to get started with.&#x20;
+
+[Try it out today ](./#get-started):link: and create your first coin in as little as 10 minutes.
