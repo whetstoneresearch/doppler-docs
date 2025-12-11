@@ -1,5 +1,6 @@
 ---
 description: The easiest, and pure.st, place to explore the Doppler Ecosystem.
+hidden: true
 icon: crown
 ---
 
