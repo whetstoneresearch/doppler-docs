@@ -6,7 +6,7 @@ icon: hand-wave
 
 ### About
 
-Doppler is an onchain protocol for launching tokens through various price discovery auctions. Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams like Zora, Paragraph, and Noice use Doppler to create new tokens by configuring inputs such as supply curves, vesting schedules, inflation mechanics, governance structures, and ongoing economics, such as fees and treasury management.
+[Doppler](https://doppler.lol) is an onchain protocol for launching tokens through various [price discovery auctions](https://aada.ms/pdfs/pda.pdf). Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams like [Zora](https://zora.co), [Paragraph](https://paragraph.com), and [Noice](https://noice.so) use Doppler to create new tokens by configuring inputs such as supply curves, vesting schedules, inflation mechanics, governance structures, and ongoing economics, such as fees and treasury management.
 
 ### Get started&#x20;
 
@@ -65,7 +65,7 @@ console.log('Token address:', result.tokenAddress)
 
 ### Example configuration details
 
-Here's is some context about what was configured with this launch.&#x20;
+With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we configured:&#x20;
 
 * Token config - metadata such as the name, symbol, and other relevant data like an image
 * Sale config - allocations of the token and how much is available for sale&#x20;

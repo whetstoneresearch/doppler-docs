@@ -1,11 +1,11 @@
 # Table of contents
 
 * [Home](README.md)
+* [Explainer](publish-your-docs.md)
 * [Get started](get-started.md)
 
 ## How it works
 
-* [Explainer](how-it-works/publish-your-docs.md)
 * [Implementation](how-it-works/implementation.md)
 * [Airlock & modules](how-it-works/airlock-and-modules.md)
 * [Fees & economics](how-it-works/fees-and-economics.md)
