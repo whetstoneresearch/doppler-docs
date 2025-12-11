@@ -1,7 +1,7 @@
 # Table of contents
 
 * [Home](README.md)
-* [Explainer](publish-your-docs.md)
+* [Explainer](explainer.md)
 * [Get started](get-started.md)
 
 ## How it works
