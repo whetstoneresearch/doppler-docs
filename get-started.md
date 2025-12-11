@@ -1,5 +1,6 @@
 ---
 description: Create your first token with Doppler in as little as 10 minutes
+hidden: true
 icon: square-code
 ---
 

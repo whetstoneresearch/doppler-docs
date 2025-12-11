@@ -2,46 +2,77 @@
 icon: hand-wave
 ---
 
-# Welcome
+# Home
 
-**Create custom capital markets with efficient price discovery and maximum flexibility.**&#x20;
+### About
 
-### Use Doppler to...
+Doppler is an onchain protocol for launching tokens through various price discovery auctions. Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams like Zora, Paragraph, and Noice use Doppler to create new tokens by configuring inputs such as supply curves, vesting schedules, inflation mechanics, governance structures, and ongoing economics, such as fees and treasury management.
 
-{% stepper %}
-{% step %}
-#### Launch tokenized assets
+### Get started&#x20;
 
-RWAs, governance tokens, NFT collections, any arbitrary asset (even memecoins)&#x20;
-{% endstep %}
+```bash
+npm install @whetstone-research/doppler-sdk viem
+```
 
-{% step %}
-#### Discover fair market prices
+```javascript
+import { DopplerSDK } from '@whetstone-research/doppler-sdk';
+import { createPublicClient, createWalletClient, http } from 'viem';
+import { MulticurveBuilder } from '@whetstone-research/doppler-sdk'
+import { parseEther } from 'viem'
+import { base } from 'viem/chains'
 
-Support for multiple different auctions to find optimal pricing through real market demand
-{% endstep %}
+// 1. Set up viem clients
+const publicClient = createPublicClient({
+  chain: base,
+  transport: http(),
+});
 
-{% step %}
-#### Bootstrap deep liquidity
+// 2. Set up your local wallet client
+const walletClient = createWalletClient({
+  chain: base,
+  transport: http(),
+  account: '0x...', // Your wallet address
+});
 
-Seamlessly transition from onchain price discovery to liquid trading markets
-{% endstep %}
+// 3. Initialize the SDK
+const sdk = new DopplerSDK({
+  publicClient,
+  walletClient,
+  chainId: base.id,
+});
 
-{% step %}
-#### Integrate with the broader DeFi ecosystem
+// 4. Configure a multicurve auction 
+const params = new MulticurveBuilder(base.id)
+  .tokenConfig({ name: 'TEST', symbol: 'TEST', tokenURI: 'https://example.com/metadata.json' })
+  .saleConfig({ initialSupply: parseEther('1000000'), numTokensToSell: parseEther('900000'), numeraire: '0x4200000000000000000000000000000000000006' })
+  .withMulticurveAuction({
+    fee: 0, // no fees
+    tickSpacing: 8,
+    curves: [
+      { tickLower: 0, tickUpper: 240000, numPositions: 10, shares: parseEther('0.5') },
+      { tickLower: 16000, tickUpper: 240000, numPositions: 10, shares: parseEther('0.5') },
+    ],
+  })
+  .withGovernance({ type: 'noOp' }) // no governance
+  .withMigration({ type: 'noOp' }) // no migration 
+  .withUserAddress('0x...') // add your address
+  .build()
 
-Automatically get support from Uniswap integrated apps and the broader EVM ecosystem
-{% endstep %}
+const result = await sdk.factory.createMulticurve(params)
+console.log('Pool address:', result.poolAddress)
+console.log('Token address:', result.tokenAddress)
+```
 
-{% step %}
-### Manage their end to end lifecycle
+### Example configuration details
 
-Configure vesting, inflation, governance, and other optional features at creation time&#x20;
-{% endstep %}
-{% endstepper %}
+Here's is some context about what was configured with this launch.&#x20;
+
+* Token config - metadata such as the name, symbol, and other relevant data like an image
+* Sale config - allocations of the token and how much is available for sale&#x20;
+* Fees - earnings on each swap in the pool created by Doppler. Set to 0 means no fees
+* Curves - There were only two price curves defined, each with 10 unique liquidity positions&#x20;
+* Governance & Migration - There is no governance or migration associated with this token&#x20;
 
 ### Next steps
 
-Doppler has an open source TypeScript SDK that's easy to get started with.&#x20;
-
-[Try it out today ](./#get-started):link: and create your first coin in as little as 10 minutes.
+Continue learning more about Doppler and follow along with other SDK [examples](sdk/examples/).&#x20;
