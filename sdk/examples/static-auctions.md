@@ -4,38 +4,41 @@ description: Create coins with Doppler's static bonding curve, aka Doppler v3
 
 # Static auctions
 
-### With proceeds migration to Uniswap v2
+Static auctions use Uniswap V3's concentrated liquidity to create a fixed price range bonding curve. The price ascends from a floor to a ceiling as tokens are purchased.
+
+## Using market cap targets (recommended)
+
+The `withMarketCapRange()` method is the recommended way to configure static auctions. Instead of dealing with abstract tick values, you specify dollar-denominated market cap targets.
+
+### Benefits
+
+* **Intuitive**: Think in dollars, not ticks
+* **Auto-detection**: Token ordering (`tokenIsToken1`) inferred from numeraire address
+* **Validation**: Built-in checks for reasonable market cap ranges
+
+### Example with Uniswap V2 migration
 
 ```typescript
-/*
- * Example: Create a Static Auction with Uniswap V2 Migration
+/**
+ * Example: Create a Static Auction using Market Cap Range
  *
  * This example demonstrates:
- * - Creating a token with fixed price range on Uniswap V3
- * - Migrating liquidity to Uniswap V2 after graduation
- * - Monitoring auction progress
+ * - Configuring a V3 static auction using dollar-denominated market cap targets
+ * - Auto-detection of token ordering from numeraire address
+ * - Simplified API that converts market cap to ticks internally
  */
 
-// UNCOMMENT IF RUNNING LOCALLY
-// import { DopplerSDK, StaticAuctionBuilder } from '@whetstone-research/doppler-sdk';
+import { DopplerSDK } from '@whetstone-research/doppler-sdk';
+import { parseEther, createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { base } from 'viem/chains';
 
-import { DopplerSDK } from '../src';
-import {
-  createPublicClient,
-  createWalletClient,
-  http,
-  parseEther,
-  formatEther,
-} from "viem";
-import { base } from "viem/chains";
-import { privateKeyToAccount } from "viem/accounts";
-
-// Load environment variables
 const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
-const rpcUrl = process.env.RPC_URL || "https://mainnet.base.org";
+const rpcUrl = process.env.RPC_URL ?? 'https://mainnet.base.org';
+
+if (!privateKey) throw new Error('PRIVATE_KEY must be set');
 
 async function main() {
-  // 1. Set up clients
   const account = privateKeyToAccount(privateKey);
 
   const publicClient = createPublicClient({
@@ -49,84 +52,195 @@ async function main() {
     account,
   });
 
-  // 2. Initialize SDK
   const sdk = new DopplerSDK({
     publicClient,
     walletClient,
     chainId: base.id,
   });
 
-  // 3. Define auction parameters via builder
-  const params = sdk.buildStaticAuction()
+  // Build static auction using market cap range instead of raw ticks
+  const params = sdk
+    .buildStaticAuction()
     .tokenConfig({
-      name: "TEST",
-      symbol: "TEST",
-      tokenURI: "https://example.com/token-metadata.json",
+      name: 'My Token',
+      symbol: 'MTK',
+      tokenURI: 'https://example.com/token-metadata.json',
     })
     .saleConfig({
-      initialSupply: parseEther("1000000"), // 1M tokens
-      numTokensToSell: parseEther("500000"), // Sell 500k tokens
-      numeraire: "0x4200000000000000000000000000000000000006", // WETH on Base
+      initialSupply: parseEther('1000000000'), // 1 billion tokens
+      numTokensToSell: parseEther('900000000'), // 900 million for sale
+      numeraire: '0x4200000000000000000000000000000000000006', // WETH on Base
     })
-    .poolByTicks({ startTick: 175000, endTick: 225000, fee: 10000 })
-    .withMigration({ type: "uniswapV2" })
-    .withUserAddress(account.address)
+    // Use market cap range - much more intuitive than raw ticks!
+    .withMarketCapRange({
+      marketCap: { start: 100_000, end: 10_000_000 }, // $100k to $10M fully diluted
+      numerairePrice: 3000, // ETH = $3000 USD
+      // Optional overrides (defaults shown):
+      // fee: 10000,            // 1% fee tier (default for V3)
+      // numPositions: 15,      // Number of LP positions
+      // maxShareToBeSold: parseEther('0.35'), // 35% max per position
+    })
+    .withVesting({
+      duration: BigInt(365 * 24 * 60 * 60), // 1 year vesting
+      cliffDuration: 0,
+    })
     .withGovernance({ type: 'default' })
+    .withMigration({ type: 'uniswapV2' })
+    .withUserAddress(account.address)
     .build();
 
-  console.log("Creating static auction...");
-  console.log("Token:", params.token.name, `(${params.token.symbol})`);
-  console.log("Selling:", formatEther(params.sale.numTokensToSell), "tokens");
-  console.log("Price range: 0.0001 - 0.001 ETH per token");
+  console.log('Creating static auction with market cap targets...');
+  console.log('Token:', params.token.name, `(${params.token.symbol})`);
+  console.log('Market cap range: $100,000 → $10,000,000 (at ETH = $3000)');
+  console.log('Computed ticks:', params.pool.startTick, '→', params.pool.endTick);
 
-  try {
-    // 4. Create the auction
-    const result = await sdk.factory.createStaticAuction(params);
+  const result = await sdk.factory.createStaticAuction(params);
 
-    console.log("\n✅ Auction created successfully!");
-    console.log("Pool address:", result.poolAddress);
-    console.log("Token address:", result.tokenAddress);
-    console.log("Transaction:", result.transactionHash);
+  console.log('\n✅ Static auction created successfully!');
+  console.log('Pool address:', result.poolAddress);
+  console.log('Token address:', result.tokenAddress);
+  console.log('Transaction:', result.transactionHash);
 
-    // 5. Get the auction instance
-    const auction = await sdk.getStaticAuction(result.poolAddress);
+  // Monitor the auction
+  const auction = await sdk.getStaticAuction(result.poolAddress);
+  const hasGraduated = await auction.hasGraduated();
 
-    // 6. Monitor the auction
-    console.log("\nMonitoring auction...");
-
-    const poolInfo = await auction.getPoolInfo();
-    console.log("Current liquidity:", formatEther(poolInfo.liquidity));
-    console.log("Current sqrtPriceX96:", poolInfo.sqrtPriceX96.toString());
-
-    // 7. Check graduation status
-    const hasGraduated = await auction.hasGraduated();
-    console.log("Has graduated:", hasGraduated);
-
-    if (!hasGraduated) {
-      console.log("\nAuction is still active. It will graduate after:");
-      console.log("- 7 days have passed since creation");
-      console.log("- Minimum proceeds are collected");
-      console.log("\nLiquidity will then migrate to Uniswap V2");
-    }
-
-    // 8. Get current price
-    const currentPrice = await auction.getCurrentPrice();
-    console.log("\nCurrent price (in tick form):", currentPrice.toString());
-
-    // 9. Calculate actual price from tick
-    // This is simplified - in production use proper tick math
-    const actualPrice = Number(currentPrice) / 1e18;
-    console.log("Approximate price:", actualPrice, "ETH per token");
-  } catch (error) {
-    console.error("\n❌ Error creating auction:", error);
-    process.exit(1);
+  if (hasGraduated) {
+    console.log('\nAuction has graduated - ready for migration!');
+  } else {
+    console.log('\nAuction is active. Will graduate when sufficient tokens are sold.');
   }
-
-  console.log("\n✨ Example completed!");
 }
 
 main();
 ```
+
+### Market cap configuration options
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `marketCap.start` | `number` | Required | Starting market cap in USD (launch price) |
+| `marketCap.end` | `number` | Required | Ending market cap in USD |
+| `numerairePrice` | `number` | Required | Price of numeraire in USD (e.g., 3000 for ETH) |
+| `fee` | `number` | `10000` | Fee tier in basis points (1% default) |
+| `numPositions` | `number` | `15` | Number of LP positions |
+| `maxShareToBeSold` | `bigint` | `0.35e18` | Maximum share per position (35%) |
+| `tokenDecimals` | `number` | `18` | Token decimals |
+| `numeraireDecimals` | `number` | `18` | Numeraire decimals |
+
+### Example with Uniswap V4 migration
+
+```typescript
+import { DopplerSDK, getAirlockOwner } from '@whetstone-research/doppler-sdk';
+import { parseEther, createPublicClient, createWalletClient, http } from 'viem';
+import { privateKeyToAccount } from 'viem/accounts';
+import { base } from 'viem/chains';
+
+const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
+const rpcUrl = process.env.RPC_URL ?? 'https://mainnet.base.org';
+
+async function main() {
+  const account = privateKeyToAccount(privateKey);
+
+  const publicClient = createPublicClient({
+    chain: base,
+    transport: http(rpcUrl),
+  });
+
+  const walletClient = createWalletClient({
+    chain: base,
+    transport: http(rpcUrl),
+    account,
+  });
+
+  const sdk = new DopplerSDK({
+    publicClient,
+    walletClient,
+    chainId: base.id,
+  });
+
+  const airlockOwner = await getAirlockOwner(publicClient);
+
+  const params = sdk
+    .buildStaticAuction()
+    .tokenConfig({
+      name: 'My Token',
+      symbol: 'MTK',
+      tokenURI: 'https://example.com/token-metadata.json',
+    })
+    .saleConfig({
+      initialSupply: parseEther('1000000000'),
+      numTokensToSell: parseEther('900000000'),
+      numeraire: '0x4200000000000000000000000000000000000006',
+    })
+    .withMarketCapRange({
+      marketCap: { start: 100_000, end: 10_000_000 },
+      numerairePrice: 3000,
+    })
+    .withVesting({
+      duration: BigInt(365 * 24 * 60 * 60),
+      cliffDuration: 0,
+    })
+    .withGovernance({ type: 'default' })
+    .withMigration({
+      type: 'uniswapV4',
+      fee: 3000,
+      tickSpacing: 60,
+      streamableFees: {
+        lockDuration: 365 * 24 * 60 * 60,
+        beneficiaries: [
+          { beneficiary: account.address, shares: parseEther('0.95') },
+          { beneficiary: airlockOwner, shares: parseEther('0.05') },
+        ],
+      },
+    })
+    .withUserAddress(account.address)
+    .build();
+
+  const result = await sdk.factory.createStaticAuction(params);
+
+  console.log('Pool created:', result.poolAddress);
+  console.log('Token created:', result.tokenAddress);
+
+  const auction = await sdk.getStaticAuction(result.poolAddress);
+  const hasGraduated = await auction.hasGraduated();
+
+  if (hasGraduated) {
+    console.log('Auction is ready for V4 migration!');
+  }
+}
+
+main();
+```
+
+---
+
+## Using raw ticks (advanced)
+
+For advanced users who need precise control over tick values, you can use `poolByTicks()` directly.
+
+```typescript
+const params = sdk.buildStaticAuction()
+  .tokenConfig({
+    name: "TEST",
+    symbol: "TEST",
+    tokenURI: "https://example.com/token-metadata.json",
+  })
+  .saleConfig({
+    initialSupply: parseEther("1000000"),
+    numTokensToSell: parseEther("500000"),
+    numeraire: "0x4200000000000000000000000000000000000006",
+  })
+  .poolByTicks({ startTick: 175000, endTick: 225000, fee: 10000 })
+  .withMigration({ type: "uniswapV2" })
+  .withUserAddress(account.address)
+  .withGovernance({ type: 'default' })
+  .build();
+```
+
+{% hint style="info" %}
+The `poolByPriceRange()` method is deprecated. Use `withMarketCapRange()` instead for more intuitive configuration.
+{% endhint %}
 
 ### With proceeds migration to Uniswap v4&#x20;
 
