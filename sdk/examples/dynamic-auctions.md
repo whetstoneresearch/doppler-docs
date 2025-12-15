@@ -223,9 +223,7 @@ const params = sdk.buildDynamicAuction()
   .build();
 ```
 
-{% hint style="info" %}
-The `auctionByPriceRange()` method is deprecated. Use `withMarketCapRange()` instead for more intuitive configuration.
-{% endhint %}
+
 
 ---
 

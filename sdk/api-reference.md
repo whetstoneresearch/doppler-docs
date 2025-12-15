@@ -49,81 +49,14 @@ Methods (chainable):
     * Defaults: `yearlyMintRate = DEFAULT_V3_YEARLY_MINT_RATE (0.02e18)`
 * saleConfig({ initialSupply, numTokensToSell, numeraire })
 * Price specification methods (use one, not multiple):
-  * **withMarketCapRange({ marketCap, numerairePrice, ... })** Recommended
+  * **withMarketCapRange({ marketCap, numerairePrice, ... })** ⭐ Recommended
+    * Configure via dollar-denominated market cap targets (most intuitive)
+    * Requires `saleConfig()` to be called first (for numeraire and tokenSupply)
+    * Auto-detects `tokenIsToken1` from numeraire address
+    * Parameters: `marketCap: { start, end }`, `numerairePrice`, optional `fee`, `numPositions`, `maxShareToBeSold`, `tokenDecimals`, `numeraireDecimals`
+    * Defaults: `fee = 10000`, `numPositions = 15`, `maxShareToBeSold = 0.35e18`
   * poolByTicks({ startTick?, endTick?, fee?, numPositions?, maxShareToBeSold? })
     * Defaults: `fee = DEFAULT_V3_FEE (10000)`, `startTick = DEFAULT_V3_START_TICK`, `endTick = DEFAULT_V3_END_TICK`, `numPositions = DEFAULT_V3_NUM_POSITIONS`, `maxShareToBeSold = DEFAULT_V3_MAX_SHARE_TO_BE_SOLD`
-* withVesting({ duration?, cliffDuration?, recipients?, amounts? } | undefined)
-  * Omit to disable vesting. Default duration if provided but undefined is `DEFAULT_V3_VESTING_DURATION`.
-  * `recipients`: Optional array of addresses to receive vested tokens
-  * `amounts`: Optional array of token amounts per recipient
-* withGovernance(GovernanceConfig)
-* withMigration(MigrationConfig)
-* withUserAddress(address)
-* withIntegrator(address?)
-  * Defaults to zero address if omitted
-* build(): CreateStaticAuctionParams
-  * Throws if required sections are missing
-
-### Market Cap Config Interface (Static)
-
-```typescript
-interface StaticAuctionMarketCapConfig {
-  marketCap: { start: number; end: number };  // USD market cap range
-  numerairePrice: number;                      // Numeraire price in USD
-  tokenSupply?: bigint;                        // Override (defaults to initialSupply)
-  tokenDecimals?: number;                      // Default: 18
-  numeraireDecimals?: number;                  // Default: 18
-  fee?: number;                                // Default: 10000 (1%)
-  numPositions?: number;                       // Default: 15
-  maxShareToBeSold?: bigint;                   // Default: 0.35e18 (35%)
-}
-```
-
-### Example (Market Cap)
-
-```ts
-const params = sdk.buildStaticAuction()
-  .tokenConfig({ name: 'My Token', symbol: 'MTK', tokenURI: 'https://example.com/mtk.json' })
-  .saleConfig({ initialSupply: parseEther('1_000_000_000'), numTokensToSell: parseEther('500_000_000'), numeraire: WETH })
-  .withMarketCapRange({
-    marketCap: { start: 100_000, end: 10_000_000 }, // $100k to $10M fully diluted
-    numerairePrice: 3000, // ETH = $3000 USD
-  })
-  .withVesting({ duration: BigInt(365*24*60*60) })
-  .withGovernance({ type: 'default' })
-  .withMigration({ type: 'uniswapV2' })
-  .withUserAddress(user)
-  .build()
-```
-
-***
-
-## DynamicAuctionBuilder (V4‑style)
-
-Recommended for Dynamic Dutch Auctions where price moves over epochs using Uniswap V4 hooks.
-
-Methods (chainable):
-
-* tokenConfig(params)
-  * Standard: `{ name, symbol, tokenURI, yearlyMintRate? }`
-    * Defaults: `yearlyMintRate = DEFAULT_V4_YEARLY_MINT_RATE (0.02e18)`
-* saleConfig({ initialSupply, numTokensToSell, numeraire? })
-  * Defaults: `numeraire = ZERO_ADDRESS` (token is paired against ETH)
-* poolConfig({ fee, tickSpacing })
-* Price configuration methods (use one, not multiple):
-  * **withMarketCapRange({ marketCap, numerairePrice, minProceeds, maxProceeds, ... })** ⭐ Recommended
-    * Configure via dollar-denominated market cap targets
-    * Requires both `saleConfig()` AND `poolConfig()` to be called first
-    * Auto-detects `tokenIsToken1` from numeraire address
-    * Required: `marketCap: { start, end }`, `numerairePrice`, `minProceeds`, `maxProceeds`
-    * Optional: `duration`, `epochLength`, `gamma`, `numPdSlugs`, `tokenDecimals`, `numeraireDecimals`
-    * Defaults: `duration = 7 days`, `epochLength = 1 hour`, `numPdSlugs = 5`
-  * auctionByTicks({ startTick, endTick, minProceeds, maxProceeds, duration?, epochLength?, gamma?, numPdSlugs? })
-    * Defaults: `duration = DEFAULT_AUCTION_DURATION (604800)`, `epochLength = DEFAULT_EPOCH_LENGTH (3600)`, `numPdSlugs` optional
-    * If `gamma` omitted, computed from ticks, duration, epoch length, and `tickSpacing`
-  * auctionByPriceRange({ priceRange, minProceeds, maxProceeds, duration?, epochLength?, gamma?, tickSpacing?, numPdSlugs? })
-    * Uses `pool.tickSpacing` unless `tickSpacing` is provided here
-    * @deprecated: Use `withMarketCapRange()` instead
 * withVesting({ duration?, cliffDuration?, recipients?, amounts? } | undefined)
   * Omit to disable vesting. Default duration if provided but undefined is `0` for dynamic auctions.
 * withGovernance(GovernanceConfig)

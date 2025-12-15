@@ -238,9 +238,7 @@ const params = sdk.buildStaticAuction()
   .build();
 ```
 
-{% hint style="info" %}
-The `poolByPriceRange()` method is deprecated. Use `withMarketCapRange()` instead for more intuitive configuration.
-{% endhint %}
+
 
 ### With proceeds migration to Uniswap v4&#x20;
 
