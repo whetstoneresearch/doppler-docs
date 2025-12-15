@@ -1,8 +1,10 @@
 ---
-description: Create coins with Doppler's dynamic bonding curve, aka Doppler v4
+description: Create coins with Doppler's Dutch auction bonding curve, aka Doppler v4
 ---
 
 # Dynamic auctions
+
+Dynamic auctions are Dutch auctions where the price starts high and descends over time through epochs until buyers purchase or the auction ends.
 
 ## Using market cap targets
 
