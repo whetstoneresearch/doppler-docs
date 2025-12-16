@@ -84,16 +84,6 @@ Methods (chainable):
 
 ***
 
-## Method call order
-
-```
-Static:    saleConfig() → withMarketCapRange()
-Dynamic:   saleConfig() → poolConfig() → withMarketCapRange()
-Multicurve: saleConfig() → withCurves()
-```
-
-***
-
 ## Factory methods
 
 ```ts
