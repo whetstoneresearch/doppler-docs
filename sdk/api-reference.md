@@ -26,7 +26,7 @@ Methods (chainable):
 * `tokenConfig({ name, symbol, tokenURI, yearlyMintRate? })`
 * `saleConfig({ initialSupply, numTokensToSell, numeraire })`
 * `withMarketCapRange({ marketCap: { start, end }, numerairePrice, fee?, numPositions?, maxShareToBeSold? })`
-  * `marketCap.start` and `marketCap.end` are fully diluted market caps denominated in whatever unit `numerairePrice` is in
+  * `marketCap.start` and `marketCap.end` are fully diluted market caps in USD (or whatever unit your numeraire is priced in)
   * Requires `saleConfig()` first
 * `poolByTicks({ startTick, endTick, fee?, numPositions?, maxShareToBeSold? })`
 * `withVesting({ duration?, cliffDuration?, recipients?, amounts? })`
@@ -45,7 +45,7 @@ Methods (chainable):
 * `saleConfig({ initialSupply, numTokensToSell, numeraire? })`
 * `poolConfig({ fee, tickSpacing })`
 * `withMarketCapRange({ marketCap: { start, end }, numerairePrice, minProceeds, maxProceeds, duration?, epochLength? })`
-  * `marketCap.start` and `marketCap.end` are fully diluted market caps denominated in whatever unit `numerairePrice` is in
+  * `marketCap.start` and `marketCap.end` are fully diluted market caps in USD (or whatever unit your numeraire is priced in)
   * Requires `saleConfig()` and `poolConfig()` first
 * `auctionByTicks({ startTick, endTick, minProceeds, maxProceeds, duration?, epochLength?, gamma? })`
 * `withVesting({ duration?, cliffDuration?, recipients?, amounts? })`
@@ -66,7 +66,7 @@ Methods (chainable):
 * `withCurves({ numerairePrice, curves, fee?, tickSpacing?, beneficiaries? })`
   * Requires `saleConfig()` first
   * `curves`: Array of `{ marketCap: { start, end }, numPositions, shares }`
-  * `marketCap.start` and `marketCap.end` are fully diluted market caps denominated in whatever unit `numerairePrice` is in
+  * `marketCap.start` and `marketCap.end` are fully diluted market caps in USD (or whatever unit your numeraire is priced in)
   * Shares must sum to 1e18 (100%)
 * `poolConfig({ fee, tickSpacing, curves, beneficiaries? })`
   * `curves`: Array of `{ tickLower, tickUpper, numPositions, shares }`
