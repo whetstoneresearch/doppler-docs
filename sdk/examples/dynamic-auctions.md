@@ -53,7 +53,7 @@ async function main() {
     })
     .poolConfig({ fee: 3000, tickSpacing: 10 })
     .withMarketCapRange({
-      marketCap: { start: 500_000, end: 50_000_000 }, // $500k to $50M
+      marketCap: { start: 500_000, min: 50_000 }, // $500k start, $50k floor
       numerairePrice: 3000, // ETH = $3000 USD
       minProceeds: parseEther('100'),
       maxProceeds: parseEther('5000'),
