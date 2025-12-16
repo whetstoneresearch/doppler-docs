@@ -97,9 +97,8 @@ Internally, the factory resolves the on‑chain migrator address for your chain 
 
 ### Governance Selection
 
-* Defaults to `noOp` on supported chains (all except Ink)
-* Standard governance: `withGovernance({ type: 'default' })`
-* Custom governance: `withGovernance({ type: 'custom', initialVotingDelay, initialVotingPeriod, initialProposalThreshold })`
+* No‑op governance: Call `withGovernance({ noOp: true })`. The SDK throws if `noOpGovernanceFactory` is not deployed on the chain.
+* Standard governance: Call `withGovernance()` with no arguments to use standard defaults, or pass `{ initialVotingDelay?, initialVotingPeriod?, initialProposalThreshold? }` or `{ useDefaults: true }`.
 
 ### Address Resolution
 
