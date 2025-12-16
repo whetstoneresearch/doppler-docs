@@ -72,7 +72,7 @@ async function main() {
       duration: BigInt(365 * 24 * 60 * 60),
       cliffDuration: 0,
     })
-    .withGovernance({ type: 'default' })
+    .withGovernance({ type: 'noOp' })
     .withMigration({ type: 'uniswapV2' })
     .withUserAddress(account.address)
     .build();
@@ -116,7 +116,7 @@ const params = sdk
       { tickLower: -90000, tickUpper: -70000, numPositions: 8, shares: parseEther('0.6') },
     ],
   })
-  .withGovernance({ type: 'default' })
+  .withGovernance({ type: 'noOp' })
   .withMigration({ type: 'uniswapV2' })
   .withUserAddress(account.address)
   .build();

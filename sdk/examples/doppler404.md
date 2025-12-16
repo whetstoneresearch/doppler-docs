@@ -42,7 +42,7 @@ const dynamicBuilder = new DynamicAuctionBuilder()
       beneficiaries: []
     }
   })
-  .withGovernance({ useDefaults: true })
+  .withGovernance({ type: 'noOp' })
   .withUserAddress(account.address)
   .withIntegrator()
   .withTime({ blockTimestamp: Number(adjustedTimestamp) })

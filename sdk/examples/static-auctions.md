@@ -55,7 +55,7 @@ async function main() {
       duration: BigInt(365 * 24 * 60 * 60),
       cliffDuration: 0,
     })
-    .withGovernance({ type: 'default' })
+    .withGovernance({ type: 'noOp' })
     .withMigration({ type: 'uniswapV2' })
     .withUserAddress(account.address)
     .build();
@@ -122,7 +122,7 @@ async function main() {
       duration: BigInt(365 * 24 * 60 * 60),
       cliffDuration: 0,
     })
-    .withGovernance({ type: 'default' })
+    .withGovernance({ type: 'noOp' })
     .withMigration({
       type: 'uniswapV4',
       fee: 3000,
@@ -164,7 +164,7 @@ const params = sdk.buildStaticAuction()
     numeraire: '0x4200000000000000000000000000000000000006',
   })
   .poolByTicks({ startTick: 175000, endTick: 225000, fee: 10000 })
-  .withGovernance({ type: 'default' })
+  .withGovernance({ type: 'noOp' })
   .withMigration({ type: 'uniswapV2' })
   .withUserAddress(account.address)
   .build();

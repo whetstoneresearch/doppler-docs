@@ -70,7 +70,7 @@ async function main() {
         ],
       },
     })
-    .withGovernance({ type: 'default' })
+    .withGovernance({ type: 'noOp' })
     .withUserAddress(account.address)
     .build();
 
@@ -120,7 +120,7 @@ const params = sdk.buildDynamicAuction()
       ],
     },
   })
-  .withGovernance({ type: 'default' })
+  .withGovernance({ type: 'noOp' })
   .withUserAddress(account.address)
   .build();
 ```

@@ -15,6 +15,7 @@ Builders assemble type‑safe parameter objects for `DopplerFactory.createStatic
 ### Common Concepts
 
 * Governance is required - call `withGovernance(...)` in all cases
+* `noOp` governance is the default on all chains except Ink
 * Fee tiers and tick spacing: 100→1, 500→10, 3000→60, 10000→200
 
 ***
