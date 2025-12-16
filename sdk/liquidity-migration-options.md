@@ -97,9 +97,9 @@ Internally, the factory resolves the on‑chain migrator address for your chain 
 
 ### Governance Selection
 
-* Required: You must call `withGovernance(...)` in the builders.
-* No‑op governance: `withGovernance({ type: 'noOp' })` - the default on all chains except Ink.
-* Standard governance: `withGovernance({ type: 'default' })` or `{ type: 'custom', initialVotingDelay, initialVotingPeriod, initialProposalThreshold }`.
+* Defaults to `noOp` on supported chains (all except Ink)
+* Standard governance: `withGovernance({ type: 'default' })`
+* Custom governance: `withGovernance({ type: 'custom', initialVotingDelay, initialVotingPeriod, initialProposalThreshold })`
 
 ### Address Resolution
 
