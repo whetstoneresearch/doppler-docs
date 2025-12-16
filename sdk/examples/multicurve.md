@@ -1,6 +1,6 @@
 ---
 description: >-
-  Create coins with Doppler Multicurve for richer liquidity distributions
+  Create coins with Doppler Multicurve for more granular supply curves
 ---
 
 # Multicurve
