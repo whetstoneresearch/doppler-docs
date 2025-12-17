@@ -16,7 +16,12 @@ npm install @whetstone-research/doppler-sdk viem
 
 ```javascript
 import { DopplerSDK } from '@whetstone-research/doppler-sdk';
-import { createPublicClient, createWalletClient, http, parseEther } from 'viem';
+import {
+  createPublicClient,
+  createWalletClient,
+  http,
+  parseEther
+} from 'viem';
 import { base } from 'viem/chains'
 
 // 1. Set up viem clients
@@ -40,24 +45,38 @@ const sdk = new DopplerSDK({
 });
 
 // 4. Configure a multicurve auction using market cap ranges
+const WETH = '0x4200000000000000000000000000000000000006';
+
 const params = sdk
   .buildMulticurveAuction()
-  .tokenConfig({ name: 'TEST', symbol: 'TEST', tokenURI: 'https://example.com/metadata.json' })
+  .tokenConfig({
+    name: 'TEST',
+    symbol: 'TEST',
+    tokenURI: 'https://example.com/metadata.json'
+  })
   .saleConfig({
     initialSupply: parseEther('1000000000'),
     numTokensToSell: parseEther('900000000'),
-    numeraire: '0x4200000000000000000000000000000000000006', // WETH on Base
+    numeraire: WETH,
   })
   .withCurves({
     numerairePrice: 3000, // ETH = $3000 USD
     curves: [
-      { marketCap: { start: 500_000, end: 1_500_000 }, numPositions: 10, shares: parseEther('0.5') },
-      { marketCap: { start: 1_000_000, end: 5_000_000 }, numPositions: 10, shares: parseEther('0.5') },
+      {
+        marketCap: { start: 500_000, end: 1_500_000 },
+        numPositions: 10,
+        shares: parseEther('0.5')
+      },
+      {
+        marketCap: { start: 1_000_000, end: 5_000_000 },
+        numPositions: 10,
+        shares: parseEther('0.5')
+      },
     ],
   })
-  .withGovernance({ type: 'noOp' }) // no governance
-  .withMigration({ type: 'noOp' }) // no migration 
-  .withUserAddress('0x...') // add your address
+  .withGovernance({ type: 'noOp' })
+  .withMigration({ type: 'noOp' })
+  .withUserAddress('0x...')
   .build()
 
 const result = await sdk.factory.createMulticurve(params)
