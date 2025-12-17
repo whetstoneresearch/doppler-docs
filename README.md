@@ -16,9 +16,7 @@ npm install @whetstone-research/doppler-sdk viem
 
 ```javascript
 import { DopplerSDK } from '@whetstone-research/doppler-sdk';
-import { createPublicClient, createWalletClient, http } from 'viem';
-import { MulticurveBuilder } from '@whetstone-research/doppler-sdk'
-import { parseEther } from 'viem'
+import { createPublicClient, createWalletClient, http, parseEther } from 'viem';
 import { base } from 'viem/chains'
 
 // 1. Set up viem clients
@@ -41,16 +39,20 @@ const sdk = new DopplerSDK({
   chainId: base.id,
 });
 
-// 4. Configure a multicurve auction 
-const params = new MulticurveBuilder(base.id)
+// 4. Configure a multicurve auction using market cap ranges
+const params = sdk
+  .buildMulticurveAuction()
   .tokenConfig({ name: 'TEST', symbol: 'TEST', tokenURI: 'https://example.com/metadata.json' })
-  .saleConfig({ initialSupply: parseEther('1000000'), numTokensToSell: parseEther('900000'), numeraire: '0x4200000000000000000000000000000000000006' })
-  .withMulticurveAuction({
-    fee: 0, // no fees
-    tickSpacing: 8,
+  .saleConfig({
+    initialSupply: parseEther('1000000000'),
+    numTokensToSell: parseEther('900000000'),
+    numeraire: '0x4200000000000000000000000000000000000006', // WETH on Base
+  })
+  .withCurves({
+    numerairePrice: 3000, // ETH = $3000 USD
     curves: [
-      { tickLower: 0, tickUpper: 240000, numPositions: 10, shares: parseEther('0.5') },
-      { tickLower: 16000, tickUpper: 240000, numPositions: 10, shares: parseEther('0.5') },
+      { marketCap: { start: 500_000, end: 1_500_000 }, numPositions: 10, shares: parseEther('0.5') },
+      { marketCap: { start: 1_000_000, end: 5_000_000 }, numPositions: 10, shares: parseEther('0.5') },
     ],
   })
   .withGovernance({ type: 'noOp' }) // no governance
@@ -69,8 +71,7 @@ With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we co
 
 * Token config - metadata such as the name, symbol, and other relevant data like an image
 * Sale config - allocations of the token and how much is available for sale&#x20;
-* Fees - earnings on each swap in the pool created by Doppler. Set to 0 means no fees
-* Curves - There were only two price curves defined, each with 10 unique liquidity positions&#x20;
+* Curves - Two price curves defined by market cap ranges (USD), each with 10 unique liquidity positions. The first curve's start market cap ($500k) sets the launch price.
 * Governance & Migration - There is no governance or migration associated with this token&#x20;
 
 ### Next steps
