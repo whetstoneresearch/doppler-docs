@@ -2,14 +2,6 @@
 
 * [Home](README.md)
 * [Explainer](explainer.md)
-* [Get started](get-started.md)
-
-## How it works
-
-* [Implementation](how-it-works/implementation.md)
-* [Airlock & modules](how-it-works/airlock-and-modules.md)
-* [Fees & economics](how-it-works/fees-and-economics.md)
-* [Treasury & governance](how-it-works/treasury-and-governance.md)
 
 ## SDK
 
@@ -27,14 +19,6 @@
 
 * [Overview](indexer/overview.md)
 * [API Usage](indexer/api-usage.md)
-* [Getting Started](indexer/getting-started.md)
-* [Development](indexer/development.md)
-
-## Featured users
-
-* [Pure.st](featured-users/pure.st.md)
-* [Ohara](featured-users/ohara.md)
-* [Zora](featured-users/zora.md)
 
 ## Resources
 

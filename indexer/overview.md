@@ -35,7 +35,7 @@ The indexer is configured to support the following networks:
 | **Ink**          | `57073`  | V2, V3, V4 Protocol Indexing           |
 | **Base Sepolia** | `84532`  | V2, V3, V4 Protocol Indexing (Testnet) |
 
-The configuration is modular, making it straightforward to add or remove chains. See the [Development Guide](development.md) for more details.
+The configuration is modular, making it straightforward to add or remove chains. See the [Development Guide](/broken/pages/VZBnc78XqauN19pCmwWr) for more details.
 
 ### Supported Protocols & Events
 

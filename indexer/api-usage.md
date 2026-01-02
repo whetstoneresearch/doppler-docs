@@ -6,6 +6,12 @@ icon: brackets-curly
 
 The indexer exposes the indexed data through a GraphQL API and a RESTful search endpoint.
 
+{% hint style="success" %}
+[Whetstone Research](https://whetstone.cc) hosts a free endpoint that supports Base Sepolia for development.&#x20;
+
+[https://testnet-indexer.doppler.lol/](https://testnet-indexer.doppler.lol/)
+{% endhint %}
+
 ## GraphQL API
 
 The primary way to query data is through the GraphQL endpoint, available at `/graphql`. It is strongly typed and supports complex queries, filtering, and pagination.

@@ -239,7 +239,7 @@ The SDK supports multiple networks:
 * **Unichain Sepolia** (chainId: 1301) - Testnet
 * **Ink** (chainId: 57073) - Production
 
-For complete network addresses and additional supported networks, see the [Contract Addresses](../../../resources/contract-addresses.md) documentation.
+For complete network addresses and additional supported networks, see the [Contract Addresses](../../contract-addresses.md) documentation.
 
 You can get free Base Sepolia ETH from the [Base Sepolia faucet](https://docs.base.org/tools/network-faucets) to test your applications.
 
@@ -271,5 +271,5 @@ try {
 For additional help and examples:
 
 * Check the [Token Launch Examples](../v4/examples.md) for comprehensive deployment scenarios
-* Review the [Implementation Guide](../../../how-it-works/implementation.md) for protocol details
+* Review the [Implementation Guide](/broken/pages/2xkvOvHSEt9zfaWDOv5z) for protocol details
 * Join the community for discussions and support
