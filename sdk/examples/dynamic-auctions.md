@@ -14,21 +14,21 @@ Dynamic auctions are Dutch auctions where the price starts high and descends ove
 import { DopplerSDK } from '@whetstone-research/doppler-sdk';
 import { parseEther, createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
-import { base } from 'viem/chains';
+import { baseSepolia } from 'viem/chains';
 
 const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
-const rpcUrl = process.env.RPC_URL ?? 'https://mainnet.base.org';
+const rpcUrl = process.env.RPC_URL ?? baseSepolia.rpcUrls.default.http[0];
 
 async function main() {
   const account = privateKeyToAccount(privateKey);
 
   const publicClient = createPublicClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl),
   });
 
   const walletClient = createWalletClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl),
     account,
   });
@@ -36,7 +36,7 @@ async function main() {
   const sdk = new DopplerSDK({
     publicClient,
     walletClient,
-    chainId: base.id,
+    chainId: baseSepolia.id,
   });
 
   const params = sdk
@@ -51,7 +51,7 @@ async function main() {
       numTokensToSell: parseEther('500000000'),
       numeraire: '0x4200000000000000000000000000000000000006', // WETH on Base
     })
-    .poolConfig({ fee: 3000, tickSpacing: 10 })
+    .poolConfig({ fee: 3000, tickSpacing: 60 })
     .withMarketCapRange({
       marketCap: { start: 500_000, min: 50_000 }, // $500k start, $50k floor
       numerairePrice: 3000, // ETH = $3000 USD
@@ -61,7 +61,7 @@ async function main() {
     .withMigration({
       type: 'uniswapV4',
       fee: 3000,
-      tickSpacing: 10,
+      tickSpacing: 60,
       streamableFees: {
         lockDuration: 365 * 24 * 60 * 60,
         beneficiaries: [

@@ -6,7 +6,7 @@ icon: rotate
 
 ## Quotes and Swaps
 
-This guide shows how to get price quotes and execute swaps using the unified SDK (`@whetstone-research/doppler-sdk-alpha)` across Uniswap V2, V3, and V4 (including Doppler dynamic auctions).
+This guide shows how to get price quotes and execute swaps using the unified SDK (`@whetstone-research/doppler-sdk`) across Uniswap V2, V3, and V4 (including Doppler dynamic auctions).
 
 * Quoting uses the SDK `Quoter` for V2/V3/V4.
 * Executing swaps uses the Uniswap Universal Router. For convenience, we show examples with the `doppler-router` helpers used in the [demo app](https://github.com/whetstoneresearch/doppler-demo-app).
