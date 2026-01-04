@@ -99,5 +99,5 @@ Methods (chainable):
 ```ts
 const { poolAddress, tokenAddress } = await sdk.factory.createStaticAuction(params)
 const { hookAddress, tokenAddress, poolId } = await sdk.factory.createDynamicAuction(params)
-const { poolAddress, tokenAddress } = await sdk.factory.createMulticurve(params)
+const { poolId, tokenAddress } = await sdk.factory.createMulticurve(params)
 ```
