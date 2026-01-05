@@ -7,6 +7,7 @@
 
 * [Examples](sdk/examples/README.md)
   * [Multicurve](sdk/examples/multicurve.md)
+  * [Rehype Pools](sdk/examples/rehype-pools.md)
   * [Static auctions](sdk/examples/static-auctions.md)
   * [Dynamic auctions](sdk/examples/dynamic-auctions.md)
   * [Doppler404](sdk/examples/doppler404.md)
