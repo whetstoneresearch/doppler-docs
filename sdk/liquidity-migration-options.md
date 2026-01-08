@@ -28,7 +28,7 @@ export type MigrationConfig =
       tickSpacing: number
       streamableFees: {
         lockDuration: number // seconds
-        beneficiaries: { address: Address; percentage: number }[] // in basis points
+        beneficiaries: { beneficiary: Address; shares: bigint }[] // in WAD (1e18 = 100%)
       }
     }
 ```
@@ -78,8 +78,8 @@ Internally, the factory resolves the on‑chain migrator address for your chain 
   streamableFees: {
     lockDuration: 365 * 24 * 60 * 60, // 1 year
     beneficiaries: [
-      { address: '0x...', percentage: 6000 },
-      { address: '0x...', percentage: 4000 },
+      { beneficiary: '0x...', shares: parseEther('0.60') },
+      { beneficiary: '0x...', shares: parseEther('0.40') },
     ],
   },
 })
@@ -87,10 +87,10 @@ Internally, the factory resolves the on‑chain migrator address for your chain 
 
 * Encoded data:
   * `(fee:uint24, tickSpacing:int24, lockDuration:uint32, beneficiaries: (address, shares[WAD])[])`
-  * The SDK converts `percentage` (basis points) to `shares` in WAD (1e18), and sorts beneficiaries by address (ascending) as required by the contract
+  * The SDK sorts beneficiaries by address (ascending) as required by the contract
 * Validation:
   * At least one beneficiary
-  * Percentages must sum to exactly 10000
+  * Shares must sum to exactly 1e18 (100% in WAD format)
   * Contract enforces: airlock owner must receive at least 5% of streamed fees (add as a beneficiary if applicable)
 * Chain support:
   * Ensure `streamableFeesLocker` and `v4Migrator` are deployed on your target chain (see `src/addresses.ts`)
