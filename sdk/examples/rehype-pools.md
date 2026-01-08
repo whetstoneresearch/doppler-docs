@@ -23,7 +23,7 @@ Fees are split into four categories (must sum to 100%):
 ## Basic example
 
 ```typescript
-import { DopplerSDK, WAD, getAddresses } from '@whetstone-research/doppler-sdk';
+import { DopplerSDK, getAddresses } from '@whetstone-research/doppler-sdk';
 import { parseEther, createPublicClient, createWalletClient, http } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { base } from 'viem/chains';
@@ -75,19 +75,16 @@ async function main() {
       numTokensToSell: parseEther('1000000000'),
       numeraire: addresses.weth,
     })
-    .poolConfig({
-      fee: 0, // base pool fee (can be 0 when using hook fees)
-      tickSpacing: 8,
-      curves: Array.from({ length: 10 }, (_, i) => ({
-        tickLower: i * 16_000,
-        tickUpper: 240_000,
-        numPositions: 10,
-        shares: WAD / 10n,
-      })),
-      farTick: 200_000,
+    .withCurves({
+      numerairePrice: 3000, // ETH = $3000 USD
+      curves: [
+        { marketCap: { start: 500_000, end: 1_500_000 }, numPositions: 10, shares: parseEther('0.3') },
+        { marketCap: { start: 1_000_000, end: 5_000_000 }, numPositions: 15, shares: parseEther('0.4') },
+        { marketCap: { start: 4_000_000, end: 50_000_000 }, numPositions: 10, shares: parseEther('0.3') },
+      ],
       beneficiaries,
     })
-    .withRehyperDopplerHook({
+    .withRehypeDopplerHook({
       hookAddress: addresses.rehypeDopplerHook!,
       buybackDestination: BUYBACK_DESTINATION,
       customFee: 3000, // 0.3% swap fee
@@ -120,7 +117,7 @@ main();
 ### Heavy buyback (price support)
 
 ```typescript
-.withRehyperDopplerHook({
+.withRehypeDopplerHook({
   hookAddress: addresses.rehypeDopplerHook!,
   buybackDestination: burnAddress,
   customFee: 5000, // 0.5%
@@ -134,7 +131,7 @@ main();
 ### LP-first (attract liquidity)
 
 ```typescript
-.withRehyperDopplerHook({
+.withRehypeDopplerHook({
   hookAddress: addresses.rehypeDopplerHook!,
   buybackDestination: treasury,
   customFee: 3000,
@@ -148,7 +145,7 @@ main();
 ### Treasury-building
 
 ```typescript
-.withRehyperDopplerHook({
+.withRehypeDopplerHook({
   hookAddress: addresses.rehypeDopplerHook!,
   buybackDestination: treasury,
   customFee: 3000,
