@@ -47,7 +47,7 @@ Methods (chainable):
 * `withMarketCapRange({ marketCap: { start, min }, numerairePrice, minProceeds, maxProceeds, duration?, epochLength? })`
   * `marketCap.start` is the starting market cap (auction begins here), `marketCap.min` is the floor price the auction descends to
   * Both values are fully diluted market caps in USD (or whatever unit your numeraire is priced in)
-  * Requires `saleConfig()` and `poolConfig()` first
+  * Requires `saleConfig()` first (do NOT use `poolConfig()` with this method - they are mutually exclusive)
 * `auctionByTicks({ startTick, endTick, minProceeds, maxProceeds, duration?, epochLength?, gamma? })`
 * `withVesting({ duration?, cliffDuration?, recipients?, amounts? })`
 * `withGovernance({ type: 'default' | 'custom' | 'noOp' })`

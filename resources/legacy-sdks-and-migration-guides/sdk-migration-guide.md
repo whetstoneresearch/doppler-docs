@@ -199,8 +199,8 @@ const params = new DynamicAuctionBuilder()
     priceRange: { startPrice: 0.0001, endPrice: 0.01 },
     minProceeds: parseEther('50'),
     maxProceeds: parseEther('500'),
-    durationDays: 7,
-    epochLength: 3600,
+    duration: 7 * 24 * 60 * 60,  // 7 days in seconds
+    epochLength: 43200,  // 12 hours (default)
   })
   .withMigration({
     type: 'uniswapV4',

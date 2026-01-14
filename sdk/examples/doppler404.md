@@ -32,8 +32,8 @@ const dynamicBuilder = new DynamicAuctionBuilder()
     startTick, endTick,
     minProceeds: parseEther("100"),
     maxProceeds: parseEther("600"),
-    durationDays: 7,
-    epochLength: 3600,
+    duration: 7 * 24 * 60 * 60,  // 7 days in seconds
+    epochLength: 43200,  // 12 hours (default)
   })
   .withMigration({
     type: 'uniswapV4', fee: 3000, tickSpacing: 60,

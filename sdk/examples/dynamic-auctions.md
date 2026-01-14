@@ -8,7 +8,7 @@ Dynamic auctions are Dutch auctions where the price starts high and descends ove
 
 ## Using market cap targets
 
-`saleConfig()` and `poolConfig()` must be called before `withMarketCapRange()`.
+`saleConfig()` must be called before `withMarketCapRange()`. Note: Do NOT use `poolConfig()` with `withMarketCapRange()` - they are mutually exclusive. Use `poolConfig()` only with `auctionByTicks()` for manual tick configuration.
 
 ```typescript
 import { DopplerSDK } from '@whetstone-research/doppler-sdk';
@@ -51,7 +51,6 @@ async function main() {
       numTokensToSell: parseEther('500000000'),
       numeraire: '0x4200000000000000000000000000000000000006', // WETH on Base
     })
-    .poolConfig({ fee: 3000, tickSpacing: 10 })
     .withMarketCapRange({
       marketCap: { start: 500_000, min: 50_000 }, // $500k start, $50k floor
       numerairePrice: 3000, // ETH = $3000 USD
