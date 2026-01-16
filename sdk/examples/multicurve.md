@@ -54,17 +54,23 @@ async function main() {
         {
           marketCap: { start: 500_000, end: 1_500_000 },
           numPositions: 10,
-          shares: parseEther('0.3'),
+          shares: parseEther('0.3'),  // 30%
         },
         {
           marketCap: { start: 1_000_000, end: 5_000_000 },
           numPositions: 15,
-          shares: parseEther('0.4'),
+          shares: parseEther('0.4'),  // 40%
         },
         {
-          marketCap: { start: 4_000_000, end: 50_000_000 },
+          marketCap: { start: 4_000_000, end: 6_000_000 },
           numPositions: 10,
-          shares: parseEther('0.3'),
+          shares: parseEther('0.2'),  // 20%
+        },
+        // Tail curve: extends liquidity to infinity
+        {
+          marketCap: { start: 6_000_000, end: 'max' },
+          numPositions: 1,
+          shares: parseEther('0.1'),  // 10% (completes 100%)
         },
       ],
     })
@@ -91,6 +97,7 @@ main();
 * First curve's `marketCap.start` = the launch price
 * Curves must be contiguous or overlapping (no gaps)
 * Shares must sum to exactly 1e18 (100%)
+* **Tail curve (recommended)**: A final curve with `end: 'max'` and `numPositions: 1` ensures price continuity beyond the bonding curve. The tail's `start` must match the previous curve's `end`.
 
 ---
 
