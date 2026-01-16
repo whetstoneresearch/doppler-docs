@@ -103,7 +103,7 @@ async function main() {
 
   const result = await sdk.factory.createMulticurve(params);
 
-  console.log('Pool:', result.poolAddress);
+  console.log('Pool:', result.poolId);
   console.log('Token:', result.tokenAddress);
 }
 

@@ -65,12 +65,17 @@ const params = sdk
       {
         marketCap: { start: 500_000, end: 1_500_000 },
         numPositions: 10,
-        shares: parseEther('0.5')
+        shares: parseEther('0.4')
       },
       {
         marketCap: { start: 1_000_000, end: 5_000_000 },
         numPositions: 10,
         shares: parseEther('0.5')
+      },
+      {
+        marketCap: { start: 5_000_000, end: 'max' },
+        numPositions: 1,
+        shares: parseEther('0.1')
       },
     ],
   })
@@ -80,7 +85,7 @@ const params = sdk
   .build()
 
 const result = await sdk.factory.createMulticurve(params)
-console.log('Pool address:', result.poolAddress)
+console.log('Pool:', result.poolId)
 console.log('Token address:', result.tokenAddress)
 ```
 

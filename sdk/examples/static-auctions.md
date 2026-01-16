@@ -62,7 +62,7 @@ async function main() {
 
   const result = await sdk.factory.createStaticAuction(params);
 
-  console.log('Pool:', result.poolAddress);
+  console.log('Pool:', result.poolId);
   console.log('Token:', result.tokenAddress);
 }
 
@@ -140,7 +140,7 @@ async function main() {
 
   const result = await sdk.factory.createStaticAuction(params);
 
-  console.log('Pool:', result.poolAddress);
+  console.log('Pool:', result.poolId);
   console.log('Token:', result.tokenAddress);
 }
 
