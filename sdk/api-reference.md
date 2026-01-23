@@ -71,6 +71,15 @@ Methods (chainable):
   * Shares must sum to 1e18 (100%)
 * `poolConfig({ fee, tickSpacing, curves, beneficiaries? })`
   * `curves`: Array of `{ tickLower, tickUpper, numPositions, shares }`
+* `withRehypeDopplerHook({ hookAddress, buybackDestination, customFee, assetBuybackPercentWad, numeraireBuybackPercentWad, beneficiaryPercentWad, lpPercentWad, graduationCalldata? })`
+  * `hookAddress` — Deployed RehypeDopplerHook (must be whitelisted)
+  * `buybackDestination` — Receives bought-back tokens
+  * `customFee` — Swap fee in bps (3000 = 0.3%)
+  * `assetBuybackPercentWad` — % for asset buyback (WAD, 1e18 = 100%)
+  * `numeraireBuybackPercentWad` — % for numeraire buyback (WAD)
+  * `beneficiaryPercentWad` — % for beneficiaries (WAD)
+  * `lpPercentWad` — % for LPs (WAD)
+  * `graduationCalldata` — Optional calldata executed on graduation
 * `withVesting({ duration?, cliffDuration?, recipients?, amounts? })`
 * `withGovernance({ type: 'default' | 'custom' | 'noOp' })`
 * `withMigration(MigrationConfig)`
