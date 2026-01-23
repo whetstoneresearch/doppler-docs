@@ -13,7 +13,6 @@
   * [Doppler404](sdk/examples/doppler404.md)
   * [Quoting, monitoring, and metrics](sdk/examples/quoting-monitoring-and-metrics.md)
 * [API reference](sdk/api-reference.md)
-* [Doppler Hooks](sdk/doppler-hooks.md)
 * [Quotes & swaps](sdk/quotes-and-swaps.md)
 * [Liquidity migration options](sdk/liquidity-migration-options.md)
 
@@ -28,6 +27,7 @@
 * [Demo application](https://github.com/whetstoneresearch/doppler-demo-app)
 * [Doppler Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/doppler/Dutch_auction_Dynamic_Bonding_Curves.pdf)
 * [Multicurve Whitepaper](https://github.com/whetstoneresearch/docs/blob/main/whitepapers/multicurve/Doppler_Multicurve.pdf)
+* [Doppler Hooks](resources/doppler-hooks.md)
 * [Metadata standards](resources/metadata-standards.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
 * [Contract addresses](resources/contract-addresses.md)
