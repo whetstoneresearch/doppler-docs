@@ -85,6 +85,67 @@ Methods (chainable):
 
 ***
 
+## RehypeDopplerHook Configuration
+
+The `withRehypeDopplerHook()` method on `MulticurveBuilder` enables advanced fee distribution and buyback mechanisms.
+
+Methods (chainable on MulticurveBuilder):
+
+* `withRehypeDopplerHook({ hookAddress, buybackDestination, customFee, assetBuybackPercentWad, numeraireBuybackPercentWad, beneficiaryPercentWad, lpPercentWad, graduationCalldata? })`
+* `withDopplerHookInitializer(address)` — required when using Rehype
+* `withNoOpMigrator(address)` — required (Rehype pools don't migrate)
+
+### RehypeDopplerHookConfig parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `hookAddress` | `Address` | Deployed RehypeDopplerHook (must be whitelisted) |
+| `buybackDestination` | `Address` | Receives bought-back tokens |
+| `customFee` | `number` | Swap fee in bps (3000 = 0.3%) |
+| `assetBuybackPercentWad` | `bigint` | % for asset buyback (WAD, 1e18 = 100%) |
+| `numeraireBuybackPercentWad` | `bigint` | % for numeraire buyback (WAD) |
+| `beneficiaryPercentWad` | `bigint` | % for beneficiaries (WAD) |
+| `lpPercentWad` | `bigint` | % for LPs (WAD) |
+| `graduationCalldata` | `Hex` | Optional calldata executed on graduation |
+
+### Rehype rules
+
+* All four percentage parameters must sum to exactly `WAD` (1e18)
+* `hookAddress` must be enabled in `DopplerHookInitializer`
+* Use `noOp` migration — Rehype pools enter "Locked" status
+* Beneficiary shares must sum to `WAD`; protocol owner requires minimum 5%
+
+***
+
+## Rehype Pool Methods
+
+After creating a Rehype pool, interact with it via the SDK:
+
+```ts
+const pool = await sdk.getMulticurvePool(assetAddress);
+
+// Collect fees (anyone can call; distributes automatically)
+const { fees0, fees1, transactionHash } = await pool.collectFees();
+
+// Get current fee distribution info
+const feeInfo = await pool.getFeeDistributionInfo();
+// Returns: { assetBuybackPercentWad, numeraireBuybackPercentWad, beneficiaryPercentWad, lpPercentWad }
+
+// Get accumulated hook fees
+const hookFees = await pool.getHookFees();
+// Returns: { fees0, fees1, beneficiaryFees0, beneficiaryFees1, airlockOwnerFees0, airlockOwnerFees1 }
+```
+
+### Fee claiming (on-chain)
+
+| Method | Caller | Description |
+|--------|--------|-------------|
+| `collectFees(asset)` | Anyone | Transfers beneficiary fees to `buybackDst` |
+| `claimAirlockOwnerFees(asset)` | Airlock owner only | Claims 5% protocol fee |
+| `setFeeDistribution(poolId, ...)` | `buybackDst` only | Updates fee distribution |
+
+***
+
 ## Factory methods
 
 ```ts
