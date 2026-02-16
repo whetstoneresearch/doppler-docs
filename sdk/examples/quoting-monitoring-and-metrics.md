@@ -23,10 +23,10 @@ description: >-
 import { DopplerSDK } from '../src';
 
 import { createPublicClient, http, parseEther, formatEther, type Address } from 'viem'
-import { base } from 'viem/chains'
+import { baseSepolia } from 'viem/chains'
 
 const token = process.env.TOKEN as `0x${string}`;
-const rpcUrl = process.env.RPC_URL || 'https://mainnet.base.org' as string;
+const rpcUrl = process.env.RPC_URL || baseSepolia.rpcUrls.default.http[0] as string;
 
 if (!token) throw new Error('TOKEN is not set');
 
@@ -37,13 +37,13 @@ const usdc = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913' as Address // USDC on 
 async function main() {
   // Initialize SDK
   const publicClient = createPublicClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl)
   })
 
   const sdk = new DopplerSDK({
     publicClient,
-    chainId: base.id
+    chainId: baseSepolia.id
   })
 
   const quoter = sdk.quoter
@@ -211,12 +211,12 @@ import {
   type Address,
   createPublicClient,
 } from 'viem';
-import { base } from 'viem/chains';
+import { baseSepolia } from 'viem/chains';
 
 // Example addresses - replace with your actual auction addresses
 const staticPoolAddress = process.env.STATIC_POOL_ADDRESS as `0x${string}`;
 const dynamicHookAddress = process.env.DYNAMIC_HOOK_ADDRESS as `0x${string}`;
-const rpcUrl = process.env.RPC_URL || ('https://mainnet.base.org' as string);
+const rpcUrl = process.env.RPC_URL || baseSepolia.rpcUrls.default.http[0] as string;
 
 async function monitorStaticAuction(sdk: DopplerSDK, poolAddress: Address) {
   console.log('\n📊 Monitoring Static Auction...');
@@ -328,13 +328,13 @@ async function monitorDynamicAuction(sdk: DopplerSDK, hookAddress: Address) {
 async function main() {
   // Initialize SDK in read-only mode
   const publicClient = createPublicClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl),
   });
 
   const sdk = new DopplerSDK({
     publicClient,
-    chainId: base.id,
+    chainId: baseSepolia.id,
   });
 
   console.log('🔍 Doppler Auction Monitor');
@@ -383,13 +383,13 @@ import {
   parseEther,
   formatEther,
 } from 'viem';
-import { base } from 'viem/chains';
+import { baseSepolia } from 'viem/chains';
 import { privateKeyToAccount } from 'viem/accounts';
 
 // Configuration
 const spender = process.env.SPENDER as `0x${string}`;
 const privateKey = process.env.PRIVATE_KEY as `0x${string}`;
-const rpcUrl = process.env.RPC_URL || 'https://mainnet.base.org' as string;
+const rpcUrl = process.env.RPC_URL || baseSepolia.rpcUrls.default.http[0] as string;
 const tokenAddress = process.env.TOKEN_ADDRESS as `0x${string}`;
 
 if (!privateKey) throw new Error('PRIVATE_KEY is not set');
@@ -401,12 +401,12 @@ async function main() {
   const account = privateKeyToAccount(privateKey);
 
   const publicClient = createPublicClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl),
   });
 
   const walletClient = createWalletClient({
-    chain: base,
+    chain: baseSepolia,
     transport: http(rpcUrl),
     account,
   });
