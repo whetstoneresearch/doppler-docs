@@ -14,7 +14,7 @@ _**It is entirely subject to change.**_
 **Completed :white\_check\_mark:**
 
 * ~~Protocol & Unichain Network Launch~~ - [Read the Launch announcement](https://x.com/aadams/status/1889362777791168877)
-* ~~Ink Network Support~ - [Read the Ink announcement](https://x.com/dopplerprotocol/status/1905273707817316510)
+* ~~Ink Network Support~~ - [Read the Ink announcement](https://x.com/dopplerprotocol/status/1905273707817316510)
 * ~~Base Network Support~~ - [Read the Base announcement](https://x.com/dopplerprotocol/status/1907810739315761221)
 * ~~Doppler Core~~ - [Read the Core announcement](https://x.com/dopplerprotocol/status/1933169128166334882) 
 * ~~Doppler Multicurve~~ - [Read the Multicurve announcement](https://x.com/dopplerprotocol/status/1973770809165639855)
