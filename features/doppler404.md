@@ -1,5 +1,6 @@
 ---
 description: Create hybrid fungible and non-fungible tokens
+icon: image-stack
 ---
 
 # Doppler404
@@ -10,13 +11,13 @@ Doppler404 enables token creators to issue assets with unified liquid markets by
 
 **How it works**
 
-Creators and users can define a custom quantity of fungible tokens that result in NFT ownership as inputs into the Doppler protocol contracts. For example, holding 100 of a specific fungible token, eg. $ABC, can result in holding 1 NFT from an art collection called ABCart. These assets can be auctioned using either Doppler's static or dynamic auctions, and migrate the liquidity generated to any of the supported AMMs, with or without onchain governance, just like other Doppler token configurations.&#x20;
+Creators and users can define a custom quantity of fungible tokens that result in NFT ownership as inputs into the Doppler protocol contracts. For example, holding 100 of a specific fungible token, eg. $ABC, can result in holding 1 NFT from an art collection called ABCart. These assets can be auctioned using either Doppler's static or dynamic auctions, and migrate the liquidity generated to any of the supported AMMs, with or without onchain governance, just like other Doppler token configurations.
 
 #### DN404 & ERC-7631 modifications
 
 Doppler404 builds on top of the foundation of “DN404”, aka [ERC-7631 for “Dual Nature Token Pairs"](https://ethereum-magicians.org/t/erc-7631-dual-nature-token-pair/18796). With a few modifications, Doppler extends the [DN404](https://github.com/Vectorized/dn404) token standard allowing users to freeze their token balances, ensuring users don't accidentally trade away NFTs that they wish to hold.
 
-### Example usage&#x20;
+### Example usage
 
 ```typescript
 const dynamicBuilder = new DynamicAuctionBuilder()
@@ -53,6 +54,6 @@ const dynamicBuilder = new DynamicAuctionBuilder()
 
 The Doppler Demo App supports Doppler404 and is the easiest way to get started.
 
-<figure><img src="../../../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-View it on GitHub: [https://github.com/whetstoneresearch/doppler-demo-app](https://github.com/whetstoneresearch/doppler-demo-app)&#x20;
+View it on GitHub: [https://github.com/whetstoneresearch/doppler-demo-app](https://github.com/whetstoneresearch/doppler-demo-app)

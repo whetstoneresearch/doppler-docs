@@ -1,9 +1,11 @@
 ---
 description: >-
-  Create Multicurve pools with RehypeDopplerHook for advanced fee distribution and buyback mechanisms
+  Create Multicurve pools with RehypeDopplerHook for advanced fee distribution
+  and buyback mechanisms
+icon: sack-dollar
 ---
 
-# Rehype Pools
+# Fee Rehypothecation
 
 Rehype Pools use the **RehypeDopplerHook** to distribute trading fees across beneficiaries, LPs, and buyback destinations.
 
@@ -11,14 +13,14 @@ Rehype Pools use the **RehypeDopplerHook** to distribute trading fees across ben
 
 Fees are split into four categories (must sum to 100%):
 
-| Category | Description |
-|----------|-------------|
-| **Asset Buyback** | Buy back the token |
-| **Numeraire Buyback** | Buy back the quote token |
-| **Beneficiary** | Stream to configured addresses |
-| **LP** | Distribute to liquidity providers |
+| Category              | Description                       |
+| --------------------- | --------------------------------- |
+| **Asset Buyback**     | Buy back the token                |
+| **Numeraire Buyback** | Buy back the quote token          |
+| **Beneficiary**       | Stream to configured addresses    |
+| **LP**                | Distribute to liquidity providers |
 
----
+***
 
 ## Basic example
 
@@ -110,7 +112,7 @@ async function main() {
 main();
 ```
 
----
+***
 
 ## Fee distribution strategies
 
@@ -156,7 +158,7 @@ main();
 })
 ```
 
----
+***
 
 ## Collecting fees
 
@@ -170,24 +172,24 @@ console.log('Fees collected (token0):', fees0);
 console.log('Fees collected (token1):', fees1);
 ```
 
----
+***
 
 ## Configuration reference
 
 ### RehypeDopplerHookConfig
 
-| Parameter | Type | Description |
-|-----------|------|-------------|
-| `hookAddress` | `Address` | Deployed RehypeDopplerHook (must be whitelisted) |
-| `buybackDestination` | `Address` | Receives buyback tokens |
-| `customFee` | `number` | Swap fee in bps (3000 = 0.3%) |
-| `assetBuybackPercentWad` | `bigint` | % for asset buyback (in WAD) |
-| `numeraireBuybackPercentWad` | `bigint` | % for numeraire buyback (in WAD) |
-| `beneficiaryPercentWad` | `bigint` | % for beneficiaries (in WAD) |
-| `lpPercentWad` | `bigint` | % for LPs (in WAD) |
-| `graduationCalldata` | `Hex` | Optional calldata on graduation |
+| Parameter                    | Type      | Description                                      |
+| ---------------------------- | --------- | ------------------------------------------------ |
+| `hookAddress`                | `Address` | Deployed RehypeDopplerHook (must be whitelisted) |
+| `buybackDestination`         | `Address` | Receives buyback tokens                          |
+| `customFee`                  | `number`  | Swap fee in bps (3000 = 0.3%)                    |
+| `assetBuybackPercentWad`     | `bigint`  | % for asset buyback (in WAD)                     |
+| `numeraireBuybackPercentWad` | `bigint`  | % for numeraire buyback (in WAD)                 |
+| `beneficiaryPercentWad`      | `bigint`  | % for beneficiaries (in WAD)                     |
+| `lpPercentWad`               | `bigint`  | % for LPs (in WAD)                               |
+| `graduationCalldata`         | `Hex`     | Optional calldata on graduation                  |
 
----
+***
 
 ## Rules
 

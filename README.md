@@ -100,4 +100,4 @@ With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we co
 
 ## Next steps
 
-Continue [learning more about Doppler](/explainer.md) and follow along with other SDK [examples](sdk/examples/).
+Continue [learning more about Doppler](explainer.md) and follow along with other SDK [examples](reference/examples/).
