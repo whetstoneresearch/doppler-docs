@@ -6,7 +6,7 @@ icon: hand-wave
 
 ### About
 
-[Doppler](https://doppler.lol) is an onchain protocol for launching tokens through various [price discovery auctions](https://aada.ms/pdfs/pda.pdf). Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams like [Zora](https://zora.co), [Paragraph](https://paragraph.com), and [Noice](https://noice.so) use Doppler to create new tokens by configuring inputs such as supply curves, vesting schedules, inflation mechanics, governance structures, and ongoing economics, such as fees and treasury management.
+[Doppler](https://doppler.lol) is an onchain protocol for launching tokens through various [price discovery auctions](https://aada.ms/pdfs/pda.pdf). Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams including [Zora](https://zora.co), [Paragraph](https://paragraph.com), [Noice](https://noice.so), and [Bankr](https://bankr.bot/) use Doppler to create new tokens by configuring inputs such as supply curves, vesting + inflation schedules, governance structures, and ongoing economics, such as fees or treasury management.
 
 ### Get started
 
@@ -94,10 +94,10 @@ console.log('Token address:', result.tokenAddress)
 With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we configured:&#x20;
 
 * Token config - metadata such as the name, symbol, and other relevant data like an image
-* Sale config - allocations of the token and how much is available for sale&#x20;
+* Sale config - allocations of the token and how much is available for sale
 * Curves - Two price curves defined by market cap ranges (USD), each with 10 unique liquidity positions. The first curve's start market cap ($500k) sets the launch price.
-* Governance & Migration - There is no governance or migration associated with this token&#x20;
+* Governance & Migration - There is no onchain governance or protocol migration associated with this token
 
 ### Next steps
 
-Continue learning more about Doppler and follow along with other SDK [examples](sdk/examples/).&#x20;
+Continue learning more about Doppler and follow along with other SDK [examples](sdk/examples/).
