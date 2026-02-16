@@ -31,7 +31,6 @@
 * [Metadata standards](resources/metadata-standards.md)
 * [Security & bug bounties](resources/security-and-bug-bounties.md)
 * [Contract addresses](resources/contract-addresses.md)
-* [Roadmap](resources/roadmap.md)
 * [Legacy SDKs & migration guides](resources/legacy-sdks-and-migration-guides/README.md)
   * [v3](resources/legacy-sdks-and-migration-guides/v3/README.md)
     * [Overview](resources/legacy-sdks-and-migration-guides/v3/overview.md)
@@ -53,3 +52,4 @@
     * [Governance Options](resources/legacy-sdks-and-migration-guides/v4/governance-options.md)
   * [Historical context](resources/legacy-sdks-and-migration-guides/overview.md)
   * [Legacy SDK migration guide](resources/legacy-sdks-and-migration-guides/sdk-migration-guide.md)
+* [Roadmap](resources/roadmap.md)

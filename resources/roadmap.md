@@ -11,9 +11,12 @@ Notably this does not include every designed or planned feature, improvement, no
 
 _**It is entirely subject to change.**_
 
-**Completed:**
+**Completed :white\_check\_mark:**
 
-* ~~Doppler Core~~ - [Read the Core announcement](https://x.com/dopplerprotocol/status/1933169128166334882) :white\_check\_mark:
+* ~~Protocol & Unichain Network Launch~~ - [Read the Launch announcement](https://x.com/aadams/status/1889362777791168877)
+* ~~Ink Network Support~ - [Read the Ink announcement](https://x.com/dopplerprotocol/status/1905273707817316510)
+* ~~Base Network Support~~ - [Read the Base announcement](https://x.com/dopplerprotocol/status/1907810739315761221)
+* ~~Doppler Core~~ - [Read the Core announcement](https://x.com/dopplerprotocol/status/1933169128166334882) 
 * ~~Doppler Multicurve~~ - [Read the Multicurve announcement](https://x.com/dopplerprotocol/status/1973770809165639855)
 * ~~Monad Network Support~~ - [Read the Monad announcement](https://x.com/dopplerprotocol/status/1992986760205480204)
 * ~~Doppler 404~~ - [Read the DN404 announcement](https://x.com/dopplerprotocol/status/1963646130732081406)
@@ -42,7 +45,7 @@ _**It is entirely subject to change.**_
 If you work on project and are interested in integrations or collaborations with Doppler, such as deploying to your protocol, please get in touch at [contact@whetstone.cc](mailto:contact@whetstone.cc) or to a team member directly.
 {% endhint %}
 
-The [Doppler Airlock](https://docs.doppler.lol/how-it-works/airlock-and-modules) makes it seamless to integrate other downstream smart contract protocols that benefit the token issuance lifecycle and make these optionally available to developers. Some of these may include novel sybil resistance mechanisms that can reduce spam or MEV during the auction or initial issuance. A significant portion of the Doppler roadmap aims to provide a seamless, programmable experience for the initial distribution of assets, as well as their ongoing governance and long term alignment between ecosystem participants.
+The [Doppler Airlock](https://docs.doppler.lol/how-it-works/airlock-and-modules) makes it seamless to optionally integrate other other smart contract protocols that benefit the token issuance lifecycle. Some of these may include novel sybil resistance mechanisms that can reduce spam or MEV during the price discovery auction. A significant portion of the Doppler roadmap aims to provide a seamless, programmable experience for the initial distribution of assets, as well as their ongoing governance and long term alignment between ecosystem participants.
 
 **Future plans (not in any particular order):**
 
