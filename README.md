@@ -91,11 +91,11 @@ console.log('Token address:', result.tokenAddress)
 
 ### Example configuration details
 
-With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we configured:&#x20;
+With this [Doppler Multicurve](https://doppler.lol/multicurve.pdf) Launch, we configured:
 
-* Token config - metadata such as the name, symbol, and other relevant data like an image
-* Sale config - allocations of the token and how much is available for sale
-* Curves - Two price curves defined by market cap ranges (USD), each with 10 unique liquidity positions. The first curve's start market cap ($500k) sets the launch price.
+* Token config - metadata such as the name, symbol, and other relevant data like an image.
+* Sale config - allocations of the token and how much is available for sale.
+* Curves - Two supply curves defined in USD market caps. The first curve ($500k) sets launch price.
 * Governance & Migration - There is no onchain governance or protocol migration associated with this token
 
 ### Next steps
