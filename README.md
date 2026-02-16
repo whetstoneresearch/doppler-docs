@@ -8,7 +8,7 @@ icon: hand-wave
 
 [Doppler](https://doppler.lol) is an onchain protocol for launching tokens through various [price discovery auctions](https://aada.ms/pdfs/pda.pdf). Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams like [Zora](https://zora.co), [Paragraph](https://paragraph.com), and [Noice](https://noice.so) use Doppler to create new tokens by configuring inputs such as supply curves, vesting schedules, inflation mechanics, governance structures, and ongoing economics, such as fees and treasury management.
 
-### Get started&#x20;
+### Get started
 
 ```bash
 npm install @whetstone-research/doppler-sdk viem
