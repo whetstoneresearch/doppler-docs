@@ -32,7 +32,7 @@ After a price discovery auction completes, the liquidity proceeds generated in t
 
 ### Doppler Hooks
 
-Use custom callback functions on initialization, each swap, or token graduation, aka liquidity migration at a specified price or proceed target. This can enable custom logic or downstream triggers within external contracts. See the [Doppler Hooks](features/doppler-hooks.md) section for more information.
+Use custom callback functions on initialization, each swap, or token graduation, aka liquidity migration at a specified price or proceed target. This can enable custom logic or downstream triggers within external contracts. See the [Doppler Hooks](advanced-features/doppler-hooks.md) section for more information.
 
 ### Fees
 

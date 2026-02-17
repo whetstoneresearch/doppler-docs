@@ -5,27 +5,29 @@
 
 ## Core concepts
 
-* [Supply curves](core-concepts/supply-curves.md)
+* [Creation & initialization](core-concepts/creation-and-initialization.md)
 * [Price discovery auctions](core-concepts/price-discovery-auctions.md)
+* [Supply curves](core-concepts/supply-curves.md)
+* [Liquidity migration](core-concepts/liquidity-migration-options.md)
+* [Fees & economics](core-concepts/fees-and-economics.md)
 
-## Features
+## Advanced features
 
-* [Liquidity migration](features/liquidity-migration-options.md)
-* [Quotes & swaps](features/quotes-and-swaps.md)
-* [Data Indexing](features/overview.md)
-* [Doppler Hooks](features/doppler-hooks.md)
-* [Fee Rehypothecation](features/rehype-pools.md)
-* [Doppler404](features/doppler404.md)
+* [Doppler Hooks](advanced-features/doppler-hooks.md)
+* [Fee Rehypothecation](advanced-features/rehype-pools.md)
+* [Doppler404](advanced-features/doppler404.md)
 
 ## Reference
 
 * [SDK API](reference/api-reference.md)
-* [Indexer API](reference/api-usage.md)
 * [SDK Examples](reference/examples/README.md)
   * [Multicurve](reference/examples/multicurve.md)
   * [Static auctions](reference/examples/static-auctions.md)
   * [Dynamic auctions](reference/examples/dynamic-auctions.md)
   * [Quoting, monitoring, and metrics](reference/examples/quoting-monitoring-and-metrics.md)
+* [Data Indexing](reference/overview.md)
+* [Indexer API](reference/api-usage.md)
+* [Quotes & swaps](reference/quotes-and-swaps.md)
 * [Contract addresses](reference/contract-addresses.md)
 * [Metadata standards](reference/metadata-standards.md)
 * [Legacy SDK migration guide](reference/legacy-sdks-and-migration-guides/README.md)
