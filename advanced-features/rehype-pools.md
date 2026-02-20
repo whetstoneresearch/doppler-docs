@@ -162,7 +162,7 @@ main();
 
 ## Collecting fees
 
-Anyone can trigger fee collection; fees are distributed automatically:
+Anyone can trigger fee collection; fees are distributed automatically to the initializer, but each address listed as a beneficiary must then claim their own fees from the initializer:
 
 ```typescript
 const pool = await sdk.getMulticurvePool(assetAddress);
@@ -195,6 +195,7 @@ console.log('Fees collected (token1):', fees1);
 
 * **Distribution sum**: All four percentages must equal `WAD` (1e18)
 * **Beneficiary shares**: Must sum to `WAD`; protocol owner needs at least 5%
+  * Note: each beneficiary must collect their own fees by calling collectFees
 * **Hook whitelisting**: `hookAddress` must be enabled in `DopplerHookInitializer`
 * **Migration**: Use `noOp` - rehype pools don't migrate liquidity
 * **Pool status**: Enters "Locked" (status = 2)
