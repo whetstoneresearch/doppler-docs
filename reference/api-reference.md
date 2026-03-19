@@ -4,6 +4,69 @@ icon: terminal
 
 # API reference
 
+***
+
+## DopplerSDK (EVM)
+
+The top-level entry point for all EVM SDK operations. Import from `@doppler-xyz/sdk`.
+
+```ts
+import { DopplerSDK } from '@doppler-xyz/sdk'
+
+const sdk = new DopplerSDK({
+  publicClient,   // viem PublicClient
+  walletClient,   // viem WalletClient (optional for read-only)
+  chainId,        // SupportedChainId
+})
+```
+
+### Entity getters
+
+These return entity instances bound to a specific on-chain address.
+
+| Method | Returns |
+|--------|---------|
+| `getStaticAuction(poolAddress)` | `Promise<StaticAuction>` |
+| `getDynamicAuction(hookAddress)` | `Promise<DynamicAuction>` |
+| `getMulticurvePool(tokenAddress)` | `Promise<MulticurvePool>` |
+| `getRehypeDopplerHook(hookAddress)` | `Promise<RehypeDopplerHook>` |
+| `getOpeningAuction(hookAddress)` | `Promise<OpeningAuction>` |
+| `getOpeningAuctionLifecycle(initializerAddress?)` | `Promise<OpeningAuctionLifecycle>` |
+| `getOpeningAuctionPositionManager(positionManagerAddress?)` | `Promise<OpeningAuctionPositionManager>` |
+| `getOpeningAuctionBidManager({ openingAuctionHookAddress, openingAuctionPoolKey, positionManagerAddress? })` | `Promise<OpeningAuctionBidManager>` |
+| `getDerc20(tokenAddress)` | `Derc20` |
+
+`getMulticurvePool` takes the token address as key (V4 pools have no address — the token is the lookup key).
+
+`getOpeningAuctionLifecycle` and `getOpeningAuctionPositionManager` fall back to the chain's configured address when the override is omitted; they throw if neither is available.
+
+### Builder shortcuts
+
+```ts
+sdk.buildStaticAuction()       // → StaticAuctionBuilder<C>
+sdk.buildDynamicAuction()      // → DynamicAuctionBuilder<C>
+sdk.buildMulticurveAuction()   // → MulticurveBuilder<C>
+sdk.buildOpeningAuction()      // → OpeningAuctionBuilder<C>
+```
+
+### Token / governance helpers
+
+| Method | Returns |
+|--------|---------|
+| `getAirlockOwner()` | `Promise<Address>` |
+| `getAirlockBeneficiary(shares?)` | `Promise<BeneficiaryData>` — defaults to 5% (0.05e18 WAD) |
+| `getPoolInfo(poolAddress)` | `Promise<PoolInfo>` |
+| `getHookInfo(hookAddress)` | `Promise<HookInfo>` |
+
+### Lazy accessors
+
+| Property | Type |
+|----------|------|
+| `sdk.factory` | `DopplerFactory<C>` — lazy-initialized on first access |
+| `sdk.quoter` | `Quoter` — lazy-initialized on first access |
+
+***
+
 ## Builder API Reference
 
 Builders assemble type‑safe parameter objects for `DopplerFactory.createStaticAuction`, `DopplerFactory.createDynamicAuction`, and `DopplerFactory.createMulticurve`.
@@ -94,10 +157,300 @@ Methods (chainable):
 
 ***
 
+## OpeningAuctionBuilder
+
+A two-phase auction: a short opening Dutch auction sets the clearing price, which then seeds a Doppler dynamic auction. Obtain via `sdk.buildOpeningAuction()`.
+
+Methods (chainable):
+
+* `tokenConfig(params)` — standard or doppler404 token
+  * Standard: `{ name, symbol, tokenURI, yearlyMintRate? }`
+  * Doppler404: `{ type: 'doppler404', name, symbol, baseURI, unit? }`
+* `saleConfig({ initialSupply, numTokensToSell, numeraire })` — `numTokensToSell ≤ initialSupply`
+* `openingAuctionConfig(params: OpeningAuctionConfig)`:
+  * `auctionDuration` — opening auction duration in seconds (positive integer)
+  * `tickSpacing` — opening auction pool tick spacing
+  * `fee` — opening auction pool fee (0–`V4_MAX_FEE`)
+  * `minAcceptableTickToken0` / `minAcceptableTickToken1` — int24 price floor/ceiling
+  * `minLiquidity` — minimum liquidity the auction must attract (bigint, positive)
+  * `shareToAuctionBps` — share of `numTokensToSell` allocated to the opening pool (1–10000)
+  * `incentiveShareBps` — bidder incentive share in bps (0–10000)
+* `dopplerConfig(params: OpeningAuctionDopplerConfig)`:
+  * `minProceeds`, `maxProceeds` — soft and hard raise targets (bigint)
+  * `startTick`, `endTick` — Doppler price range (direction depends on numeraire token ordering)
+  * `duration?` — Doppler auction duration in seconds (default: `DEFAULT_OPENING_DOPPLER_DURATION`)
+  * `epochLength?` — Doppler epoch length in seconds; must divide `duration` evenly
+  * `gamma?` — tick step per epoch; computed optimally when omitted
+  * `numPdSlugs?` — number of price-discovery slugs
+  * `fee?` — Doppler pool fee (default: `DEFAULT_OPENING_DOPPLER_FEE`)
+  * `tickSpacing?` — Doppler pool tick spacing; must divide `openingAuction.tickSpacing` evenly
+* `withVesting({ duration?, cliffDuration?, recipients?, amounts? })`
+* `withGovernance(params: GovernanceOption<C>)` — `{ type: 'default' | 'noOp' | 'launchpad' | 'custom' }`
+* `withMigration(migration: MigrationConfig)` — required; e.g. `{ type: 'uniswapV2' }`
+* `withUserAddress(address)` — required
+* `withIntegrator(address?)` — optional integrator fee recipient
+* `withGasLimit(gas?)` — optional gas override (bigint)
+* `withTime({ startTimeOffset?, startingTime?, blockTimestamp? })` — mutually exclusive: use `startTimeOffset` (seconds from now) or `startingTime` (absolute unix timestamp or Date)
+* Module overrides (advanced): `withOpeningAuctionInitializer(address)`, `withOpeningAuctionPositionManager(address)`, `withAirlock(address)`, `withTokenFactory(address)`, `withDopplerDeployer(address)`, `withGovernanceFactory(address)`, `withV2Migrator(address)`, `withV4Migrator(address)`, `withNoOpMigrator(address)`
+* `build()` → `CreateOpeningAuctionParams` — validates all constraints; throws descriptive errors on invalid config
+
+Factory method:
+
+```ts
+const { hookAddress, tokenAddress, poolId } = await sdk.factory.createOpeningAuction(params)
+```
+
+***
+
 ## Factory methods
 
 ```ts
 const { poolAddress, tokenAddress } = await sdk.factory.createStaticAuction(params)
 const { hookAddress, tokenAddress, poolId } = await sdk.factory.createDynamicAuction(params)
 const { poolId, tokenAddress } = await sdk.factory.createMulticurve(params)
+const { hookAddress, tokenAddress, poolId } = await sdk.factory.createOpeningAuction(params)
 ```
+
+***
+
+## Solana SDK
+
+The Solana SDK is functional/procedural — there is no top-level class. Import from `@doppler-xyz/sdk/solana`. The two namespaced sub-modules are `initializer` (bonding curve launches) and `cpmmMigrator` (bonding curve → CPMM graduation).
+
+```ts
+import {
+  initializer,
+  cpmmMigrator,
+  getPoolByMints,
+  getSwapQuote,
+  createSwapInstruction,
+} from '@doppler-xyz/sdk/solana'
+```
+
+***
+
+### Initializer
+
+The `initializer` namespace handles XYK bonding curve launches on Solana.
+
+**PDA helpers**
+
+```ts
+const [config]          = await initializer.getConfigAddress()
+const [launch]          = await initializer.getLaunchAddress(namespace, launchId)
+const [launchAuthority] = await initializer.getLaunchAuthorityAddress(launch)
+const metadataAccount   = await initializer.getTokenMetadataAddress(baseMint)
+```
+
+* `launchIdFromU64(u64: bigint): Uint8Array` — converts a u64 (e.g. `BigInt(Date.now())`) to the 8-byte little-endian launch ID used in PDAs
+
+**`createInitializeLaunchInstruction(accounts, args)`**
+
+Builds the on-chain instruction that creates a new bonding curve launch.
+
+Accounts (key fields):
+
+| Account | Description |
+|---------|-------------|
+| `config` | Global initializer config PDA |
+| `launch` | New launch PDA |
+| `launchAuthority` | Launch authority PDA |
+| `baseMint` | New base token mint keypair (signer) |
+| `quoteMint` | Numeraire mint (e.g. WSOL) |
+| `baseVault` / `quoteVault` | Token vault keypairs (signers) |
+| `payer` / `authority` | Fee payer and launch authority (signers) |
+| `migratorProgram` | Migrator program ID (e.g. `CPMM_MIGRATOR_PROGRAM_ID`) |
+| `metadataAccount` | Token metadata account |
+| `addressLookupTable` | ALT address for transaction compression (use `DOPPLER_DEVNET_ALT` on devnet) |
+
+Args (key fields):
+
+| Arg | Type | Description |
+|-----|------|-------------|
+| `namespace` | `Address` | Namespace for PDA uniqueness (typically payer address) |
+| `launchId` | `Uint8Array` | 8-byte launch ID (from `launchIdFromU64`) |
+| `baseDecimals` | `number` | Decimals of the base token |
+| `baseTotalSupply` | `bigint` | Total base token supply (with decimals) |
+| `baseForDistribution` | `bigint` | Tokens reserved for creator at graduation |
+| `baseForLiquidity` | `bigint` | Tokens reserved for post-graduation liquidity |
+| `curveVirtualBase` | `bigint` | XYK virtual base reserves (from `marketCapToCurveParams`) |
+| `curveVirtualQuote` | `bigint` | XYK virtual quote reserves (from `marketCapToCurveParams`) |
+| `curveFeeBps` | `number` | Swap fee during bonding curve phase (e.g. 100 = 1%) |
+| `curveKind` | `number` | Curve type — use `CURVE_KIND_XYK` |
+| `curveParams` | `Uint8Array` | Curve encoding — use `new Uint8Array([CURVE_PARAMS_FORMAT_XYK_V0])` |
+| `migratorProgram` | `Address` | Migrator program that handles graduation |
+| `migratorInitCalldata` | `Uint8Array` | Encoded graduation params (from `cpmmMigrator.encodeRegisterLaunchCalldata`) |
+| `migratorMigrateCalldata` | `Uint8Array` | Encoded migration args (from `cpmmMigrator.encodeMigrateCalldata`) |
+| `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
+
+After building the instruction, append the `cpmmMigratorState` PDA as a writable remaining account so the register\_launch CPI can write graduation parameters:
+
+```ts
+const ix = {
+  ...ixBase,
+  accounts: [
+    ...(ixBase.accounts ?? []),
+    { address: cpmmMigratorState, role: ACCOUNT_ROLE_WRITABLE },
+  ],
+}
+```
+
+**Client helpers**
+
+```ts
+const launch = await initializer.fetchLaunch(rpc, launchAddress)
+// launch: Launch | null
+// launch.phase: PHASE_TRADING | PHASE_MIGRATED | PHASE_ABORTED
+```
+
+**Constants**
+
+| Constant | Description |
+|----------|-------------|
+| `CURVE_KIND_XYK` | XYK curve type discriminant |
+| `CURVE_PARAMS_FORMAT_XYK_V0` | XYK encoding version byte |
+| `PHASE_TRADING` | Launch is active on bonding curve |
+| `PHASE_MIGRATED` | Launch has graduated to CPMM |
+| `PHASE_ABORTED` | Launch was aborted |
+| `EMPTY_REMAINING_ACCOUNTS_HASH` | Hash constant for instructions with no remaining accounts |
+| `DOPPLER_DEVNET_ALT` | Devnet address lookup table address |
+
+***
+
+### CPMM Migrator
+
+The `cpmmMigrator` namespace encodes the calldata forwarded to the CPMM migrator at graduation.
+
+**`encodeRegisterLaunchCalldata(args)`**
+
+Encodes the `migratorInitCalldata` passed to `createInitializeLaunchInstruction`. Called once at launch creation to register graduation parameters.
+
+```ts
+const migratorInitCalldata = cpmmMigrator.encodeRegisterLaunchCalldata({
+  cpmmConfig:              CPMM_CONFIG,   // Address of the CPMM AmmConfig
+  initialSwapFeeBps:       30,            // Swap fee on graduated CPMM pool (0.3%)
+  initialFeeSplitBps:      5000,          // % of fees distributed to LPs (50%)
+  recipients: [
+    { wallet: creatorAddress, amount: BASE_FOR_DISTRIBUTION },
+  ],
+  minRaiseQuote:           50_000_000_000n, // Graduation threshold in lamports (50 SOL)
+  minMigrationPriceQ64Opt: null,            // Optional minimum graduation price floor
+})
+```
+
+**`encodeMigrateCalldata(args)`**
+
+Encodes the `migratorMigrateCalldata` passed to `createInitializeLaunchInstruction`. Forwarded at graduation time.
+
+```ts
+const migratorMigrateCalldata = cpmmMigrator.encodeMigrateCalldata({
+  baseForDistribution: BASE_FOR_DISTRIBUTION,
+  baseForLiquidity:    BASE_FOR_LIQUIDITY,
+})
+```
+
+**PDA helpers**
+
+```ts
+const [cpmmMigratorState] = await cpmmMigrator.getCpmmMigratorStateAddress(launch)
+```
+
+**Constants**
+
+| Constant | Description |
+|----------|-------------|
+| `CPMM_MIGRATOR_PROGRAM_ID` | CPMM migrator program address |
+
+***
+
+### CPMM
+
+After graduation the bonding curve becomes a CPMM pool. These are the core helpers for swaps.
+
+**Pool fetching**
+
+```ts
+// By address
+const pool = await fetchPool(rpc, poolAddress)         // Pool | null
+
+// By token pair (order-independent)
+const result = await getPoolByMints(rpc, mint0, mint1) // { address, account: Pool } | null
+```
+
+**Swap quote (off-chain)**
+
+```ts
+const quote = getSwapQuote(pool, amountIn, direction)
+// direction: 0 = token0→token1, 1 = token1→token0
+// quote: { amountOut, feeTotal, feeDist, feeComp, priceImpact, executionPrice }
+```
+
+`getSwapQuote` is a pure function — no RPC call needed.
+
+**`createSwapInstruction(accounts)` / `createSwapExactInInstruction(accounts, args)`**
+
+`createSwapInstruction` is a convenience wrapper; `createSwapExactInInstruction` is the low-level form.
+
+```ts
+const ix = createSwapInstruction({
+  config,
+  pool:        poolAddress,
+  authority:   pool.authority,
+  vault0:      pool.vault0,
+  vault1:      pool.vault1,
+  token0Mint:  pool.token0Mint,
+  token1Mint:  pool.token1Mint,
+  userToken0:  userAta0,
+  userToken1:  userAta1,
+  user:        payer.address,
+  amountIn:    1_000_000n,
+  minAmountOut,
+  direction:   0,
+})
+```
+
+**PDA derivation**
+
+```ts
+const [poolAddress] = await getPoolAddress(config, token0Mint, token1Mint)
+const [config]      = await getConfigAddress()
+```
+
+**Q64.64 fixed-point helpers**
+
+```ts
+numberToQ64(n: number): bigint   // multiply by 2^64
+q64ToNumber(q: bigint): number   // divide by 2^64
+```
+
+Used for price comparisons against `pool.feeGrowthGlobal0Q64`, oracle values, etc.
+
+***
+
+## Market cap helpers
+
+Convert a USD market cap range to bonding curve virtual reserves. These helpers work for both Solana (XYK bonding curve) and any other context where market-cap-based pricing is needed.
+
+```ts
+import { marketCapToCurveParams, validateMarketCapParameters, curveParamsToMarketCap } from '@doppler-xyz/sdk/solana'
+```
+
+```ts
+const { start } = marketCapToCurveParams({
+  startMarketCapUSD: 100_000,    // opening spot price implied by this market cap
+  endMarketCapUSD:   10_000_000, // used to compute graduation threshold (minRaiseQuote)
+  baseTotalSupply:   BigInt(1e15),
+  baseForCurve:      BigInt(9e14), // baseTotalSupply - baseForDistribution - baseForLiquidity
+  baseDecimals:      6,
+  quoteDecimals:     9,            // 9 for SOL
+  numerairePriceUSD: solPriceUsd,
+})
+// start.curveVirtualBase, start.curveVirtualQuote
+```
+
+`marketCapToCurveParams` returns `{ start: CurveParams }` where `CurveParams = { curveVirtualBase: bigint, curveVirtualQuote: bigint }`.
+
+Additional helpers:
+
+* `validateMarketCapParameters(startMarketCapUSD, baseTotalSupply, baseDecimals)` → `{ valid, warnings }` — sanity-checks inputs before computing
+* `curveParamsToMarketCap(input: CurveParamsToMarketCapInput)` — inverse: reserves → current market cap
