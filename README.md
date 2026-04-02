@@ -9,7 +9,7 @@ icon: hand-wave
 [Doppler](https://doppler.lol) is an onchain protocol for launching tokens through various [price discovery auctions](https://aada.ms/pdfs/pda.pdf). Applications integrate Doppler, configure their token launch parameters, and get to market faster than building in-house smart contracts. Teams including [Zora](https://zora.co), [Paragraph](https://paragraph.com), [Noice](https://noice.so), and [Bankr](https://bankr.bot/) use Doppler to create new tokens by configuring inputs such as supply curves, vesting + inflation schedules, governance structures, and ongoing economics, such as fees or treasury management.
 
 {% hint style="success" %}
-Doppler is now available on Solana devnet. View the [SDK examples](reference/examples/) to get started.
+Doppler is now available on Solana devnet. View the [SDK examples](reference/svm-sdk-examples/) to get started.
 {% endhint %}
 
 ## Start building on Base
