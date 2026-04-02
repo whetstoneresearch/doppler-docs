@@ -12,7 +12,9 @@ Doppler's [smart contracts](https://github.com/whetstoneresearch/doppler) can be
 
 All of the smart contracts have been through [security review &/or audited](reference/security-and-bug-bounties.md).
 
-## Key concepts
+Doppler is available on a variety of Ethereum Virtual Machine (EVM) based networks, such as Base, Ethereum Mainnet, and Monad. Doppler is also now available on Solana Devnet, and soon, Mainnet.
+
+## Key concepts&#x20;
 
 ### Doppler Airlock
 

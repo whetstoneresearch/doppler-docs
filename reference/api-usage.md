@@ -2,14 +2,24 @@
 icon: brackets-curly
 ---
 
-# API Usage
+# Indexer API
 
 The indexer exposes the indexed data through a GraphQL API and a RESTful search endpoint.
 
 {% hint style="success" %}
 [Whetstone Research](https://whetstone.cc) hosts a free endpoint that supports Base Sepolia for development.&#x20;
 
-[https://testnet-indexer.doppler.lol/](https://testnet-indexer.doppler.lol/)
+
+
+[https://test.indexer.doppler.lol/](https://test.indexer.doppler.lol/)
+
+
+
+Production endpoints are available upon request.&#x20;
+
+
+
+Indexing APIs that support Solana are a work in progress.&#x20;
 {% endhint %}
 
 ## GraphQL API

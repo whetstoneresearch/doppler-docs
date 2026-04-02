@@ -20,11 +20,15 @@
 ## Reference
 
 * [SDK API](reference/api-reference.md)
-* [SDK Examples](reference/examples/README.md)
+* [EVM SDK Examples](reference/examples/README.md)
   * [Multicurve](reference/examples/multicurve.md)
   * [Static auctions](reference/examples/static-auctions.md)
   * [Dynamic auctions](reference/examples/dynamic-auctions.md)
   * [Quoting, monitoring, and metrics](reference/examples/quoting-monitoring-and-metrics.md)
+* [SVM SDK Examples](reference/svm-sdk-examples/README.md)
+  * [Launch](reference/svm-sdk-examples/launch.md)
+  * [Swap](reference/svm-sdk-examples/swap.md)
+  * [Launch, monitor, and e2e](reference/svm-sdk-examples/launch-monitor-and-e2e.md)
 * [Data Indexing](reference/overview.md)
 * [Indexer API](reference/api-usage.md)
 * [Quotes & swaps](reference/quotes-and-swaps.md)
