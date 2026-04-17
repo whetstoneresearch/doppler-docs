@@ -7,7 +7,7 @@ icon: pen-field
 Here are the networks that Doppler is officially deployed to:
 
 - Mainnets: Ethereum Mainnet, Unichain, Monad Mainnet, MegaETH Mainnet, Base, Ink
-- Testnets: Unichain Sepolia, World Chain Sepolia, MegaETH Testnet, Monad Testnet, Base Sepolia, Sepolia
+- Testnets: Solana Devnet, Unichain Sepolia, World Chain Sepolia, MegaETH Testnet, Monad Testnet, Base Sepolia, Sepolia
 
 {% hint style="danger" %}
 If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical. Use with caution. :rotating_light:
@@ -298,3 +298,10 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | UniswapV4ScheduledMulticurveInitializer | [0xf843...3876](https://sepolia.etherscan.io/address/0xf84378c9f39e0ff267f3101c88773359c5393876) | [0x972a...4de9](https://sepolia.etherscan.io/tx/0x972a11c52ee5a77b8c8ff5490226ec6f435015083150ebddb80a43ef85c44de9) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 | UniswapV4ScheduledMulticurveInitializerHook | [0xc6a5...2dc0](https://sepolia.etherscan.io/address/0xc6a562cb5cbfa29bcb1bdccf903b8b8f2e4a2dc0) | [0x9cc4...53c3](https://sepolia.etherscan.io/tx/0x9cc428598667705087bfae7cdda2929518612ff73080832e1425ed25f2ca53c3) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 
+### Solana Devnet
+| Contract | Address |
+|---|---|
+| Initializer | `4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1` |
+| CPMM | `9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ` |
+| CPMM Migrator | `7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd` |
+| CPMM Sentinel | `2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u` |
