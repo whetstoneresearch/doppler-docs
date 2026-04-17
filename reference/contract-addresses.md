@@ -301,7 +301,7 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 ### Solana Devnet
 | Contract | Address |
 |---|---|
-| Initializer | `4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1` |
-| CPMM | `9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ` |
-| CPMM Migrator | `7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd` |
-| CPMM Sentinel | `2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u` |
+| Initializer | [4h3D...iKp1](https://solscan.io/account/4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1?cluster=devnet) |
+| CPMM | [9PSx...xkgQ](https://solscan.io/account/9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ?cluster=devnet) |
+| CPMM Migrator | [7WMU...CSUd](https://solscan.io/account/7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd?cluster=devnet) |
+| CPMM Sentinel | [2vJ1...gW7u](https://solscan.io/account/2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u?cluster=devnet) |
