@@ -35,7 +35,7 @@ import {
   findAssociatedTokenPda,
 } from '@solana-program/token';
 
-import { cpmm } from '../src/solana/index.js';
+import { cpmm } from '@whetstone-research/doppler-sdk/solana';
 
 // ============================================================================
 // Environment
@@ -164,9 +164,12 @@ async function main() {
       rpc,
       rpcSubscriptions,
     });
-    await sendAndConfirmTransaction(signedTransaction, {
-      commitment: 'confirmed',
-    });
+    await sendAndConfirmTransaction(
+      signedTransaction as Parameters<typeof sendAndConfirmTransaction>[0],
+      {
+        commitment: 'confirmed',
+      },
+    );
 
     console.log('');
     console.log('Swap confirmed!');
