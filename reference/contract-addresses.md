@@ -6,10 +6,8 @@ icon: pen-field
 
 Here are the networks that Doppler is officially deployed to:
 
-- Officially Supported Mainnets: Base, Ethereum, Monad
-- Officially Supported Testnets: Base Sepolia, Solana Devnet
-
-Doppler may be deployed elsewhere but not officially supported throughout devtools, documentation, etc.
+- Mainnets: Ethereum Mainnet, Unichain, Monad Mainnet, MegaETH Mainnet, Base, Ink
+- Testnets: Unichain Sepolia, World Chain Sepolia, MegaETH Testnet, Monad Testnet, Base Sepolia, Ink Sepolia, Sepolia
 
 {% hint style="danger" %}
 If there are contracts not reflected here but claiming to be instances of Doppler, they are not considered canonical. Use with caution. :rotating_light:
@@ -83,7 +81,7 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | DopplerDeployer | [0xb354...e421](https://monadscan.com/address/0xb35469ee64a87afd19b31615094fe3962d73e421) | [0xdb03...dcfb](https://monadscan.com/tx/0xdb03841932dcfadf966752ec380cd5313146275281d8c42e306c8f68fa58dcfb) | [d223428](https://github.com/whetstoneresearch/doppler/commit/d223428) | 
 | DopplerERC20V1 | [0xdb7b...be87](https://monadscan.com/address/0xdb7b520bb5c3a2c5d4871198081911359f93be87) | [0xf79a...4a30](https://monadscan.com/tx/0xf79a36ac5ff846649b9b7b7c647a99e0d1a5296fc43e016ce7d9527a36b04a30) | [fce45321](https://github.com/whetstoneresearch/doppler/commit/fce45321) | 
 | DopplerERC20V1Factory | [0x89c2...5292](https://monadscan.com/address/0x89c261c05b5f9b6bcba07c199b8dee7cfad45292) | [0xf79a...4a30](https://monadscan.com/tx/0xf79a36ac5ff846649b9b7b7c647a99e0d1a5296fc43e016ce7d9527a36b04a30) | [fce45321](https://github.com/whetstoneresearch/doppler/commit/fce45321) | 
-| DopplerHookInitializer | [0xaa09...2544](https://monadscan.com/address/0xaa096f558f3d4c9226de77e7cc05f18e180b2544) | [0x9a29...9a58](https://monadscan.com/tx/0x9a2916ae213fadcd34042aa211cb3c67036b42d3828c0ddd973a51ff04e39a58) | [8663e3f](https://github.com/whetstoneresearch/doppler/commit/8663e3f) | 
+| DopplerHookInitializer | [0x56ea...a544](https://monadscan.com/address/0x56ea13da5f39863d3b3d54826187306af7ada544) | [0x0aaa...214f](https://monadscan.com/tx/0x0aaab65903a463331520579c6ea1c1f06df0486bcd29220cd05964165966214f) | [6b9fb9ea](https://github.com/whetstoneresearch/doppler/commit/6b9fb9ea) | 
 | DopplerHookMigrator | [0x1e40...60c4](https://monadscan.com/address/0x1e40b0875dda35f41e15cfb475403859b8c860c4) | [0xe43d...01bf](https://monadscan.com/tx/0xe43ddc777ed5ae6d9967441fd0f68c6ad0661dae4788ea2859857f6a825601bf) | [5fe4eb1](https://github.com/whetstoneresearch/doppler/commit/5fe4eb1) | 
 | GovernanceFactory | [0xfaaf...6f45](https://monadscan.com/address/0xfaafde6a5b658684cc5eb0c5c2c755b00a246f45) | [0x7a40...3bc1](https://monadscan.com/tx/0x7a40bce8a81472208242ac04f4e3ff50c9bd005b036cd014038bad8db4653bc1) | [cc6efe5](https://github.com/whetstoneresearch/doppler/commit/cc6efe5) | 
 | LaunchpadGovernanceFactory | [0x5fbe...b76d](https://monadscan.com/address/0x5fbe931dc4b923a7abe4c47ad68d5bf9eda5b76d) | [0x72d9...a79b](https://monadscan.com/tx/0x72d936f51838751594f9eef0337872c16f42fc4b92bda38fe974a5082392a79b) | [cc6efe5](https://github.com/whetstoneresearch/doppler/commit/cc6efe5) | 
@@ -333,10 +331,3 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | UniswapV4ScheduledMulticurveInitializer | [0xf843...3876](https://sepolia.etherscan.io/address/0xf84378c9f39e0ff267f3101c88773359c5393876) | [0x972a...4de9](https://sepolia.etherscan.io/tx/0x972a11c52ee5a77b8c8ff5490226ec6f435015083150ebddb80a43ef85c44de9) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 | UniswapV4ScheduledMulticurveInitializerHook | [0xc6a5...2dc0](https://sepolia.etherscan.io/address/0xc6a562cb5cbfa29bcb1bdccf903b8b8f2e4a2dc0) | [0x9cc4...53c3](https://sepolia.etherscan.io/tx/0x9cc428598667705087bfae7cdda2929518612ff73080832e1425ed25f2ca53c3) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 
-### Solana Devnet
-| Contract | Address |
-|---|---|
-| Initializer | [4h3D...iKp1](https://solscan.io/account/4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1?cluster=devnet) |
-| CPMM | [9PSx...xkgQ](https://solscan.io/account/9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ?cluster=devnet) |
-| CPMM Migrator | [7WMU...CSUd](https://solscan.io/account/7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd?cluster=devnet) |
-| CPMM Sentinel | [2vJ1...gW7u](https://solscan.io/account/2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u?cluster=devnet) |
