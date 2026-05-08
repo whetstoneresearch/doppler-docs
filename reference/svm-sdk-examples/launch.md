@@ -162,8 +162,6 @@ async function main() {
   console.log('');
 
   // ── CPMM migration remaining accounts ────────────────────────────────────
-  // Migrations commit the canonical preinitialized CPMM graph: pool, authority,
-  // vault PDAs, protocol position, launch LP position, program, and payout ATAs.
   const poolInit = await cpmm.getPoolInitAddresses(baseMint.address, WSOL_MINT);
   const pool = poolInit.pool[0];
   const poolAuthority = poolInit.authority[0];
@@ -178,7 +176,6 @@ async function main() {
     0n,
   );
 
-  // Admin ATAs receive unsold curve tokens and residual migration dust.
   const [payerBaseAta] = await findAssociatedTokenPda({
     owner: payer.address,
     mint: baseMint.address,
@@ -196,7 +193,7 @@ async function main() {
   const migratorInitCalldata = cpmmMigrator.encodeRegisterLaunchCalldata({
     cpmmConfig: cpmmConfig,
     initialSwapFeeBps: 100, // 1% swap fee on the graduated CPMM pool
-    initialFeeSplitBps: 5000, // 50% of CPMM swap fees claimable by LP holders; remaining 50% compounds into the pool
+    initialFeeSplitBps: 5000, // 50% LP claimable fees
     recipients: [],
     minRaiseQuote,
     minMigrationPriceQ64Opt: null, // no minimum graduation price floor
@@ -208,14 +205,6 @@ async function main() {
   });
 
   // ── Build, sign, and send ────────────────────────────────────────────────
-  // addressLookupTable compresses the static non-signer accounts
-  // (base/quote token program, systemProgram, rent, migratorProgram,
-  // quoteMint, metadataProgram, config) to ALT indices where available,
-  // keeping the transaction within the 1232-byte limit even with V4
-  // on-chain metadata.
-  //
-  // The CPMM migrator register_launch CPI now consumes both the
-  // cpmmMigratorState PDA and cpmmConfig as remaining accounts.
   console.log('Building launch instruction...');
   try {
     const ix = await initializer.createInitializeLaunchInstruction(
@@ -265,10 +254,7 @@ async function main() {
             cpmmMigratorState,
             cpmmConfig,
           ]),
-        // Commits the accounts that must be passed as remaining accounts to
-        // migrate_launch in this order: state, cpmm_config, pool, pool_authority,
-        // pool_vault0, pool_vault1, protocol_position, launch_lp_position,
-        // cpmm_program, migration_authority, admin_base_ata, admin_quote_ata
+        // Must match the remaining accounts passed to migrate_launch.
         migratorRemainingAccountsHash: initializer.computeRemainingAccountsHash(
           [
             cpmmMigratorState,
@@ -281,8 +267,8 @@ async function main() {
             launchLpPosition,
             cpmm.CPMM_PROGRAM_ID,
             migrationAuthority,
-            payerBaseAta, // admin_base_ata (receives any unsold curve tokens)
-            payerQuoteAta, // admin_quote_ata (receives residual quote dust)
+            payerBaseAta,
+            payerQuoteAta,
           ],
         ),
         metadataName: 'TEST',
