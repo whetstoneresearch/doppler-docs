@@ -227,6 +227,7 @@ Accounts (key fields):
 | `cpmmConfig` | CPMM config PDA. Required when `migratorProgram` is the CPMM migrator |
 | `baseTokenProgram` / `quoteTokenProgram` | Token program for each side of the launch, usually `TOKEN_PROGRAM_ADDRESS` |
 | `metadataAccount` | Token metadata account |
+| `sentinelCreateRemainingAccounts` | Optional readonly accounts forwarded to create hooks; signer values are forwarded as readonly signers |
 | `addressLookupTable` | ALT address for transaction compression (use `DOPPLER_DEVNET_ALT` on devnet) |
 
 Args (key fields):
@@ -246,14 +247,18 @@ Args (key fields):
 | `curveParams` | `Uint8Array` | Curve encoding; use `new Uint8Array([CURVE_PARAMS_FORMAT_XYK_V0])` |
 | `allowBuy` / `allowSell` | `boolean` | Enables buy and sell directions during the bonding curve phase |
 | `sentinelProgram` | `Address` | Sentinel program invoked by the bonding curve |
-| `sentinelFlags` | `number` | Sentinel hook flags (e.g. `SF_BEFORE_SWAP`) |
+| `sentinelFlags` | `number` | Sentinel hook flags (e.g. `SF_BEFORE_SWAP`, `SF_AFTER_SWAP`, `SF_BEFORE_CREATE`, `SF_AFTER_CREATE`, `SF_BEFORE_MIGRATE`, `SF_AFTER_MIGRATE`) |
 | `sentinelCalldata` | `Uint8Array` | Calldata forwarded to the sentinel |
+| `sentinelCreateRemainingAccountsLen` | `number` | Optional override for the create-hook remaining account count; defaults to `sentinelCreateRemainingAccounts.length` |
 | `migratorInitCalldata` | `Uint8Array` | Encoded graduation params (from `cpmmMigrator.encodeRegisterLaunchCalldata`) |
 | `migratorMigrateCalldata` | `Uint8Array` | Encoded migration args (from `cpmmMigrator.encodeMigrateCalldata`) |
+| `sentinelCreateRemainingAccountsHash` | `Uint8Array` | Commitment hash for initialize-launch create-hook remaining accounts; computed automatically when create hooks are enabled and `sentinelCreateRemainingAccounts` is supplied |
 | `sentinelRemainingAccountsHash` | `Uint8Array` | Commitment hash for swap/preview sentinel remaining accounts |
 | `migratorInitRemainingAccountsHash` | `Uint8Array` | Commitment hash for accounts passed to the migrator init hook |
 | `migratorRemainingAccountsHash` | `Uint8Array` | Commitment hash for accounts passed to the migrator migrate hook |
 | `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
+
+When `SF_BEFORE_CREATE` or `SF_AFTER_CREATE` is enabled, pass any accounts needed by the create sentinel through `sentinelCreateRemainingAccounts`. The SDK appends them to `initialize_launch`, sets `sentinelCreateRemainingAccountsLen`, and computes `sentinelCreateRemainingAccountsHash` unless you provide explicit values.
 
 For CPMM migrations, commit the migrator init hook accounts with `migratorInitRemainingAccountsHash`. The current CPMM migrator init hook consumes `cpmmMigratorState` and `cpmmConfig`:
 
@@ -370,7 +375,7 @@ const ix = cpmm.createSwapInstruction({
   token1Mint:  pool.token1Mint,
   userToken0:  userAta0,
   userToken1:  userAta1,
-  user:        payer.address,
+  user:        payer,
   amountIn:    1_000_000n,
   minAmountOut,
   direction:   0,
