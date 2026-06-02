@@ -68,7 +68,7 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
           type
           amountIn
           amountOut
-          usdPrice
+          swapValueUsd
         }
       }
     }
