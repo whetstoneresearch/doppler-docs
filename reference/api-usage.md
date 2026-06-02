@@ -38,14 +38,16 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
         orderDirection: "desc"
         limit: 5
       ) {
-        address
-        dollarLiquidity
-        volumeUsd
-        baseToken {
-          symbol
-        }
-        quoteToken {
-          symbol
+        items {
+          address
+          dollarLiquidity
+          volumeUsd
+          baseToken {
+            symbol
+          }
+          quoteToken {
+            symbol
+          }
         }
       }
     }
@@ -60,12 +62,14 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
         orderDirection: "desc"
         limit: 10
       ) {
-        txHash
-        timestamp
-        type
-        amountIn
-        amountOut
-        usdPrice
+        items {
+          txHash
+          timestamp
+          type
+          amountIn
+          amountOut
+          usdPrice
+        }
       }
     }
     ```
@@ -73,7 +77,7 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
 
     ```graphql
     query TokenDetails {
-      token(id: "0x...") {
+      token(address: "0x...", chainId: 8453) {
         address
         name
         symbol
