@@ -204,6 +204,18 @@ const { hookAddress, tokenAddress, poolId } = await sdk.factory.createOpeningAuc
 
 ## Solana SDK
 
+Import Solana helpers from the package subpath:
+
+```ts
+import {
+  cpmm,
+  cpmmMigrator,
+  initializer,
+  deriveSolanaCpmmDeployment,
+  DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
+} from '@whetstone-research/doppler-sdk/solana'
+```
+
 ### Initializer
 
 The `initializer` namespace handles Doppler launches on Solana.
@@ -222,13 +234,13 @@ Accounts (key fields):
 | `baseMint` | New base token mint keypair (signer) |
 | `quoteMint` | Numeraire mint (e.g. WSOL) |
 | `baseVault` / `quoteVault` | Token vault keypairs (signers) |
+| `launchFeeState` | Launch fee state PDA |
 | `payer` / `authority` | Fee payer and launch authority (signers) |
+| `hookProgram` | Hook program ID, or omit for no hook |
 | `migratorProgram` | Migrator program ID (e.g. `CPMM_MIGRATOR_PROGRAM_ID`) |
-| `cpmmConfig` | CPMM config PDA. Required when `migratorProgram` is the CPMM migrator |
-| `baseTokenProgram` / `quoteTokenProgram` | Token program for each side of the launch, usually `TOKEN_PROGRAM_ADDRESS` |
-| `metadataAccount` | Token metadata account |
-| `sentinelCreateRemainingAccounts` | Optional readonly accounts forwarded to create hooks; signer values are forwarded as readonly signers |
-| `addressLookupTable` | ALT address for transaction compression (use `DOPPLER_DEVNET_ALT` on devnet) |
+| `cpmmConfig` | CPMM config address when using the CPMM migrator |
+| `baseTokenProgram` / `quoteTokenProgram` | Token program IDs for each mint |
+| `metadataAccount` | Token metadata account, required when `metadataName` is non-empty |
 
 Args (key fields):
 
@@ -242,63 +254,44 @@ Args (key fields):
 | `baseForLiquidity` | `bigint` | Tokens reserved for post-graduation liquidity |
 | `curveVirtualBase` | `bigint` | XYK virtual base reserves (from `marketCapToCurveParams`) |
 | `curveVirtualQuote` | `bigint` | XYK virtual quote reserves (from `marketCapToCurveParams`) |
-| `curveFeeBps` | `number` | Swap fee during bonding curve phase (e.g. 100 = 1%) |
-| `curveKind` | `number` | Curve type; use `CURVE_KIND_XYK` |
-| `curveParams` | `Uint8Array` | Curve encoding; use `new Uint8Array([CURVE_PARAMS_FORMAT_XYK_V0])` |
-| `allowBuy` / `allowSell` | `boolean` | Enables buy and sell directions during the bonding curve phase |
-| `sentinelProgram` | `Address` | Sentinel program invoked by the bonding curve |
-| `sentinelFlags` | `number` | Sentinel hook flags (e.g. `SF_BEFORE_SWAP`, `SF_AFTER_SWAP`, `SF_BEFORE_CREATE`, `SF_AFTER_CREATE`, `SF_BEFORE_MIGRATE`, `SF_AFTER_MIGRATE`) |
-| `sentinelCalldata` | `Uint8Array` | Calldata forwarded to the sentinel |
-| `sentinelCreateRemainingAccountsLen` | `number` | Optional override for the create-hook remaining account count; defaults to `sentinelCreateRemainingAccounts.length` |
-| `migratorInitCalldata` | `Uint8Array` | Encoded graduation params (from `cpmmMigrator.encodeRegisterLaunchCalldata`) |
-| `migratorMigrateCalldata` | `Uint8Array` | Encoded migration args (from `cpmmMigrator.encodeMigrateCalldata`) |
-| `sentinelCreateRemainingAccountsHash` | `Uint8Array` | Commitment hash for initialize-launch create-hook remaining accounts; computed automatically when create hooks are enabled and `sentinelCreateRemainingAccounts` is supplied |
-| `sentinelRemainingAccountsHash` | `Uint8Array` | Commitment hash for swap/preview sentinel remaining accounts |
-| `migratorInitRemainingAccountsHash` | `Uint8Array` | Commitment hash for accounts passed to the migrator init hook |
-| `migratorRemainingAccountsHash` | `Uint8Array` | Commitment hash for accounts passed to the migrator migrate hook |
+| `swapFeeBps` | `number` | Swap fee during bonding curve phase (e.g. 100 = 1%) |
+| `curveKind` | `number` | Curve type — use `CURVE_KIND_XYK` |
+| `curveParams` | `Uint8Array` | Curve encoding — use `new Uint8Array([CURVE_PARAMS_FORMAT_XYK_V0])` |
+| `allowBuy` / `allowSell` | `boolean` | Enables curve buys and sells |
+| `hookFlags` | `number` | Hook flags, e.g. `HF_BEFORE_SWAP` |
+| `hookPayload` | `Uint8Array` | Hook payload forwarded to the hook program |
+| `hookRemainingAccountsHash` | `Uint8Array` | Hash of swap hook remaining accounts |
+| `migratorInitPayload` | `Uint8Array` | Encoded graduation params (from `cpmmMigrator.encodeRegisterLaunchPayload`) |
+| `migratorMigratePayload` | `Uint8Array` | Encoded migration args (from `cpmmMigrator.encodeMigratePayload`) |
+| `migratorInitRemainingAccountsHash` | `Uint8Array` | Hash of migrator init remaining accounts |
+| `migratorRemainingAccountsHash` | `Uint8Array` | Hash of migration remaining accounts |
+| `feeBeneficiaries` | `Array<{ wallet, shareBps }>` | Curve fee beneficiaries |
 | `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
 
-When `SF_BEFORE_CREATE` or `SF_AFTER_CREATE` is enabled, pass any accounts needed by the create sentinel through `sentinelCreateRemainingAccounts`. The SDK appends them to `initialize_launch`, sets `sentinelCreateRemainingAccountsLen`, and computes `sentinelCreateRemainingAccountsHash` unless you provide explicit values.
-
-For CPMM migrations, commit the migrator init hook accounts with `migratorInitRemainingAccountsHash`. The current CPMM migrator init hook consumes `cpmmMigratorState` and `cpmmConfig`:
+When `cpmmConfig` is provided, the SDK appends the CPMM migrator init remaining accounts automatically. Use the migrator helper to build the migration account list and committed hash:
 
 ```ts
-const [cpmmMigratorState] = await cpmmMigrator.getCpmmMigratorStateAddress(launch)
-const [cpmmConfig] = await cpmm.getConfigAddress()
+const deployment = await deriveSolanaCpmmDeployment(
+  DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
+)
+
+const migrationAccounts =
+  await cpmmMigrator.buildCpmmMigrationRemainingAccounts({
+    launch,
+    baseMint,
+    quoteMint,
+    launchAuthority,
+    adminBaseAta,
+    adminQuoteAta,
+    recipientAtas: [],
+    cpmmProgram: deployment.cpmmProgram,
+    cpmmMigratorProgram: deployment.cpmmMigratorProgram,
+  })
 
 const migratorInitRemainingAccountsHash =
   initializer.computeRemainingAccountsHash([
-    cpmmMigratorState,
-    cpmmConfig,
-  ])
-```
-
-For `migrate_launch`, commit the canonical CPMM pool graph and payout accounts in the exact order used later as remaining accounts:
-
-```ts
-const poolInit = await cpmm.getPoolInitAddresses(baseMint, quoteMint)
-const pool = poolInit.pool[0]
-const poolAuthority = poolInit.authority[0]
-const poolVault0 = poolInit.vault0[0]
-const poolVault1 = poolInit.vault1[0]
-const protocolPosition = poolInit.protocolPosition[0]
-const [migrationAuthority] = await cpmmMigrator.getCpmmMigrationAuthorityAddress()
-const [launchLpPosition] = await cpmm.getPositionAddress(pool, launchAuthority, 0n)
-
-const migratorRemainingAccountsHash =
-  initializer.computeRemainingAccountsHash([
-    cpmmMigratorState,
-    cpmmConfig,
-    pool,
-    poolAuthority,
-    poolVault0,
-    poolVault1,
-    protocolPosition,
-    launchLpPosition,
-    cpmm.CPMM_PROGRAM_ID,
-    migrationAuthority,
-    adminBaseAta,
-    adminQuoteAta,
+    migrationAccounts.cpmmMigrationState,
+    migrationAccounts.cpmmConfig,
   ])
 ```
 
@@ -306,59 +299,61 @@ const migratorRemainingAccountsHash =
 
 ### CPMM Migrator
 
-The `cpmmMigrator` namespace encodes calldata forwarded to the CPMM migrator at graduation.
+The `cpmmMigrator` namespace encodes the calldata forwarded to the CPMM migrator at graduation.
 
-**`encodeRegisterLaunchCalldata(args)`** -> `Uint8Array` (`migratorInitCalldata`)
+**`buildCpmmMigrationRemainingAccounts(args)`**
 
-Encodes the `migratorInitCalldata` passed to `createInitializeLaunchInstruction`. Called once at launch creation to register graduation parameters.
+Derives the CPMM pool graph, account metas, and `migratorRemainingAccountsHash` used by `initialize_launch` and `migrate_launch`.
 
 ```ts
-const migratorInitCalldata = cpmmMigrator.encodeRegisterLaunchCalldata({
-  cpmmConfig:              cpmmConfig,
+const migrationAccounts =
+  await cpmmMigrator.buildCpmmMigrationRemainingAccounts({
+    launch,
+    baseMint,
+    quoteMint,
+    launchAuthority,
+    adminBaseAta,
+    adminQuoteAta,
+    recipientAtas,
+    cpmmProgram: deployment.cpmmProgram,
+    cpmmMigratorProgram: deployment.cpmmMigratorProgram,
+  })
+```
+
+**`encodeRegisterLaunchPayload(args)`** → `Uint8Array` (`migratorInitPayload`)
+
+Encodes the `migratorInitPayload` passed to `createInitializeLaunchInstruction`. Called once at launch creation to register graduation parameters.
+
+```ts
+const migratorInitPayload = cpmmMigrator.encodeRegisterLaunchPayload({
+  cpmmConfig:              migrationAccounts.cpmmConfig,
   initialSwapFeeBps:       30,            // Swap fee on graduated CPMM pool (0.3%)
-  initialFeeSplitBps:      5000,          // 50% of fees distributed to LPs
+  initialFeeSplitBps:      5000,          // % of fees distributed to LPs (50%)
   recipients: [
     { wallet: creatorAddress, amount: BASE_FOR_DISTRIBUTION },
   ],
   minRaiseQuote:           50_000_000_000n, // Graduation threshold in lamports (50 SOL)
   minMigrationPriceQ64Opt: null,            // Optional minimum graduation price floor
+  migratedPoolHookConfig:  null,
 })
 ```
 
-**`encodeMigrateCalldata(args)`** -> `Uint8Array` (`migratorMigrateCalldata`)
+**`encodeMigratePayload(args)`** → `Uint8Array` (`migratorMigratePayload`)
 
-Encodes the `migratorMigrateCalldata` passed to `createInitializeLaunchInstruction`. Forwarded at graduation time.
+Encodes the `migratorMigratePayload` passed to `createInitializeLaunchInstruction`. Forwarded at graduation time.
 
 ```ts
-const migratorMigrateCalldata = cpmmMigrator.encodeMigrateCalldata({
+const migratorMigratePayload = cpmmMigrator.encodeMigratePayload({
   baseForDistribution: BASE_FOR_DISTRIBUTION,
   baseForLiquidity:    BASE_FOR_LIQUIDITY,
 })
 ```
-
-**`getCpmmMigrationAuthorityAddress()`**
-
-Derives the migration authority PDA that must be included in the CPMM migration remaining-account commitment and passed to `migrate_launch`.
 
 ***
 
 ### CPMM
 
 After graduation the bonding curve becomes a CPMM pool. These are the core helpers for swaps.
-
-**Pool initialization PDAs**
-
-Use `getPoolInitAddresses(baseMint, quoteMint)` when preparing a CPMM migration. It returns sorted token mints plus the canonical pool, authority, vault, config, and protocol-position PDAs:
-
-```ts
-const poolInit = await cpmm.getPoolInitAddresses(baseMint, quoteMint)
-
-const pool = poolInit.pool[0]
-const poolAuthority = poolInit.authority[0]
-const poolVault0 = poolInit.vault0[0]
-const poolVault1 = poolInit.vault1[0]
-const protocolPosition = poolInit.protocolPosition[0]
-```
 
 **`createSwapInstruction(accounts)` / `createSwapExactInInstruction(accounts, args)`**
 
@@ -378,34 +373,45 @@ const ix = cpmm.createSwapInstruction({
   user:        payer,
   amountIn:    1_000_000n,
   minAmountOut,
-  direction:   0,
+  tradeDirection: 0,
+  programId: deployment.cpmmProgram,
 })
 ```
 
 **Swap quote (off-chain, no RPC)**
 
 ```ts
-const quote = cpmm.getSwapQuote(pool, amountIn, direction)
-// direction: 0 = token0 to token1, 1 = token1 to token0
+const quote = cpmm.getSwapQuote(pool, amountIn, tradeDirection)
+// tradeDirection: 0 = token0→token1, 1 = token1→token0
 // quote: { amountOut, feeTotal, feeDist, feeComp, priceImpact, executionPrice }
 ```
 
 **Q64.64 fixed-point helpers**
 
 ```ts
-cpmm.numberToQ64(n: number): bigint   // multiply by 2^64
-cpmm.q64ToNumber(q: bigint): number   // divide by 2^64
+const q64 = cpmm.numberToQ64(1.5)
+const n = cpmm.q64ToNumber(q64)
 ```
 
 **Pool fetching**
 
 ```ts
-const [config]      = await cpmm.getConfigAddress()
-const [poolAddress] = await cpmm.getPoolAddress(token0Mint, token1Mint)
+const deployment = await deriveSolanaCpmmDeployment(
+  DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
+)
+const [poolAddress] = await cpmm.getPoolAddress(
+  token0Mint,
+  token1Mint,
+  deployment.cpmmProgram,
+)
 
 // By address
-const pool = await cpmm.fetchPool(rpc, poolAddress)         // Pool | null
+const pool = await cpmm.fetchPool(rpc, poolAddress, {
+  programId: deployment.cpmmProgram,
+})
 
 // By token pair (order-independent)
-const result = await cpmm.getPoolByMints(rpc, mint0, mint1) // { address, account: Pool } | null
+const result = await cpmm.getPoolByMints(rpc, mint0, mint1, {
+  programId: deployment.cpmmProgram,
+})
 ```
