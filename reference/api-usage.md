@@ -28,12 +28,12 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
 
 ### Example Queries
 
-1.  **Fetch top 5 pools on Base by USD liquidity:**
+1.  **Fetch top 5 pools on Base Sepolia by USD liquidity:**
 
     ```graphql
     query TopPoolsByLiquidity {
       pools(
-        where: { chainId: 8453 }
+        where: { chainId: 84532 }
         orderBy: "dollarLiquidity"
         orderDirection: "desc"
         limit: 5
@@ -77,7 +77,7 @@ The primary way to query data is through the GraphQL endpoint, available at `/gr
 
     ```graphql
     query TokenDetails {
-      token(address: "0x...", chainId: 8453) {
+      token(address: "0x...", chainId: 84532) {
         address
         name
         symbol
@@ -105,16 +105,16 @@ A simple REST endpoint is available for searching tokens.
 * **URL Parameters**:
   * `query`: The search term (e.g., "MyToken", "MTK", or "0x...").
 * **Query Parameters**:
-  * `chain_ids`: A comma-separated list of chain IDs to filter the search (e.g., `?chain_ids=8453,130`).
+  * `chain_ids`: A comma-separated list of chain IDs to filter the search (e.g., `?chain_ids=84532,130`).
 
 **Example Usage:**
 
 ```bash
-# Search for "doppler" token on Base (chain ID 8453)
-curl "http://localhost:42069/search/doppler?chain_ids=8453"
+# Search for "doppler" token on Base Sepolia (chain ID 84532)
+curl "http://localhost:42069/search/doppler?chain_ids=84532"
 
-# Search by contract address on Base and Ink
-curl "http://localhost:42069/search/0x123...abc?chain_ids=8453,57073"
+# Search by contract address on Base Sepolia and Ink
+curl "http://localhost:42069/search/0x123...abc?chain_ids=84532,57073"
 ```
 
 ## Direct SQL Access (Development)
