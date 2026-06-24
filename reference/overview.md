@@ -6,7 +6,7 @@ icon: clipboard-question
 
 ## What is the Doppler Indexer?
 
-The Doppler Indexer is a multi-chain blockchain indexing service built for tracking the state of Doppler protocol contracts and the tokens created by those contracts. It's built to track and process real-time data from Uniswap V2, V3, and V4 protocol deployments across multiple EVM-compatible chains.
+The Doppler Indexer is a multi-chain blockchain indexing service built for tracking the state of Doppler protocol contracts and programs, and the tokens created by them. It tracks Uniswap V2, V3, and V4 protocol deployments across multiple EVM-compatible chains, plus Solana initializer and CPMM markets where Solana indexing is enabled.
 
 The primary goal of this indexer is to provide a reliable, fast, and queryable data source for Doppler-related analytics, front-end applications, and market analysis tools. It aggregates data on pools, tokens, swaps, liquidity, and user activity, normalizing it into a consistent schema.
 
@@ -34,6 +34,7 @@ The indexer is configured to support the following networks:
 | **Unichain**     | `130`    | V2, V3, V4 Protocol Indexing           |
 | **Ink**          | `57073`  | V2, V3, V4 Protocol Indexing           |
 | **Base Sepolia** | `84532`  | V2, V3, V4 Protocol Indexing (Testnet) |
+| **Solana Devnet** | `solana:devnet` | Initializer and CPMM market indexing (Testnet) |
 
 The configuration is modular, making it straightforward to add or remove chains. See the [Development Guide](/broken/pages/VZBnc78XqauN19pCmwWr) for more details.
 
@@ -51,6 +52,8 @@ The indexer listens to a variety of events across different protocol versions to
 | `UniswapV4Initializer` | `Create`       | V4       | Creation of a new Doppler V4 pool.                   |
 | `UniswapV4Pool`        | `Swap`         | V4       | A trade on a Doppler V4 pool with hooks.             |
 | `DERC20`, `V4DERC20`   | `Transfer`     | V3/V4    | DERC20 token transfers, used to track user balances. |
+| Solana Initializer     | Launch account | SVM      | Doppler launch state, including hook program, flags, payload, and remaining-account hash. |
+| Solana CPMM            | Pool/swap accounts | SVM   | Post-migration CPMM pool state, swaps, and market activity. |
 | (Block Handlers)       | `block`        | -        | Periodic tasks for oracle updates and data refresh.  |
 
 ## Database Schema Overview

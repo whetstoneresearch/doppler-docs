@@ -332,4 +332,11 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | UniswapV4MigratorHook | [0x4053...e500](https://sepolia.etherscan.io/address/0x4053d4fa966cbdcc20ec62070ac8814de8bee500) | [0x8b3c...d32e](https://sepolia.etherscan.io/tx/0x8b3c88bcf3664d63d75698ec1fc458ce1e646ff0c26ea55b4b164ab53cced32e) | [14a79ea](https://github.com/whetstoneresearch/doppler/commit/14a79ea) | 
 | UniswapV4ScheduledMulticurveInitializer | [0xf843...3876](https://sepolia.etherscan.io/address/0xf84378c9f39e0ff267f3101c88773359c5393876) | [0x972a...4de9](https://sepolia.etherscan.io/tx/0x972a11c52ee5a77b8c8ff5490226ec6f435015083150ebddb80a43ef85c44de9) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 | UniswapV4ScheduledMulticurveInitializerHook | [0xc6a5...2dc0](https://sepolia.etherscan.io/address/0xc6a562cb5cbfa29bcb1bdccf903b8b8f2e4a2dc0) | [0x9cc4...53c3](https://sepolia.etherscan.io/tx/0x9cc428598667705087bfae7cdda2929518612ff73080832e1425ed25f2ca53c3) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
-
+### Solana Devnet
+| Program / account | Address |
+|---|---|
+| Initializer program | [`4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1`](https://explorer.solana.com/address/4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1?cluster=devnet) |
+| CPMM program | [`9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ`](https://explorer.solana.com/address/9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ?cluster=devnet) |
+| CPMM migrator program | [`7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd`](https://explorer.solana.com/address/7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd?cluster=devnet) |
+| CPMM hook program | [`2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u`](https://explorer.solana.com/address/2vJ1c62knEwZbxp3XdHB4RSmCfz55pA6tRkCho63gW7u?cluster=devnet) |
+| Cosigner program | [`5iWYdN9SEDeF3FTjKB48XYyCFAcVDuYHsz31Z4Wmq7Ch`](https://explorer.solana.com/address/5iWYdN9SEDeF3FTjKB48XYyCFAcVDuYHsz31Z4Wmq7Ch?cluster=devnet) |
