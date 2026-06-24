@@ -268,6 +268,26 @@ Args (key fields):
 | `feeBeneficiaries` | `Array<{ wallet, shareBps }>` | Curve fee beneficiaries |
 | `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
 
+#### Solana cosigner hook payloads
+
+The cosigner hook supports two launch-time payload modes:
+
+| Payload | Behavior |
+|---------|----------|
+| Empty `Uint8Array` | Legacy behavior. A configured cosigner must sign swaps while the launch is in the initializer trading phase. After migration, CPMM swaps are not gated by the initializer hook. |
+| 42-byte expiry payload | Swaps require a configured cosigner until the encoded expiry is reached. After expiry, the hook allows swaps without a cosigner signature. |
+
+The 42-byte payload layout is:
+
+| Bytes | Value |
+|-------|-------|
+| `0` | Version, currently `1` |
+| `1` | Expiry mode: `1` for Unix timestamp, `2` for Solana slot |
+| `2..10` | Little-endian `u64` expiry value |
+| `10..42` | Cosigner pubkey hint |
+
+For expiring cosigner launches, set `hookRemainingAccountsHash` to the hash of `[namespace, cosigner_config, cosigner]`, where `cosigner_config` is the cosigner hook PDA derived from seed `cosigner_hook_config` under the selected cosigner hook program. Before expiry, the cosigner account must be passed as a readonly signer. After expiry, clients can reconstruct the same remaining-account list from the payload hint without holding the cosigner key.
+
 When `cpmmConfig` is provided, the SDK appends the CPMM migrator init remaining accounts automatically. Use the migrator helper to build the migration account list and committed hash:
 
 ```ts
