@@ -55,6 +55,7 @@
     * [Governance Options](reference/legacy-sdks-and-migration-guides/v4/governance-options.md)
   * [Historical context](reference/legacy-sdks-and-migration-guides/overview.md)
   * [Legacy SDK migration guide](reference/legacy-sdks-and-migration-guides/sdk-migration-guide.md)
+  * [Legacy contract addresses](reference/legacy-sdks-and-migration-guides/legacy-contract-addresses.md)
 * [Security & bug bounties](reference/security-and-bug-bounties.md)
 * [Roadmap](reference/roadmap.md)
 
