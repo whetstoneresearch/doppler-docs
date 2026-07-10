@@ -208,17 +208,84 @@ Import Solana helpers from the package subpath:
 
 ```ts
 import {
+  createLaunch,
   cpmm,
   cpmmMigrator,
+  dynamicFeeHook,
   initializer,
   deriveSolanaCpmmDeployment,
   DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
 } from '@whetstone-research/doppler-sdk/solana'
 ```
 
+### Deployment helpers
+
+Use `deriveSolanaCpmmDeployment` to resolve the program IDs and config accounts used by the Solana helpers:
+
+```ts
+const deployment = await deriveSolanaCpmmDeployment(
+  DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
+)
+```
+
+The deployment object includes the CPMM, initializer, CPMM migrator, CPMM hook, cosigner hook, and dynamic fee hook program IDs, plus the derived CPMM and initializer config accounts. For custom deployments, pass the same fields yourself, including `dynamicFeeHookProgram` when using dynamic fees.
+
 ### Initializer
 
 The `initializer` namespace handles Doppler launches on Solana.
+
+**`createLaunch(input)`**
+
+Builds a complete `initialize_launch` instruction for a new Doppler launch. It derives launch PDAs, builds CPMM migration payloads by default, resolves hook flags, encodes hook payloads, and commits the relevant remaining-account hashes.
+
+Key hook inputs:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `hook` | `'cpmm' \| 'cosigner' \| 'dynamicFee' \| false` | Optional hook mode. When omitted, the SDK infers `dynamicFee` if `dynamicFee` is set, `cosigner` if only `cosigner` is set, and `cpmm` otherwise. |
+| `dynamicFee` | `DynamicFeeScheduleArgs \| null` | Enables the dynamic fee hook and stores a per-launch fee schedule in the launch hook payload. |
+| `cosigner` | `AddressOrSigner` | Enables cosigner gating for either the standalone cosigner hook or the dynamic fee hook. |
+| `cosignGateExpiresAt` | `bigint \| number \| null` | Optional Unix timestamp after which the cosigner signature is no longer required. Requires `cosigner`. |
+
+Dynamic fees and cosigning can be combined in one hook:
+
+```ts
+const { instruction, addresses } = await createLaunch({
+  deployment,
+  launchAccounts: {
+    baseMint,
+    quoteMint,
+    baseVault,
+    quoteVault,
+  },
+  payer,
+  authority: payer,
+  supply: {
+    baseDecimals: 6,
+    baseTotalSupply: 1_000_000_000n * 10n ** 6n,
+    baseForDistribution: 0n,
+    baseForLiquidity: 0n,
+  },
+  curve: {
+    curveVirtualBase: 1_000_000_000n * 10n ** 6n,
+    curveVirtualQuote: 10n * 1_000_000_000n,
+    swapFeeBps: 200,
+  },
+  dynamicFee: {
+    startingTime: 0n,
+    startFeeBps: 8_000,
+    endFeeBps: 200,
+    durationSeconds: 10n * 60n,
+  },
+  cosigner,
+  cosignGateExpiresAt,
+  migration: {
+    minRaiseQuote: 50n * 1_000_000_000n,
+  },
+  metadata: null,
+  feeBeneficiaries: [{ wallet: payer.address, shareBps: 10_000 }],
+})
+```
 
 **`createInitializeLaunchInstruction(accounts, args)`**
 
@@ -241,6 +308,7 @@ Accounts (key fields):
 | `cpmmConfig` | CPMM config address when using the CPMM migrator |
 | `baseTokenProgram` / `quoteTokenProgram` | Token program IDs for each mint |
 | `metadataAccount` | Token metadata account, required when `metadataName` is non-empty |
+| `hookCreateRemainingAccounts` | Readonly accounts forwarded to create hooks when `HF_BEFORE_CREATE` or `HF_AFTER_CREATE` is enabled |
 
 Args (key fields):
 
@@ -260,6 +328,8 @@ Args (key fields):
 | `allowBuy` / `allowSell` | `boolean` | Enables curve buys and sells |
 | `hookFlags` | `number` | Hook flags, e.g. `HF_BEFORE_SWAP` |
 | `hookPayload` | `Uint8Array` | Hook payload forwarded to the hook program |
+| `hookCreateRemainingAccountsLen` | `number` | Number of create-hook remaining accounts at the start of the routed remaining-account list |
+| `hookCreateRemainingAccountsHash` | `Uint8Array` | Hash of create-hook remaining accounts |
 | `hookRemainingAccountsHash` | `Uint8Array` | Hash of swap hook remaining accounts |
 | `migratorInitPayload` | `Uint8Array` | Encoded graduation params (from `cpmmMigrator.encodeRegisterLaunchPayload`) |
 | `migratorMigratePayload` | `Uint8Array` | Encoded migration args (from `cpmmMigrator.encodeMigratePayload`) |
@@ -286,7 +356,88 @@ The 42-byte payload layout is:
 | `2..10` | Little-endian `u64` expiry value |
 | `10..42` | Cosigner pubkey hint |
 
-For expiring cosigner launches, set `hookRemainingAccountsHash` to the hash of `[namespace, cosigner_config, cosigner]`, where `cosigner_config` is the cosigner hook PDA derived from seed `cosigner_hook_config` under the selected cosigner hook program. Before expiry, the cosigner account must be passed as a readonly signer. After expiry, clients can reconstruct the same remaining-account list from the payload hint without holding the cosigner key.
+For expiring cosigner launches, commit the same swap hook remaining accounts clients will pass later. If the launch namespace equals the cosigner config PDA, the account list is:
+
+```text
+[cosigner_config, cosigner]
+```
+
+Otherwise, the account list is:
+
+```text
+[namespace, cosigner_config, cosigner]
+```
+
+`cosigner_config` is the cosigner hook PDA derived from seed `cosigner_hook_config` under the selected cosigner hook program. Before expiry, the cosigner account must be passed as a readonly signer. After expiry, clients can reconstruct the same remaining-account list from the payload hint without holding the cosigner key. Prefer the SDK helpers for this account list and hash instead of constructing it manually.
+
+#### Solana dynamic fee hook payloads
+
+The dynamic fee hook can set a per-launch fee schedule, require a cosigner, or do both. When a schedule is present, launches should enable:
+
+```ts
+initializer.HF_BEFORE_CREATE | initializer.HF_BEFORE_SWAP
+```
+
+Add `initializer.HF_FORWARD_READONLY_SIGNERS` when the same dynamic fee hook launch also requires a cosigner. The dynamic fee hook stores the schedule in the launch hook payload; it does not require a schedule account.
+
+The 32-byte schedule payload layout is:
+
+| Bytes | Value |
+|-------|-------|
+| `0..8` | Magic bytes: `DFEEV1__` |
+| `8` | Version, currently `1` |
+| `9..16` | Reserved padding |
+| `16..24` | Little-endian `i64` Unix timestamp `startingTime` |
+| `24..26` | Little-endian `u16` `startFeeBps` |
+| `26..28` | Little-endian `u16` `endFeeBps` |
+| `28..32` | Little-endian `u32` `durationSeconds` |
+
+`startingTime: 0` means "start when the launch is created." During `BEFORE_CREATE`, the hook normalizes `0` or a past timestamp to the current Solana clock timestamp and the initializer stores that normalized payload on the launch account. Future timestamps are preserved.
+
+The hook returns the greater of the dynamic schedule fee and the launch's static `swapFeeBps`, so the schedule cannot reduce the fee below the launch's configured static fee.
+
+Payloads are composed as:
+
+```text
+dynamic fee only:          [32-byte schedule]
+dynamic fee + cosigner:    [32-byte schedule][42-byte cosigner expiry payload]
+cosigner only in this hook: [42-byte cosigner expiry payload]
+```
+
+For low-level builders, dynamic-fee-only launches commit swap hook remaining accounts as:
+
+```text
+[namespace]
+```
+
+Dynamic fee launches that also require cosigning commit:
+
+```text
+[namespace, cosigner_config, cosigner]
+```
+
+The create-hook remaining account list is empty:
+
+```text
+[]
+```
+
+When using `createInitializeLaunchInstruction` directly with `HF_BEFORE_CREATE`, set `hookCreateRemainingAccountsHash` to `initializer.computeRemainingAccountsHash([])`. The all-zero hash means "no create hook commitment" and is rejected when create hooks are enabled.
+
+The SDK exposes helpers for encoding and inspection:
+
+```ts
+const payload = dynamicFeeHook.encodeDynamicFeeHookPayload({
+  schedule: {
+    startingTime: 0n,
+    startFeeBps: 8_000,
+    endFeeBps: 200,
+    durationSeconds: 10n * 60n,
+  },
+})
+
+dynamicFeeHook.isDynamicFeeSchedulePayload(payload)
+```
 
 When `cpmmConfig` is provided, the SDK appends the CPMM migrator init remaining accounts automatically. Use the migrator helper to build the migration account list and committed hash:
 
