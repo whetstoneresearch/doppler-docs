@@ -247,8 +247,6 @@ Key hook inputs:
 | `cosigner` | `AddressOrSigner` | Optionally enables cosigner gating through the dynamic fee hook. |
 | `cosignGateExpiresAt` | `bigint \| number \| null` | Optional Unix timestamp after which the cosigner signature is no longer required. Requires `cosigner`. |
 
-The SDK retains the `cpmm`, `cosigner`, and `false` hook modes for compatibility with existing integrations. They are deprecated for new launches and are omitted from new examples.
-
 Hook features compose independently:
 
 | Features | New-launch inputs |
