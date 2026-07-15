@@ -43,6 +43,7 @@ const addresses = await initializer.deriveCreateLaunchAddresses({
 
 const { instruction } = await createLaunch({
   deployment,
+  hook: 'dynamicFee',
   namespace,
   launchId,
   addresses,
@@ -83,6 +84,8 @@ Submit the returned `instruction` with the generated mint and vault signers. The
 
 `startingTime: 0n` means the hook should start the schedule at launch creation. During `initialize_launch`, the hook replaces it with the current Solana clock timestamp before the launch account is stored.
 
+The effective swap fee is the greater of the current schedule fee and the launch's static `swapFeeBps`, so the schedule cannot reduce the fee below the static launch fee.
+
 After sending the transaction, you can verify that the launch is using the dynamic fee hook:
 
 ```typescript
@@ -112,6 +115,7 @@ To combine dynamic fees with cosigner gating, pass the same dynamic fee schedule
 ```typescript
 const { instruction } = await createLaunch({
   // ...same launch inputs as above
+  hook: 'dynamicFee',
   dynamicFee: {
     startingTime: 0n,
     startFeeBps: 8_000,
@@ -123,4 +127,4 @@ const { instruction } = await createLaunch({
 });
 ```
 
-With both features enabled, swaps require the configured cosigner until expiry, and the dynamic fee schedule continues to apply throughout the initializer trading phase.
+With both features enabled, swaps require the configured cosigner until expiry, and the dynamic fee schedule continues to apply throughout the initializer trading phase. Omit `cosignGateExpiresAt` for an indefinite gate; in that case the schedule remains the entire hook payload and the presence of the cosigner config account enables gating.

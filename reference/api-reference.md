@@ -228,7 +228,7 @@ const deployment = await deriveSolanaCpmmDeployment(
 )
 ```
 
-The deployment object includes the CPMM, initializer, CPMM migrator, CPMM hook, cosigner hook, and dynamic fee hook program IDs, plus the derived CPMM and initializer config accounts. For custom deployments, pass the same fields yourself, including `dynamicFeeHookProgram` when using dynamic fees.
+The deployment object includes the core protocol program IDs, the dynamic fee hook program ID, and the derived CPMM and initializer config accounts. For custom deployments, provide `dynamicFeeHookProgram` for new launches.
 
 ### Initializer
 
@@ -242,16 +242,30 @@ Key hook inputs:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `hook` | `'cpmm' \| 'cosigner' \| 'dynamicFee' \| false` | Optional hook mode. When omitted, the SDK infers `dynamicFee` if `dynamicFee` is set, `cosigner` if only `cosigner` is set, and `cpmm` otherwise. |
-| `dynamicFee` | `DynamicFeeScheduleArgs \| null` | Enables the dynamic fee hook and stores a per-launch fee schedule in the launch hook payload. |
-| `cosigner` | `AddressOrSigner` | Enables cosigner gating for either the standalone cosigner hook or the dynamic fee hook. |
+| `hook` | `'dynamicFee'` | Select the dynamic fee hook for every new launch. |
+| `dynamicFee` | `DynamicFeeScheduleArgs \| null` | Optional per-launch fee schedule stored in the hook payload. |
+| `cosigner` | `AddressOrSigner` | Optionally enables cosigner gating through the dynamic fee hook. |
 | `cosignGateExpiresAt` | `bigint \| number \| null` | Optional Unix timestamp after which the cosigner signature is no longer required. Requires `cosigner`. |
+
+The SDK retains the `cpmm`, `cosigner`, and `false` hook modes for compatibility with existing integrations. They are deprecated for new launches and are omitted from new examples.
+
+Hook features compose independently:
+
+| Features | New-launch inputs |
+|----------|-------------------|
+| Neither | Set `hook: 'dynamicFee'`; omit `dynamicFee` and `cosigner` |
+| Cosigning | Set `hook: 'dynamicFee'` and `cosigner` |
+| Dynamic fees | Set `hook: 'dynamicFee'` and `dynamicFee` |
+| Both | Set `hook: 'dynamicFee'`, `dynamicFee`, and `cosigner` |
+
+Migration configuration is independent of hook features. CPMM migration can be enabled with any of the four dynamic-hook configurations above.
 
 Dynamic fees and cosigning can be combined in one hook:
 
 ```ts
 const { instruction, addresses } = await createLaunch({
   deployment,
+  hook: 'dynamicFee',
   launchAccounts: {
     baseMint,
     quoteMint,
@@ -303,7 +317,7 @@ Accounts (key fields):
 | `baseVault` / `quoteVault` | Token vault keypairs (signers) |
 | `launchFeeState` | Launch fee state PDA |
 | `payer` / `authority` | Fee payer and launch authority (signers) |
-| `hookProgram` | Hook program ID, or omit for no hook |
+| `hookProgram` | Dynamic fee hook program ID for new launches |
 | `migratorProgram` | Migrator program ID (e.g. `CPMM_MIGRATOR_PROGRAM_ID`) |
 | `cpmmConfig` | CPMM config address when using the CPMM migrator |
 | `baseTokenProgram` / `quoteTokenProgram` | Token program IDs for each mint |
@@ -315,7 +329,7 @@ Args (key fields):
 | Arg | Type | Description |
 |-----|------|-------------|
 | `namespace` | `Address` | Namespace for PDA uniqueness (typically payer address) |
-| `launchId` | `Uint8Array` | 8-byte launch ID (from `launchIdFromU64`) |
+| `launchId` | `Uint8Array` | 32-byte launch ID, typically from `initializer.createLaunchId()` |
 | `baseDecimals` | `number` | Decimals of the base token |
 | `baseTotalSupply` | `bigint` | Total base token supply (with decimals) |
 | `baseForDistribution` | `bigint` | Tokens reserved for creator at graduation |
@@ -338,41 +352,9 @@ Args (key fields):
 | `feeBeneficiaries` | `Array<{ wallet, shareBps }>` | Curve fee beneficiaries |
 | `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
 
-#### Solana cosigner hook payloads
-
-The cosigner hook supports two launch-time payload modes:
-
-| Payload | Behavior |
-|---------|----------|
-| Empty `Uint8Array` | Legacy behavior. A configured cosigner must sign swaps while the launch is in the initializer trading phase. After migration, CPMM swaps are not gated by the initializer hook. |
-| 42-byte expiry payload | Swaps require a configured cosigner until the encoded expiry is reached. After expiry, the hook allows swaps without a cosigner signature. |
-
-The 42-byte payload layout is:
-
-| Bytes | Value |
-|-------|-------|
-| `0` | Version, currently `1` |
-| `1` | Expiry mode: `1` for Unix timestamp, `2` for Solana slot |
-| `2..10` | Little-endian `u64` expiry value |
-| `10..42` | Cosigner pubkey hint |
-
-For expiring cosigner launches, commit the same swap hook remaining accounts clients will pass later. If the launch namespace equals the cosigner config PDA, the account list is:
-
-```text
-[cosigner_config, cosigner]
-```
-
-Otherwise, the account list is:
-
-```text
-[namespace, cosigner_config, cosigner]
-```
-
-`cosigner_config` is the cosigner hook PDA derived from seed `cosigner_hook_config` under the selected cosigner hook program. Before expiry, the cosigner account must be passed as a readonly signer. After expiry, clients can reconstruct the same remaining-account list from the payload hint without holding the cosigner key. Prefer the SDK helpers for this account list and hash instead of constructing it manually.
-
 #### Solana dynamic fee hook payloads
 
-The dynamic fee hook can set a per-launch fee schedule, require a cosigner, or do both. When a schedule is present, launches should enable:
+The dynamic fee hook is the supported hook for new launches. It can act as a pass-through hook, set a per-launch fee schedule, require a cosigner, or do both. When a schedule is present, launches should enable:
 
 ```ts
 initializer.HF_BEFORE_CREATE | initializer.HF_BEFORE_SWAP
@@ -396,12 +378,17 @@ The 32-byte schedule payload layout is:
 
 The hook returns the greater of the dynamic schedule fee and the launch's static `swapFeeBps`, so the schedule cannot reduce the fee below the launch's configured static fee.
 
+The presence of the cosigner config account enables gating. The gate payload only determines whether and when that gate expires, so an indefinite gate does not need an expiry payload.
+
 Payloads are composed as:
 
 ```text
-dynamic fee only:          [32-byte schedule]
-dynamic fee + cosigner:    [32-byte schedule][42-byte cosigner expiry payload]
-cosigner only in this hook: [42-byte cosigner expiry payload]
+no schedule or cosigner:              []
+dynamic fee only:                    [32-byte schedule]
+dynamic fee + indefinite cosigner:   [32-byte schedule]
+dynamic fee + expiring cosigner:     [32-byte schedule][42-byte expiry payload]
+indefinite cosigner only in this hook: []
+expiring cosigner only in this hook: [42-byte expiry payload]
 ```
 
 For low-level builders, dynamic-fee-only launches commit swap hook remaining accounts as:
@@ -414,6 +401,12 @@ Dynamic fee launches that also require cosigning commit:
 
 ```text
 [namespace, cosigner_config, cosigner]
+```
+
+If `namespace` equals `cosigner_config`, include that address only once:
+
+```text
+[cosigner_config, cosigner]
 ```
 
 The create-hook remaining account list is empty:

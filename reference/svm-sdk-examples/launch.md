@@ -169,7 +169,7 @@ async function main() {
         launchFeeState,
         payer,
         authority: payer,
-        hookProgram: deployment.cpmmHookProgram,
+        hookProgram: deployment.dynamicFeeHookProgram,
         migratorProgram: deployment.cpmmMigratorProgram,
         cpmmConfig: migrationAccounts.cpmmConfig,
         baseTokenProgram: TOKEN_PROGRAM_ADDRESS,
@@ -193,9 +193,12 @@ async function main() {
         allowSell: true,
         hookFlags: initializer.HF_BEFORE_SWAP,
         hookPayload: new Uint8Array(),
+        hookCreateRemainingAccountsLen: 0,
+        hookCreateRemainingAccountsHash: new Uint8Array(32),
         migratorInitPayload,
         migratorMigratePayload,
-        hookRemainingAccountsHash: initializer.EMPTY_REMAINING_ACCOUNTS_HASH,
+        hookRemainingAccountsHash:
+          initializer.computeRemainingAccountsHash([namespace]),
         migratorInitRemainingAccountsHash:
           initializer.computeRemainingAccountsHash([
             migrationAccounts.cpmmMigrationState,

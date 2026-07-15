@@ -6,6 +6,7 @@ description: Create a Solana launch, buy from the curve, and migrate to CPMM
 
 ```typescript
 import {
+  AccountRole,
   createKeyPairSignerFromBytes,
   createSolanaRpc,
   createSolanaRpcSubscriptions,
@@ -99,6 +100,13 @@ async function main() {
   const quoteVault = await generateKeyPairSigner();
 
   const namespace = payer.address;
+  const withDynamicHookAccounts = (instruction: Instruction): Instruction => ({
+    ...instruction,
+    accounts: [
+      ...(instruction.accounts ?? []),
+      { address: namespace, role: AccountRole.READONLY },
+    ],
+  });
   const launchId = initializer.launchIdFromU64(BigInt(Date.now()));
   const [launch] = await initializer.getLaunchAddress(
     namespace,
@@ -164,7 +172,7 @@ async function main() {
         launchFeeState,
         payer,
         authority: payer,
-        hookProgram: deployment.cpmmHookProgram,
+        hookProgram: deployment.dynamicFeeHookProgram,
         migratorProgram: deployment.cpmmMigratorProgram,
         cpmmConfig: migrationAccounts.cpmmConfig,
         baseTokenProgram: TOKEN_PROGRAM_ADDRESS,
@@ -188,9 +196,12 @@ async function main() {
         allowSell: true,
         hookFlags: initializer.HF_BEFORE_SWAP,
         hookPayload: new Uint8Array(),
+        hookCreateRemainingAccountsLen: 0,
+        hookCreateRemainingAccountsHash: new Uint8Array(32),
         migratorInitPayload,
         migratorMigratePayload,
-        hookRemainingAccountsHash: initializer.EMPTY_REMAINING_ACCOUNTS_HASH,
+        hookRemainingAccountsHash:
+          initializer.computeRemainingAccountsHash([namespace]),
         migratorInitRemainingAccountsHash:
           initializer.computeRemainingAccountsHash([
             migrationAccounts.cpmmMigrationState,
@@ -209,19 +220,21 @@ async function main() {
   console.log('Launch:', launch);
   console.log('Base mint:', baseMint.address);
 
-  const previewIx = initializer.createPreviewSwapExactInInstruction(
-    {
-      launch,
-      launchFeeState,
-      baseVault: baseVault.address,
-      quoteVault: quoteVault.address,
-      hookProgram: deployment.cpmmHookProgram,
-    },
-    {
-      amountIn: BUY_AMOUNT_IN,
-      tradeDirection: initializer.TRADE_DIRECTION_BUY,
-    },
-    deployment.initializerProgram,
+  const previewIx = withDynamicHookAccounts(
+    initializer.createPreviewSwapExactInInstruction(
+      {
+        launch,
+        launchFeeState,
+        baseVault: baseVault.address,
+        quoteVault: quoteVault.address,
+        hookProgram: deployment.dynamicFeeHookProgram,
+      },
+      {
+        amountIn: BUY_AMOUNT_IN,
+        tradeDirection: initializer.TRADE_DIRECTION_BUY,
+      },
+      deployment.initializerProgram,
+    ),
   );
   const { value: previewBlockhash } = await rpc.getLatestBlockhash().send();
   const previewMessage = pipe(
@@ -256,29 +269,31 @@ async function main() {
     owner: payer.address,
     mint: USDC_MINT,
   });
-  const buyIx = initializer.createCurveSwapExactInInstruction(
-    {
-      config: deployment.initializerConfig,
-      launch,
-      launchAuthority,
-      baseVault: baseVault.address,
-      quoteVault: quoteVault.address,
-      launchFeeState,
-      userBaseAccount: payerBaseAta,
-      userQuoteAccount: payerQuoteAta,
-      baseMint: baseMint.address,
-      quoteMint: USDC_MINT,
-      user: payer,
-      hookProgram: deployment.cpmmHookProgram,
-      baseTokenProgram: TOKEN_PROGRAM_ADDRESS,
-      quoteTokenProgram: TOKEN_PROGRAM_ADDRESS,
-    },
-    {
-      amountIn: BUY_AMOUNT_IN,
-      minAmountOut: 1n,
-      tradeDirection: initializer.TRADE_DIRECTION_BUY,
-    },
-    deployment.initializerProgram,
+  const buyIx = withDynamicHookAccounts(
+    initializer.createCurveSwapExactInInstruction(
+      {
+        config: deployment.initializerConfig,
+        launch,
+        launchAuthority,
+        baseVault: baseVault.address,
+        quoteVault: quoteVault.address,
+        launchFeeState,
+        userBaseAccount: payerBaseAta,
+        userQuoteAccount: payerQuoteAta,
+        baseMint: baseMint.address,
+        quoteMint: USDC_MINT,
+        user: payer,
+        hookProgram: deployment.dynamicFeeHookProgram,
+        baseTokenProgram: TOKEN_PROGRAM_ADDRESS,
+        quoteTokenProgram: TOKEN_PROGRAM_ADDRESS,
+      },
+      {
+        amountIn: BUY_AMOUNT_IN,
+        minAmountOut: 1n,
+        tradeDirection: initializer.TRADE_DIRECTION_BUY,
+      },
+      deployment.initializerProgram,
+    ),
   );
   console.log(
     'Buy transaction:',
