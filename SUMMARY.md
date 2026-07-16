@@ -27,6 +27,7 @@
   * [Quoting, monitoring, and metrics](reference/examples/quoting-monitoring-and-metrics.md)
 * [SVM SDK Examples](reference/svm-sdk-examples/README.md)
   * [Launch](reference/svm-sdk-examples/launch.md)
+  * [Dynamic fee launch](reference/svm-sdk-examples/dynamic-fee-launch.md)
   * [Swap](reference/svm-sdk-examples/swap.md)
   * [Launch, monitor, and e2e](reference/svm-sdk-examples/launch-monitor-and-e2e.md)
 * [Data Indexing](reference/overview.md)
