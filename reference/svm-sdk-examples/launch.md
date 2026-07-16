@@ -169,7 +169,7 @@ async function main() {
         launchFeeState,
         payer,
         authority: payer,
-        hookProgram: deployment.dynamicFeeHookProgram,
+        hookProgram: deployment.cpmmHookProgram,
         migratorProgram: deployment.cpmmMigratorProgram,
         cpmmConfig: migrationAccounts.cpmmConfig,
         baseTokenProgram: TOKEN_PROGRAM_ADDRESS,

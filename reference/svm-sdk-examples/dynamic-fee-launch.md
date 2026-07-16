@@ -4,7 +4,7 @@ description: Create a Solana launch with a dynamic fee schedule
 
 # Dynamic Fee Launch
 
-Use `createLaunch` with `dynamicFee` to route a Solana launch through the Doppler dynamic fee hook. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
+Pass `dynamicFee` to `createLaunch` to configure a fee schedule on the Doppler dynamic fee hook. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
 
 This snippet assumes `payer` and `rpc` are already initialized with `@solana/kit`.
 
@@ -15,7 +15,7 @@ import {
 } from '@solana/kit';
 import {
   createLaunch,
-  dynamicFeeHook,
+  cpmmHook,
   initializer,
   deriveSolanaCpmmDeployment,
   DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
@@ -43,7 +43,6 @@ const addresses = await initializer.deriveCreateLaunchAddresses({
 
 const { instruction } = await createLaunch({
   deployment,
-  hook: 'dynamicFee',
   namespace,
   launchId,
   addresses,
@@ -101,11 +100,11 @@ const hookPayload = new Uint8Array(
   launch.hookPayload.bytes.slice(0, launch.hookPayload.len),
 );
 
-if (launch.hookProgram !== deployment.dynamicFeeHookProgram) {
+if (launch.hookProgram !== deployment.cpmmHookProgram) {
   throw new Error('Launch is not using the dynamic fee hook');
 }
 
-if (!dynamicFeeHook.isDynamicFeeSchedulePayload(hookPayload)) {
+if (!cpmmHook.isDynamicFeeSchedulePayload(hookPayload)) {
   throw new Error('Launch hook payload does not contain a dynamic fee schedule');
 }
 ```
@@ -115,7 +114,6 @@ To combine dynamic fees with cosigner gating, pass the same dynamic fee schedule
 ```typescript
 const { instruction } = await createLaunch({
   // ...same launch inputs as above
-  hook: 'dynamicFee',
   dynamicFee: {
     startingTime: 0n,
     startFeeBps: 8_000,

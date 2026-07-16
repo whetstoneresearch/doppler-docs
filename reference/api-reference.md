@@ -210,8 +210,8 @@ Import Solana helpers from the package subpath:
 import {
   createLaunch,
   cpmm,
+  cpmmHook,
   cpmmMigrator,
-  dynamicFeeHook,
   initializer,
   deriveSolanaCpmmDeployment,
   DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
@@ -228,7 +228,7 @@ const deployment = await deriveSolanaCpmmDeployment(
 )
 ```
 
-The deployment object includes the core protocol program IDs, the dynamic fee hook program ID, and the derived CPMM and initializer config accounts. For custom deployments, provide `dynamicFeeHookProgram` for new launches.
+The SDK exposes the dynamic fee hook as `cpmmHook` and its deployment address as `cpmmHookProgram`. The deployment object also includes the core protocol program IDs and the derived CPMM and initializer config accounts. For custom deployments, provide `cpmmHookProgram` for new launches.
 
 ### Initializer
 
@@ -236,13 +236,12 @@ The `initializer` namespace handles Doppler launches on Solana.
 
 **`createLaunch(input)`**
 
-Builds a complete `initialize_launch` instruction for a new Doppler launch. It derives launch PDAs, builds CPMM migration payloads by default, resolves hook flags, encodes hook payloads, and commits the relevant remaining-account hashes.
+Builds a complete `initialize_launch` instruction for a new Doppler launch. It derives launch PDAs, builds CPMM migration payloads by default, installs the dynamic fee hook, resolves hook flags, encodes hook payloads, and commits the relevant remaining-account hashes. Hook behavior is selected through the optional feature inputs below; there is no separate hook selector.
 
 Key hook inputs:
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `hook` | `'dynamicFee'` | Select the dynamic fee hook for every new launch. |
 | `dynamicFee` | `DynamicFeeScheduleArgs \| null` | Optional per-launch fee schedule stored in the hook payload. |
 | `cosigner` | `AddressOrSigner` | Optionally enables cosigner gating through the dynamic fee hook. |
 | `cosignGateExpiresAt` | `bigint \| number \| null` | Optional Unix timestamp after which the cosigner signature is no longer required. Requires `cosigner`. |
@@ -251,19 +250,18 @@ Hook features compose independently:
 
 | Features | New-launch inputs |
 |----------|-------------------|
-| Neither | Set `hook: 'dynamicFee'`; omit `dynamicFee` and `cosigner` |
-| Cosigning | Set `hook: 'dynamicFee'` and `cosigner` |
-| Dynamic fees | Set `hook: 'dynamicFee'` and `dynamicFee` |
-| Both | Set `hook: 'dynamicFee'`, `dynamicFee`, and `cosigner` |
+| Neither | Omit `dynamicFee` and `cosigner` |
+| Cosigning | Set `cosigner` |
+| Dynamic fees | Set `dynamicFee` |
+| Both | Set `dynamicFee` and `cosigner` |
 
-Migration configuration is independent of hook features. CPMM migration can be enabled with any of the four dynamic-hook configurations above.
+Migration configuration is independent of hook features. CPMM migration can be enabled with any of the four feature combinations above.
 
 Dynamic fees and cosigning can be combined in one hook:
 
 ```ts
 const { instruction, addresses } = await createLaunch({
   deployment,
-  hook: 'dynamicFee',
   launchAccounts: {
     baseMint,
     quoteMint,
@@ -418,7 +416,7 @@ When using `createInitializeLaunchInstruction` directly with `HF_BEFORE_CREATE`,
 The SDK exposes helpers for encoding and inspection:
 
 ```ts
-const payload = dynamicFeeHook.encodeDynamicFeeHookPayload({
+const payload = cpmmHook.encodeCpmmHookPayload({
   schedule: {
     startingTime: 0n,
     startFeeBps: 8_000,
@@ -427,7 +425,7 @@ const payload = dynamicFeeHook.encodeDynamicFeeHookPayload({
   },
 })
 
-dynamicFeeHook.isDynamicFeeSchedulePayload(payload)
+cpmmHook.isDynamicFeeSchedulePayload(payload)
 ```
 
 When `cpmmConfig` is provided, the SDK appends the CPMM migrator init remaining accounts automatically. Use the migrator helper to build the migration account list and committed hash:
