@@ -4,7 +4,7 @@ description: Create a Solana launch with a dynamic fee schedule
 
 # Dynamic Fee Launch
 
-Pass `dynamicFee` to `createLaunch` to configure a fee schedule on the Doppler dynamic fee hook. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
+Pass `dynamicFee` to `createLaunch` to configure a fee schedule on the Doppler CPMM hook. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
 
 This snippet assumes `payer` and `rpc` are already initialized with `@solana/kit`.
 
@@ -79,13 +79,13 @@ const { instruction } = await createLaunch({
 });
 ```
 
-Submit the returned `instruction` with the generated mint and vault signers. The SDK sets the dynamic fee hook program, `HF_BEFORE_CREATE | HF_BEFORE_SWAP`, the 32-byte schedule payload, the create-hook account commitment, and the swap hook remaining-account commitment.
+Submit the returned `instruction` with the generated mint and vault signers. The SDK sets the CPMM hook program, `HF_BEFORE_CREATE | HF_BEFORE_SWAP`, the 32-byte schedule payload, the create-hook account commitment, and the swap hook remaining-account commitment.
 
 `startingTime: 0n` means the hook should start the schedule at launch creation. During `initialize_launch`, the hook replaces it with the current Solana clock timestamp before the launch account is stored.
 
 The effective swap fee is the greater of the current schedule fee and the launch's static `swapFeeBps`, so the schedule cannot reduce the fee below the static launch fee.
 
-After sending the transaction, you can verify that the launch is using the dynamic fee hook:
+After sending the transaction, you can verify that the launch is using the CPMM hook:
 
 ```typescript
 const launch = await initializer.fetchLaunch(rpc, addresses.launch, {
@@ -101,7 +101,7 @@ const hookPayload = new Uint8Array(
 );
 
 if (launch.hookProgram !== deployment.cpmmHookProgram) {
-  throw new Error('Launch is not using the dynamic fee hook');
+  throw new Error('Launch is not using the CPMM hook');
 }
 
 if (!cpmmHook.isDynamicFeeSchedulePayload(hookPayload)) {

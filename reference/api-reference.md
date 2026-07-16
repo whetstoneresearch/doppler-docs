@@ -228,7 +228,7 @@ const deployment = await deriveSolanaCpmmDeployment(
 )
 ```
 
-The SDK exposes the dynamic fee hook as `cpmmHook` and its deployment address as `cpmmHookProgram`. The deployment object also includes the core protocol program IDs and the derived CPMM and initializer config accounts. For custom deployments, provide `cpmmHookProgram` for new launches.
+The SDK exposes the CPMM hook as `cpmmHook` and its deployment address as `cpmmHookProgram`. The deployment object also includes the core protocol program IDs and the derived CPMM and initializer config accounts. For custom deployments, provide `cpmmHookProgram` for new launches.
 
 ### Initializer
 
@@ -236,14 +236,14 @@ The `initializer` namespace handles Doppler launches on Solana.
 
 **`createLaunch(input)`**
 
-Builds a complete `initialize_launch` instruction for a new Doppler launch. It derives launch PDAs, builds CPMM migration payloads by default, installs the dynamic fee hook, resolves hook flags, encodes hook payloads, and commits the relevant remaining-account hashes. Hook behavior is selected through the optional feature inputs below; there is no separate hook selector.
+Builds a complete `initialize_launch` instruction for a new Doppler launch. It derives launch PDAs, builds CPMM migration payloads by default, installs the CPMM hook, resolves hook flags, encodes hook payloads, and commits the relevant remaining-account hashes. Hook behavior is selected through the optional feature inputs below; there is no separate hook selector.
 
 Key hook inputs:
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `dynamicFee` | `DynamicFeeScheduleArgs \| null` | Optional per-launch fee schedule stored in the hook payload. |
-| `cosigner` | `AddressOrSigner` | Optionally enables cosigner gating through the dynamic fee hook. |
+| `cosigner` | `AddressOrSigner` | Optionally enables cosigner gating through the CPMM hook. |
 | `cosignGateExpiresAt` | `bigint \| number \| null` | Optional Unix timestamp after which the cosigner signature is no longer required. Requires `cosigner`. |
 
 Hook features compose independently:
@@ -313,7 +313,7 @@ Accounts (key fields):
 | `baseVault` / `quoteVault` | Token vault keypairs (signers) |
 | `launchFeeState` | Launch fee state PDA |
 | `payer` / `authority` | Fee payer and launch authority (signers) |
-| `hookProgram` | Dynamic fee hook program ID for new launches |
+| `hookProgram` | CPMM hook program ID for new launches |
 | `migratorProgram` | Migrator program ID (e.g. `CPMM_MIGRATOR_PROGRAM_ID`) |
 | `cpmmConfig` | CPMM config address when using the CPMM migrator |
 | `baseTokenProgram` / `quoteTokenProgram` | Token program IDs for each mint |
@@ -348,15 +348,15 @@ Args (key fields):
 | `feeBeneficiaries` | `Array<{ wallet, shareBps }>` | Curve fee beneficiaries |
 | `metadataName` / `metadataSymbol` / `metadataUri` | `string` | On-chain token metadata |
 
-#### Solana dynamic fee hook payloads
+#### Solana CPMM hook payloads
 
-The dynamic fee hook is the supported hook for new launches. It can act as a pass-through hook, set a per-launch fee schedule, require a cosigner, or do both. When a schedule is present, launches should enable:
+The CPMM hook is the supported hook for new launches. It can act as a pass-through hook, set a per-launch fee schedule, require a cosigner, or do both. When a schedule is present, launches should enable:
 
 ```ts
 initializer.HF_BEFORE_CREATE | initializer.HF_BEFORE_SWAP
 ```
 
-Add `initializer.HF_FORWARD_READONLY_SIGNERS` when the same dynamic fee hook launch also requires a cosigner. The dynamic fee hook stores the schedule in the launch hook payload; it does not require a schedule account.
+Add `initializer.HF_FORWARD_READONLY_SIGNERS` when the same CPMM hook launch also requires a cosigner. The CPMM hook stores the schedule in the launch hook payload; it does not require a schedule account.
 
 The 32-byte schedule payload layout is:
 
