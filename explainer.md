@@ -42,7 +42,7 @@ Every token can be created with a unique set of beneficiary addresses that earn 
 
 #### Protocol fee
 
-The Doppler Protocol fee is set to 5% of whatever the newly created token's fees are configured to. For example, if a token is configured with 1% fees, the protocol earns 0.05%.. or a token configured with 0% fees earns the protocol 0%.
+The Doppler Protocol receives 5% of trading fees on EVM and 7.5% on Solana. For example, if a token is configured with a 1% trading fee, the protocol receives 0.05% of swap volume on EVM or 0.075% on Solana. A token configured with a 0% trading fee generates no protocol fees.
 
 ### Governance & Treasury
 
