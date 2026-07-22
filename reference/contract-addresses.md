@@ -198,6 +198,15 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | UniswapV3Initializer | [0xaA47...B4e5](https://explorer.inkonchain.com/address/0xaA47D2977d622DBdFD33eeF6a8276727c52EB4e5) | [0x0c83...8259](https://explorer.inkonchain.com/tx/0x0c83df3c4e550810b0b15c48751f4122628d9806b4b9a3b750304ce658f38259) | [9b23399](https://github.com/whetstoneresearch/doppler/commit/9b23399) | 
 | UniswapV4Initializer | [0x014e...d056](https://explorer.inkonchain.com/address/0x014e1c0bd34f3b10546e554cb33b3293fecdd056) | [0x8b0d...49ee](https://explorer.inkonchain.com/tx/0x8b0d5ab9f421605e8deec9a63a37d7d748067f58d970ef9d6899e154d85949ee) | [6e368f4](https://github.com/whetstoneresearch/doppler/commit/6e368f4) | 
 
+### Solana Mainnet
+
+| Program | Address |
+|---|---|
+| Initializer program | [`4carc9eePfE7jKUXdCAYMhcPf4awEFpZPrz1sTykdss1`](https://explorer.solana.com/address/4carc9eePfE7jKUXdCAYMhcPf4awEFpZPrz1sTykdss1) |
+| CPMM program | [`5pXzd9UiWrVxATCYWmgo5EbfxzXqHYhfSKGdCPXPz7vK`](https://explorer.solana.com/address/5pXzd9UiWrVxATCYWmgo5EbfxzXqHYhfSKGdCPXPz7vK) |
+| CPMM migrator program | [`H71WD4tsiCCipro4urykWHySH1ryvLTmqEdNbHTGwb3o`](https://explorer.solana.com/address/H71WD4tsiCCipro4urykWHySH1ryvLTmqEdNbHTGwb3o) |
+| CPMM hook program | [`BeyqffXEVgLpM3fQ1zjk8YnZzQN9sMVrCKtNKwSxNATr`](https://explorer.solana.com/address/BeyqffXEVgLpM3fQ1zjk8YnZzQN9sMVrCKtNKwSxNATr) |
+
 ## Testnet Deployments
 ### Unichain Sepolia (1301)
 | Contract | Address | Transaction | Commit |
