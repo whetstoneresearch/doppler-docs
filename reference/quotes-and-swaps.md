@@ -4,188 +4,258 @@ icon: rotate
 
 # Quotes & swaps
 
-## Quotes and Swaps
+Use the Doppler SDK to discover a pool and quote a swap. Then pass the resulting pool, direction, and amounts to Uniswap's [Universal Router SDK](https://github.com/Uniswap/sdks/tree/main/sdks/universal-router-sdk) to construct and execute the transaction.
 
-This guide shows how to get price quotes and execute swaps using the unified SDK (`@whetstone-research/doppler-sdk`) across Uniswap V2, V3, and V4 (including Doppler dynamic auctions).
+This guide focuses on the information Doppler provides for:
 
-* Quoting uses the SDK `Quoter` for V2/V3/V4.
-* Executing swaps uses the Uniswap Universal Router. For convenience, we show examples with the `doppler-router` helpers used in the [demo app](https://github.com/whetstoneresearch/doppler-demo-app).
+* **Dynamic auctions**
+* **Multicurve**
+* **Multicurve Rehype**
 
-### Setup
+All three are Uniswap V4 pools. They use the same quoting API but expose their initialized `PoolKey` differently.
+
+## Install
+
+```bash
+pnpm add @whetstone-research/doppler-sdk viem
+```
+
+## Set up the SDK
+
+Only a public client is required to discover pools and request quotes:
 
 ```ts
-import { DopplerSDK, Quoter, getAddresses, DYNAMIC_FEE_FLAG } from '@whetstone-research/doppler-sdk'
-import { createPublicClient, createWalletClient, http, parseUnits } from 'viem'
+import {
+  DopplerSDK,
+  getAddresses,
+} from '@whetstone-research/doppler-sdk/evm'
+import { createPublicClient, http } from 'viem'
 import { base } from 'viem/chains'
 
-const publicClient = createPublicClient({ chain: base, transport: http(rpcUrl) })
-const walletClient  = createWalletClient({ chain: base, transport: http(rpcUrl), account })
+const publicClient = createPublicClient({
+  chain: base,
+  transport: http(rpcUrl),
+})
 
-const sdk = new DopplerSDK({ publicClient, walletClient, chainId: base.id })
-const quoter = new Quoter(publicClient, base.id)
+const sdk = new DopplerSDK({
+  publicClient,
+  chainId: base.id,
+})
+
 const addresses = getAddresses(base.id)
 ```
 
-***
+Use `addresses.universalRouter` when executing the swap. It is the Doppler-compatible Universal Router for the selected chain.
 
-### Quoting
+Use Universal Router version:
 
-#### V3: Exact Input (Single Pool)
+* `2.1.1` on Robinhood (chain ID `4663`)
+* `2.0` on every other supported network
+
+{% hint style="warning" %}
+Do not substitute a same-chain Universal Router from another address registry. Each Universal Router deployment is connected to a specific V4 `PoolManager`. Another router on the same chain may use a different `PoolManager`, where the Doppler pool is not initialized.
+{% endhint %}
+
+## Get the V4 `PoolKey`
+
+The `PoolKey` contains the exact currencies, fee configuration, tick spacing, and hook address of an initialized V4 pool. Use the key returned from onchain state without reconstructing or modifying it.
+
+### Multicurve and Multicurve Rehype
+
+Look up either pool type by its Doppler asset address:
 
 ```ts
-const { amountOut, sqrtPriceX96After } = await quoter.quoteExactInputV3({
-  tokenIn:  tokenInAddress,
-  tokenOut: tokenOutAddress,
-  amountIn: parseUnits('1.0', inDecimals),
-  fee: 3000,                 // 0.3%
-  sqrtPriceLimitX96: 0n,     // optional
-})
+const pool = await sdk.getMulticurvePool(assetAddress)
+const poolState = await pool.getState()
+
+const poolKey = poolState.poolKey
 ```
 
-#### V3: Exact Output (Single Pool)
+For a buy, the input is normally the pool's numeraire:
 
 ```ts
-const { amountIn } = await quoter.quoteExactOutputV3({
-  tokenIn:  tokenInAddress,
-  tokenOut: tokenOutAddress,
-  amountOut: parseUnits('100', outDecimals),
-  fee: 3000,
-})
+const currencyInAddress = poolState.numeraire
 ```
 
-#### V2: Exact Input (Path)
+For a sell, the input is the Doppler asset:
 
 ```ts
-// Simple 2-hop path (tokenIn -> tokenOut). Multi-hop supported.
-const amounts = await quoter.quoteExactInputV2({
-  amountIn: parseUnits('1.0', inDecimals),
-  path: [tokenInAddress, tokenOutAddress],
-})
-const amountOut = amounts[amounts.length - 1]
+const currencyInAddress = poolState.asset
 ```
 
-#### V4 (Dynamic Auctions): Exact Input
+Use `poolState.poolKey` unchanged for both Multicurve and Multicurve Rehype pools.
 
-For Doppler V4 dynamic auctions, build a `poolKey` and determine direction with `zeroForOne`:
+### Dynamic auctions
+
+A Dynamic auction stores its initialized `PoolKey` on its hook:
 
 ```ts
-import { Address } from 'viem'
+import {
+  dopplerHookAbi,
+  normalizePoolKey,
+} from '@whetstone-research/doppler-sdk/evm'
 
-// Sort to get currency0/currency1 as in V4 (lexicographically ascending)
-const [currency0, currency1] = [baseToken as Address, quoteToken as Address]
-  .sort((a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : 1))
+const storedPoolKey = await publicClient.readContract({
+  address: hookAddress,
+  abi: dopplerHookAbi,
+  functionName: 'poolKey',
+})
 
-const poolKey = {
-  currency0,
-  currency1,
-  fee: DYNAMIC_FEE_FLAG, // Doppler dynamic auctions use the dynamic fee flag
-  tickSpacing: 8,        // Typical for Doppler auctions; use actual value if known
-  hooks: hookAddress as Address,
+const poolKey = normalizePoolKey(storedPoolKey)
+```
+
+The returned key already contains the Dynamic auction's fee flag, tick spacing, currencies, and hook address.
+
+## Determine the swap direction
+
+Uniswap V4 uses `zeroForOne` to identify the input side:
+
+* `true`: swap `currency0` for `currency1`
+* `false`: swap `currency1` for `currency0`
+
+Derive it from the requested input currency:
+
+```ts
+function sameAddress(left: string, right: string) {
+  return left.toLowerCase() === right.toLowerCase()
 }
 
-// Direction: swap 0->1 when tokenIn is currency0
-const zeroForOne = (tokenInAddress.toLowerCase() === currency0.toLowerCase())
+const inputIsCurrency0 = sameAddress(
+  currencyInAddress,
+  poolKey.currency0,
+)
+const inputIsCurrency1 = sameAddress(
+  currencyInAddress,
+  poolKey.currency1,
+)
 
-const { amountOut } = await quoter.quoteExactInputV4({
-  poolKey,
-  zeroForOne,
-  exactAmount: parseUnits('1.0', inDecimals),
-  hookData: '0x', // usually empty for Doppler swaps
-})
+if (!inputIsCurrency0 && !inputIsCurrency1) {
+  throw new Error('Input currency is not part of this PoolKey')
+}
+
+const zeroForOne = inputIsCurrency0
+const currencyOutAddress = zeroForOne
+  ? poolKey.currency1
+  : poolKey.currency0
 ```
 
-Notes:
+V4 represents native currency as the zero address. Wrapped native currency uses its ERC-20 address.
 
-* Use your pool’s actual `tickSpacing` if available from the indexer or hook config.
-* `hookData` is typically `0x` for Doppler swaps.
+## Quote an exact-input swap
 
-***
-
-### Executing Swaps (Universal Router)
-
-The SDK exposes addresses for the Uniswap Universal Router via `getAddresses(chainId)`. To build inputs, the miniapp uses `doppler-router` helpers; you can do the same or craft bytes manually.
-
-Install helpers:
-
-```bash
-npm install doppler-router
-```
-
-#### V4 Dynamic Auction: Swap Exact In Single
+Use base units for `amountIn`:
 
 ```ts
-import { CommandBuilder, V4ActionBuilder, V4ActionType } from 'doppler-router'
-import { zeroAddress, maxUint256, parseUnits } from 'viem'
-
-// 1) Build poolKey and zeroForOne as in the quoting example
-const [currency0, currency1] = [baseToken as Address, quoteToken as Address]
-  .sort((a, b) => (a.toLowerCase() < b.toLowerCase() ? -1 : 1))
-const poolKey = { currency0, currency1, fee: DYNAMIC_FEE_FLAG, tickSpacing: 8, hooks: hookAddress as Address }
-const zeroForOne = (tokenInAddress.toLowerCase() === currency0.toLowerCase())
-const amountIn = parseUnits('1.0', inDecimals)
-const minAmountOut = 0n // add slippage logic as needed
-
-// 2) Build V4 swap actions
-const actionBuilder = new V4ActionBuilder()
-const [actions, params] = actionBuilder
-  .addSwapExactInSingle(poolKey, zeroForOne, amountIn, minAmountOut, '0x')
-  // Settle and take ensures outputs are transferred correctly
-  .addAction(V4ActionType.SETTLE_ALL, [zeroForOne ? poolKey.currency0 : poolKey.currency1, maxUint256])
-  .addAction(V4ActionType.TAKE_ALL,   [zeroForOne ? poolKey.currency1 : poolKey.currency0, 0])
-  .build()
-
-// 3) Encode Universal Router command
-const [commands, inputs] = new CommandBuilder().addV4Swap(actions, params).build()
-
-// 4) Minimal Universal Router ABI with execute()
-const universalRouterAbi = [
-  {
-    type: 'function',
-    name: 'execute',
-    stateMutability: 'payable',
-    inputs: [
-      { name: 'commands', type: 'bytes' },
-      { name: 'inputs',   type: 'bytes[]' },
-    ],
-    outputs: [],
-  },
-] as const
-
-// 5) Execute
-const txHash = await walletClient.writeContract({
-  address: addresses.universalRouter,
-  abi: universalRouterAbi,
-  functionName: 'execute',
-  args: [commands, inputs],
-  // Send ETH when swapping from native currency (currency0 usually WETH/native)
-  value: zeroForOne ? amountIn : 0n,
+const quote = await sdk.quoter.quoteExactInputV4({
+  poolKey,
+  zeroForOne,
+  exactAmount: amountIn,
+  hookData: '0x',
 })
-const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash })
+
+console.log('Expected output:', quote.amountOut)
+console.log('Quoter gas estimate:', quote.gasEstimate)
 ```
 
-Tips:
+For example, use `parseUnits('1', decimals)` for an ERC-20 or `parseEther('0.01')` for an 18-decimal native or wrapped-native input.
 
-* For ERC20 inputs, ensure allowance (Permit2 or token approve). See `doppler-router` `getPermitSignature` helper.
-* Use a non‑zero `minAmountOut` based on a prior quote and desired slippage.
+Select the Universal Router SDK encoding version for the current chain:
 
-#### V3 and V2 Swaps
+```ts
+const universalRouterVersion =
+  publicClient.chain.id === 4_663 ? '2.1.1' : '2.0'
+```
 
-The Universal Router also supports V3/V2 swaps. You can:
+The values required for a single-pool exact-input V4 swap are now:
 
-* Use the `CommandBuilder` to add V3/V2 swap commands similarly, or
-* Call the respective pool routers directly (outside the scope of this doc).
+```ts
+const swapQuote = {
+  poolKey,
+  zeroForOne,
+  currencyInAddress,
+  currencyOutAddress,
+  amountIn,
+  amountOut: quote.amountOut,
+  hookData: '0x',
+  universalRouter: addresses.universalRouter,
+  universalRouterVersion,
+}
+```
 
-The unified SDK’s `Quoter` covers price discovery for all of V2/V3/V4 regardless of which path you choose for execution.
+Apply your application's slippage policy to the quote when constructing the router transaction.
 
-***
+## Quote an exact-output swap
 
-### End‑to‑End Pattern (Demo application)
+To calculate the input required for an exact output:
 
-The `doppler-demo-app` demonstrates:
+```ts
+const exactOutputQuote = await sdk.quoter.quoteExactOutputV4({
+  poolKey,
+  zeroForOne,
+  exactAmount: amountOut,
+  hookData: '0x',
+})
 
-* Building V4 `poolKey` and `zeroForOne` from base/quote tokens
-* Quoting via `quoter.quoteExactInputV4`
-* Executing via Universal Router using `doppler-router` builders
-* View it's code here: [https://github.com/whetstoneresearch/doppler-demo-app](https://github.com/whetstoneresearch/doppler-demo-app)
+console.log('Required input:', exactOutputQuote.amountIn)
+console.log('Quoter gas estimate:', exactOutputQuote.gasEstimate)
+```
 
-Look at `src/pages/PoolDetails.tsx` for a complete reference implementation.
+Apply your application's slippage policy to `exactOutputQuote.amountIn` when determining the maximum input.
+
+## Execute with Uniswap Universal Router
+
+Use the values above with Uniswap's official [Universal Router SDK](https://github.com/Uniswap/sdks/tree/main/sdks/universal-router-sdk). Its documentation covers transaction construction, currency objects, Permit2 or token approvals, slippage protection, native value, simulation, and submission.
+
+When building the transaction:
+
+* Use `addresses.universalRouter`.
+* Select version `2.1.1` on Robinhood (chain ID `4663`).
+* Select version `2.0` on every other supported network.
+* Pass the exact `poolKey` returned by the Doppler SDK.
+* Pass the derived `zeroForOne` value.
+* Use empty hook data (`0x`) for these swaps.
+* Simulate the final transaction before submitting it.
+
+## V2 and V3 quotes
+
+V2 and V3 are relevant for migrated pools and older Doppler deployments. New Dynamic, Multicurve, and Multicurve Rehype integrations should use the V4 path above.
+
+### V3 exact-input quote
+
+```ts
+const quote = await sdk.quoter.quoteExactInputV3({
+  tokenIn: tokenInAddress,
+  tokenOut: tokenOutAddress,
+  amountIn,
+  fee: 3_000,
+  sqrtPriceLimitX96: 0n,
+})
+
+console.log('Expected output:', quote.amountOut)
+```
+
+Use the initialized V3 pool's actual fee tier.
+
+### V2 exact-input quote
+
+```ts
+const amounts = await sdk.quoter.quoteExactInputV2({
+  amountIn,
+  path: [tokenInAddress, tokenOutAddress],
+})
+
+const amountOut = amounts.at(-1)
+if (amountOut === undefined) {
+  throw new Error('V2 quoter returned an empty path')
+}
+```
+
+Use the resulting route and quote with the corresponding V2 or V3 operation in the Universal Router SDK.
+
+## Quote troubleshooting
+
+**The pool cannot be quoted.** Read the `PoolKey` from `getState()` or the Dynamic hook and use it unchanged. Do not guess the fee, tick spacing, currency order, or hook address.
+
+**The quoter returns `NotEnoughLiquidity`.** Verify `currencyInAddress`, `zeroForOne`, amount units, and current pool state. The requested amount may also be outside the pool's active liquidity.
+
+**The quote succeeds but transaction construction or execution fails.** Verify that the Universal Router integration uses `getAddresses(chainId).universalRouter`. Use version `2.1.1` on Robinhood and version `2.0` on every other supported network. Then refer to the Universal Router SDK documentation for approvals, encoding, and execution.
