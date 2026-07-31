@@ -365,3 +365,22 @@ If there are contracts not reflected here but claiming to be instances of Dopple
 | UniswapV4ScheduledMulticurveInitializer | [0xf843...3876](https://sepolia.etherscan.io/address/0xf84378c9f39e0ff267f3101c88773359c5393876) | [0x972a...4de9](https://sepolia.etherscan.io/tx/0x972a11c52ee5a77b8c8ff5490226ec6f435015083150ebddb80a43ef85c44de9) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 | UniswapV4ScheduledMulticurveInitializerHook | [0xc6a5...2dc0](https://sepolia.etherscan.io/address/0xc6a562cb5cbfa29bcb1bdccf903b8b8f2e4a2dc0) | [0x9cc4...53c3](https://sepolia.etherscan.io/tx/0x9cc428598667705087bfae7cdda2929518612ff73080832e1425ed25f2ca53c3) | [787e2df](https://github.com/whetstoneresearch/doppler/commit/787e2df) | 
 
+## Solana Deployments
+
+### Mainnet
+
+| Program | Address |
+|---|---|
+| Initializer program | [`4carc9eePfE7jKUXdCAYMhcPf4awEFpZPrz1sTykdss1`](https://explorer.solana.com/address/4carc9eePfE7jKUXdCAYMhcPf4awEFpZPrz1sTykdss1) |
+| CPMM program | [`5pXzd9UiWrVxATCYWmgo5EbfxzXqHYhfSKGdCPXPz7vK`](https://explorer.solana.com/address/5pXzd9UiWrVxATCYWmgo5EbfxzXqHYhfSKGdCPXPz7vK) |
+| CPMM migrator program | [`H71WD4tsiCCipro4urykWHySH1ryvLTmqEdNbHTGwb3o`](https://explorer.solana.com/address/H71WD4tsiCCipro4urykWHySH1ryvLTmqEdNbHTGwb3o) |
+| Doppler Launch Hook v1 | [`BeyqffXEVgLpM3fQ1zjk8YnZzQN9sMVrCKtNKwSxNATr`](https://explorer.solana.com/address/BeyqffXEVgLpM3fQ1zjk8YnZzQN9sMVrCKtNKwSxNATr) |
+
+### Devnet
+
+| Program | Address |
+|---|---|
+| Initializer program | [`4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1`](https://explorer.solana.com/address/4h3Dqyo5qmteJoMxXt3tdtfXELDB6pdRTPU9mWruiKp1?cluster=devnet) |
+| CPMM program | [`9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ`](https://explorer.solana.com/address/9PSxVPoPfnbZ8Q1uQhgS6ZxvBjFboZtebNsu34umxkgQ?cluster=devnet) |
+| CPMM migrator program | [`7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd`](https://explorer.solana.com/address/7WMUTNC41eMCo6eGH5Sy2xbgE3AycvLbFPo95AU9CSUd?cluster=devnet) |
+| Doppler Launch Hook v1 | [`HVsPNZh98TgChUXHwKrUG47SUqvGQHxUy5wZwcQLFD4i`](https://explorer.solana.com/address/HVsPNZh98TgChUXHwKrUG47SUqvGQHxUy5wZwcQLFD4i?cluster=devnet) |
