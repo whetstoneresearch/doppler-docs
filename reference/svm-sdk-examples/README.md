@@ -16,9 +16,11 @@ A launch's fee settings are saved when it is created, so later changes to the ne
 
 ## Cosigning
 
-Doppler Launch Hook v1 can optionally require Doppler approval for each buy or sell. This protection works with either standard or time-based fees. It can end at a chosen time or remain active indefinitely; once it expires, trading continues normally without approval. Creating the launch and claiming fees do not require cosigning.
+Cosigning is an optional transaction approval layer for a launch. While it is enabled, each swap must include a signature from an approved cosigner before Doppler accepts it. The cosigner does not take custody of the user's tokens or submit the trade for them; it only confirms that the transaction is allowed under the launch's trading policy.
 
-The standard SDK selects a cosigner already approved by Doppler. A launch creator cannot authorize a new cosigner simply by supplying an address. Integrators that need to run their own approval service must coordinate a separate approved setup with Doppler.
+A cosigning gate can end at a chosen time or remain active indefinitely, and it works with either standard or time-based fees. Once an expiring gate ends, trading continues normally without approval. Creating a launch and claiming fees do not require cosigning.
+
+The standard SDK selects a cosigner already approved by Doppler; supplying an address does not register a new cosigner. Teams interested in cosigning, running their own approval service, or discussing a custom setup can contact [contact@whetstone.cc](mailto:contact@whetstone.cc).
 
 * [Launch](launch.md) - create a standard Solana launch.
 * [Dynamic fee launch](dynamic-fee-launch.md) - create a launch with a decaying swap fee schedule, optionally combined with cosigner gating.
