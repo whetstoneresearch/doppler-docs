@@ -4,7 +4,7 @@ description: Create a Solana launch with a dynamic fee schedule
 
 # Dynamic Fee Launch
 
-Pass `dynamicFee` to `createLaunch` to configure a fee schedule on the Doppler CPMM hook. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
+Pass `dynamicFee` to `createLaunch` to configure a fee schedule on Doppler Launch Hook v1. The hook normalizes the schedule during the `BEFORE_CREATE` callback and stores the normalized schedule in the launch hook payload.
 
 This snippet assumes `payer` and `rpc` are already initialized with `@solana/kit`.
 
@@ -15,7 +15,7 @@ import {
 } from '@solana/kit';
 import {
   createLaunch,
-  cpmmHook,
+  dopplerLaunchHookV1,
   initializer,
   deriveSolanaCpmmDeployment,
   DOPPLER_SOLANA_DEVNET_PROGRAM_ADDRESSES,
@@ -79,13 +79,13 @@ const { instruction } = await createLaunch({
 });
 ```
 
-Submit the returned `instruction` with the generated mint and vault signers. The SDK sets the CPMM hook program, `HF_BEFORE_CREATE | HF_BEFORE_SWAP`, the 32-byte schedule payload, the create-hook account commitment, and the swap hook remaining-account commitment.
+Submit the returned `instruction` with the generated mint and vault signers. The SDK sets the Doppler Launch Hook v1 program, `HF_BEFORE_CREATE | HF_BEFORE_SWAP`, the 32-byte schedule payload, the create-hook account commitment, and the swap hook remaining-account commitment.
 
 `startingTime: 0n` means the hook should start the schedule at launch creation. During `initialize_launch`, the hook replaces it with the current Solana clock timestamp before the launch account is stored.
 
 The effective swap fee is the greater of the current schedule fee and the launch's static `swapFeeBps`, so the schedule cannot reduce the fee below the static launch fee.
 
-After sending the transaction, you can verify that the launch is using the CPMM hook:
+After sending the transaction, you can verify that the launch is using Doppler Launch Hook v1:
 
 ```typescript
 const launch = await initializer.fetchLaunch(rpc, addresses.launch, {
@@ -100,18 +100,23 @@ const hookPayload = new Uint8Array(
   launch.hookPayload.bytes.slice(0, launch.hookPayload.len),
 );
 
-if (launch.hookProgram !== deployment.cpmmHookProgram) {
-  throw new Error('Launch is not using the CPMM hook');
+if (launch.hookProgram !== deployment.dopplerLaunchHookV1Program) {
+  throw new Error('Launch is not using Doppler Launch Hook v1');
 }
 
-if (!cpmmHook.isDynamicFeeSchedulePayload(hookPayload)) {
+if (!dopplerLaunchHookV1.isDynamicFeeSchedulePayload(hookPayload)) {
   throw new Error('Launch hook payload does not contain a dynamic fee schedule');
 }
 ```
 
-To combine dynamic fees with cosigner gating, pass the same dynamic fee schedule plus `cosigner` and, optionally, `cosignGateExpiresAt`:
+To combine dynamic fees with cosigner gating, first resolve the Doppler-managed gate from its on-chain config, then pass it with the schedule:
 
 ```typescript
+const cosignerGate =
+  await dopplerLaunchHookV1.resolveManagedCosignerGate(rpc, {
+    expiresAt: BigInt(Math.floor(Date.now() / 1_000) + 60 * 60),
+  });
+
 const { instruction } = await createLaunch({
   // ...same launch inputs as above
   dynamicFee: {
@@ -120,9 +125,8 @@ const { instruction } = await createLaunch({
     endFeeBps: 200,
     durationSeconds: 10n * 60n,
   },
-  cosigner,
-  cosignGateExpiresAt,
+  cosignerGate,
 });
 ```
 
-With both features enabled, swaps require the configured cosigner until expiry, and the dynamic fee schedule continues to apply throughout the initializer trading phase. Omit `cosignGateExpiresAt` for an indefinite gate; in that case the schedule remains the entire hook payload and the presence of the cosigner config account enables gating.
+With both features enabled, swaps require the configured cosigner until expiry, and the dynamic fee schedule continues to apply throughout the Initializer trading phase. Omit `expiresAt` when resolving the gate to require cosigning indefinitely. The resolver selects an active cosigner already authorized by the hook config; it does not register a caller-provided key.
