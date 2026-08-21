@@ -254,7 +254,7 @@ console.log('Dev buy output:', result.devBuy?.amountOut);
 
 The SDK uses the chain's configured Bundler by default. Use `.withBundler(address)` only for a compatible custom deployment.
 
-For compatible Rehype pools, initialization grants that Bundler a pool-specific exemption for its first swap in the launch transaction. The dev buy still pays the Airlock owner's share of the Rehype fee, but bypasses all other Rehype fee portions, including beneficiary, buyback, and LP-reinvestment fees. It does not bypass the pool's Uniswap v4 LP fee. The exemption cannot be used by a normal router and expires when the transaction ends, every later swap uses the configured fee schedule.
+For compatible Rehype pools, initialization grants that Bundler a pool-specific exemption for its first swap in the launch transaction. The dev buy still pays the protocol's share of the Rehype fee.
 
 Native numeraires send exactly `exactAmountIn` with the bundle. ERC-20 numeraires require sufficient balance and Bundler allowances. `createMulticurve` submits an approval first when needed.
 
